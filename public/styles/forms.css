@@ -1,0 +1,192 @@
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-content: center;
+	align-items: center;
+	height: 100%;
+	max-height: 650px;
+	width: 90%;
+	min-width: 320px;
+	max-width: 420px;
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 12px;
+	box-shadow: 0 0 15px rgba(0, 0 , 0, 0.3);
+	box-sizing: border-box;
+}
+
+.centered,
+.put-data,
+.passwd {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.centered {
+	width: 80%;
+	flex-grow: 0.7;
+	justify-content: space-between;
+}
+
+form#login .put-data {
+	flex-grow: 0.6;
+}
+
+form#signup .put-data {
+	flex-grow: 0.5;
+}
+
+.passwd,
+.put-data {
+	width: 100%;
+	justify-content: space-between;
+}
+
+form#signup .centered,
+#signup .put-data {
+	justify-content: space-evenly;
+}
+
+
+.passwd {
+	text-align: center;
+	flex-grow: 0.2;
+}
+
+form h3 {
+	display: flex;
+	align-items: center;
+	text-transform: uppercase;
+	text-shadow: -2.5px -2.5px 0px #4EC5C1;
+	text-align: center;
+	background: repeating-linear-gradient(45deg, #0e0d0c, #4EC5C1 1px, white 2px, white 3px);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 1.7em;
+}
+
+form#login h3 {
+	flex-grow: 0.3;
+}
+
+form > p > a {
+	color: inherit;
+	font-weight: 550;
+}
+
+form p {
+	width: 80%;
+	text-align: center;
+	background-color: none;
+	font-size: 0.9em;
+	font-weight: 300;
+}
+
+.passwd a {
+	font-size: 0.8em;
+	color: #a8a4a6;
+	font-weight: 300;
+}
+
+form a {
+	transition: all 0.3s ease;
+}
+
+form a:hover {
+	text-decoration: underline;
+	color: #EC576B;
+}
+
+form input {
+	width: 100%;
+	border: inherit;
+	outline: inherit;
+}
+
+form .focus-input {
+	height: 4vh;
+	color: inherit;
+	min-height: 16px;
+	border-bottom: 1.5px solid rgba(104, 100, 102, 0.5);
+	background-color: transparent;
+	font-family: 'Questrial', sans-serif;
+	letter-spacing: 1px;
+	position: relative;
+}
+
+form#login .focus-input {
+	font-size: 0.9em;
+}
+
+form#signup .focus-input {
+	font-size: 0.8em;
+}
+
+form .focus-input:focus {
+	border-bottom: 2px solid #4EC5C1;
+	border-image: linear-gradient(to left, #e5e338 0%, #4EC5C1 100%);
+	border-image-slice: 1;
+}
+
+form input[type=submit] {
+	flex-grow: 0.1;
+	border-radius: 20px;
+	background-color: rgb(78, 197, 193);
+	min-height: 30px;
+	font-size: 1.2em;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	font-family: 'Questrial', sans-serif;
+	color: white;
+	text-shadow: 1px 2px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+}
+
+form input[type=submit]:hover {
+	filter: saturate(150%);
+	-webkit-filter: saturate(150%);
+}
+
+form input[type=submit]:active {
+	transform: translateY(1px);
+}
+
+@media (max-height: 830px) and (max-width: 420px) {
+	form#login h3 {
+		font-size: 1.5em;
+	}
+
+	form#signup h3 {
+		font-size: 1.48em;
+	}
+
+	.centered {
+		flex-grow: 0.75;
+	}
+	
+	form .focus-input {
+		height: 6vh;
+	}
+}
+
+@media (max-width: 420px) {
+	form {
+		max-height: 600px;
+	}
+
+	form input {
+		font-size: 1em;
+	}
+	
+	.passwd a {
+		font-size: 0.9em;
+	} 
+}
+
+@media (max-width: 320px) {
+	form {
+		border-radius: 0;
+	}
+}
