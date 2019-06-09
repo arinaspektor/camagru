@@ -3,18 +3,17 @@
 
 			private $db;
 
-			function __construct($DB_con) {
+			function __construct($conn) {
      			 $this->db = $conn;
 			}
-			
+
 			public function register($username, $email, $passwd) {
 
 				try {
 					$new_passwd = password_hash($passwd, PASSWORD_DEFAULT);
-					echo $new_passwd;
 
 					$stmt = $this->db->prepare(
-						"INSERT INTO users(username, email, hashed_password) 
+						"INSERT INTO users(username, email, hashed_password)
 						VALUES(:username, :email, :passwd)"
 						);
 
@@ -29,23 +28,24 @@
 				}
 
 			}
-			
+
 			public function login($username, $passwd) {
 
 				try {
 
 					$stmt = $this->db->prepare(
-						"SELECT * FROM users 
-						WHERE username=:username OR email=:email 
+						"SELECT * FROM users
+						WHERE username=:username
 						LIMIT 1"
 					);
-					$stmt->execute(array(':username'=>$username, ':email'=>$email));
+
+					$stmt->execute(array(':username'=>$username));
 					$userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
 					if ($stmt->rowCount() > 0) {
-						if (password_verify($passwd, $userRow['user_pass'])) {
+						if (password_verify($passwd, $userRow['hashed_password'])) {
 							$_SESSION['user_session'] = $userRow['user_id'];
-                			return true;
+              return true;
 						}
 					} else {
 						return false;
@@ -61,16 +61,12 @@
 				return isset($_SESSION['user_session']);
 			}
 
-			public function redirect($url) {
-				header("Location: $url");
-			}
-
 			public function logout()
    			{
         		session_destroy();
         		unset($_SESSION['user_session']);
         		return true;
    			}
-			
+
 		}
 ?>

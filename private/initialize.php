@@ -1,4 +1,5 @@
 <?php
+    ini_set('display_errors', 1);
 
     $public_start = strpos($_SERVER['SCRIPT_NAME'], '/public');
     $public_end = $public_start + 7;
@@ -14,6 +15,7 @@
 
     require_once('config.php');
     require_once('setup.php');
+    require_once('functions.php');
     require_once('validation_functions.php');
 
     // require_once('classes/DatabaseObject.class.php');
@@ -23,6 +25,6 @@
     // DatabaseObject::set_database($conn);
 
     // $session = new Session;
-    $user = new User($conn);
     session_start();
+    $user = new User($conn);
 ?>

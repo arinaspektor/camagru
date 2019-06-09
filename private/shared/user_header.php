@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +17,12 @@
 					<img src="<?php echo IMAGES_PATH . '/camera-shutter.svg'; ?>" alt="logo image" width="25em">
 					<a href="<?php echo WWW_ROOT . '/index'; ?>">Camagru</a>
 				</li>
-				<li <?php if ($page_title === 'Sign in' || ($user->is_loggedin()!="")) { echo "style='display: none;'"; } ?> >
-					<a href=" <?php echo WWW_ROOT . '/login'; ?> ">Sign In</a>
+				<li><a href=" <?php echo PRIVATE_PATH . '/profile'; ?>">Profile</a>
+					<ul>
+						<li><a>View my profile</a></li>
+						<li><a>Settings</a></li>
+						<li><a>Sign out</a></li>
+					</ul>
 				</li>
 			</ul>
 		</nav>

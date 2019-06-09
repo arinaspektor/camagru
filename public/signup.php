@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once('../private/initialize.php');
 
 	$page_title = 'Sign up';
@@ -12,9 +12,8 @@
 		$userdata['dup_passwd '] = trim($_POST['dup_passwd']);
 
 		$errors = check_data($userdata);
-		
+
 		if ($errors === Array()) {
-			print_r($userdata);
 			try
 			{
 				$stmt = $conn->prepare(
@@ -24,21 +23,24 @@
 
 				$stmt->execute(array(':username'=>$userdata['username'], ':email'=>$userdata['email']));
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			
+
 				if ($row['username'] == $userdata['username']) {
 					$error[] = "sorry username already taken !";
 				}
-				else if ($row['email'] == $$userdata['email']) {
+				else if ($row['email'] == $userdata['email']) {
 					$error[] = "sorry email already taken !";
 				}
 				else
 				{
-					if ($user->register($userdata['username'], $userdata['email'], $userdata['passwd'])) 
+					if ($user->register($userdata['username'], $userdata['email'], $userdata['passwd']))
 					{
-						alert("Congrats! You are registered!");
-						$user->redirect('index');
+						// Нужно сначала отправить письмо на подтверждение
+						// Затем только логинить
+						$user->login($userdata['username'], $userdata['passwd']);
+						redirect(WWW_ROOT . '/index');
 					}
 				}
+					print_r($error);
 			}
 			catch(PDOException $e)
 			{
@@ -48,7 +50,7 @@
 	}
 ?>
 
-<?php include('../private/shared/header.php'); ?>
+<?php include('../private/shared/public_header.php'); ?>
 
 <link rel="stylesheet" href="styles/forms.css">
 

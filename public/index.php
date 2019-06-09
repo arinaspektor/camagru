@@ -4,7 +4,7 @@
 	$page_title = 'Gallery';
 ?>
 
-<?php include('../private/shared/header.php'); ?>
+<?php include_header($user->is_loggedin(), $page_title); ?>
 
 <main>
 	<p>to be done</p>
