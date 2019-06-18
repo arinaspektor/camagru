@@ -24,14 +24,15 @@
                     $segments = explode('/', $path);
                     $controllerName = ucfirst(array_shift($segments) . 'Controller');
                     $actionName =  'action' . ucfirst(array_shift($segments));
-
-                    $controllerFile = ROOT .'/controllers/' . $controllerName . '.php';
+            
+                    $controllerFile = ROOT .'/app/controllers/' . $controllerName . '.php';
                     if (file_exists($controllerFile)) {
                         include_once($controllerFile);
                     }
 
                     $controllerObject = new $controllerName;
-                    $result = $controllerObject->actionName();
+                    $result = $controllerObject->$actionName();
+                    
                     if ($result != null) {
                         break ;
                     }

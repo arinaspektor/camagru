@@ -1,7 +1,9 @@
 <?php
 
     return array(
-       'login' => 'user/login'
+        '' => 'main/index',
+        'main' => 'main/index',
+        'login' => 'user/login'
     );
 
 ?>

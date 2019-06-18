@@ -14,6 +14,7 @@
 
         static public function getConnection() {
             $data = include(ROOT . '/config/config.php');
+            
             $db_dsn = "mysql:host={$data['host']};charset={$data['charset']}";
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
