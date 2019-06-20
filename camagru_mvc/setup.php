@@ -1,5 +1,4 @@
-<?php
-        require_once(ROOT . '/components/Database.php');
-         
-        $db = Db::getConnection();
+<?php  
+        $instance = Db::getInstance();
+        $pdo = $instance->getConnection();
 ?>

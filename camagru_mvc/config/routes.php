@@ -1,9 +1,11 @@
 <?php
 
     return array(
-        '' => 'main/index',
         'main' => 'main/index',
-        'login' => 'user/login'
+        'login' => 'user/login',
+        'signup' => 'signup/index',
+        'create' => 'signup/create',
+        '' => 'main/index'
     );
 
 ?>

@@ -1,18 +1,15 @@
-<?php require_once(ROOT . '/app/views/MainView.php'); ?>
-
 <?php
 
-    class MainController
+    class MainController extends Controller
     {
-        private $model;
-        private $view;
+        public function __construct()
+	    {
+            parent::__construct();
+        }
 
         public function actionIndex()
         {
-            if ($_SERVER['REQUEST_URI'] !== $_SERVER['SCRIPT_NAME']) {
-                $this->view = new MainView;
-            }
-
+            $this->view->generate('main.php', 'main_template.php', 'Main');
         }
     }
 

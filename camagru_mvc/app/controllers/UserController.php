@@ -1,23 +1,17 @@
 <?php
-
     require_once(ROOT . '/app/models/UserModel.php');
-    require_once(ROOT . '/app/views/LoginView.php');
-    require_once(ROOT . '/app/views/SignupView.php');
 
-    class UserController {
-      
-        private $model;
-        private $view;
-
+    class UserController extends Controller
+    {
+        function __construct()
+	    {
+            parent::__construct();
+        }
+        
         public function actionLogin()
         {
-            $this->view = new LoginView;
-            $this->view->generate();
+            $this->view->generate('login.php', 'main_template.php', 'Sign in');
         }
 
-        public function actionRegister()
-        {
-            echo "sigup";
-        }
     }
 ?>
