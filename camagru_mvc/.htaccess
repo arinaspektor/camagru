@@ -7,3 +7,27 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php
+
+# Закрыть просмотр директорий
+Options All -Indexes
+
+# set the 404 page
+# ErrorDocument 404 /error-docs/error-404.html
+
+# ограничение размера загружаемых файлов
+# php_value upload_max_filesize 20M
+
+# <FilesMatch "\.(ico|png|jpeg|svg|ttf)$">
+#	Header Set Cache-Control "max-age=3600, public"
+#</FilesMatch>
+#<FilesMatch "\.(js|css)$">
+#	Header Set Cache-Control "public"
+#	Header Set Expires "Sat, 24 Jan 2015 16:00:00 GMT"
+#</FilesMatch>
+
+# Prevent Image Hotlinking for your Website
+# RewriteEngine ON
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERERER} !^http://(www\.)?mydomain.com/.*$ [NC]
+# RewriteRule \.(gif|jpeg|png)$ - [F].
+

@@ -9,7 +9,8 @@
 
         public function actionIndex()
         {
-            $this->view->generate('main.php', 'main_template.php', 'Main');
+            $this->view_data['page_title'] = 'Main';
+            $this->view->generate('main.php', 'main_template.php', $this->view_data);
         }
     }
 

@@ -2,10 +2,9 @@
 
     class Db {
 
-        private static $instance = null;
-        private $pdo;
+        static private $pdo;
 
-        private function __construct () {
+        static public function setup() {
             $data = include(ROOT . '/config/config.php');
             $db_dsn = "mysql:host={$data['host']};charset={$data['charset']}";
 
@@ -15,19 +14,11 @@
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ];
 
-            $this->pdo = new PDO($db_dsn, $data['db_user'], $data['db_pass'], $options);
-            self::setDatabase($this->pdo);
+            self::$pdo = new PDO($db_dsn, $data['db_user'], $data['db_pass'], $options);
+            self::setDatabase(self::$pdo);
         }
 
-        public static function getInstance()
-        {
-            if (self::$instance != null) {
-                return self::$instance;
-            }
-            return new self();
-        }
-
-        private static function setDatabase($pdo)
+        static private function setDatabase($pdo)
         {
             try {
                 $sql = file_get_contents('db.sql');
@@ -38,18 +29,44 @@
             }
         }
 
-        public function getConnection()
+        // public function getConnection()
+        // {
+        //     return self::$pdo;
+        // }
+
+        static public function destroyConnection()
         {
-            return $this->pdo;
+            self::$pdo = null;
         }
 
-
-       
-        public function destroyConnection()
+        static public function insertData($table, $data = [])
         {
-            $this->pdo = null;
+            $sql = "INSERT INTO $table (";
+            $sql .= join(', ', array_keys($data));
+            $sql .= ") VALUES (:";
+            $sql .= join(', :', array_keys($data));
+            $sql .= ")";
+
+            $stmt = self::$pdo->prepare($sql);
+
+            foreach ($data as $key => $value) {
+                $param = ":$key";
+                $stmt->bindValue($param, $value, PDO::PARAM_STR);
+            }
+
+            return $stmt->execute();
         }
 
+        static public function alreadyExists($table, $column, $value)
+        {
+            $sql = "SELECT * FROM $table WHERE $column = :val";
+
+            $stmt = self::$pdo->prepare($sql);
+            $stmt->bindParam(':val', $value, PDO::PARAM_STR);
+
+            $stmt->execute();
+            return $stmt->fetch() !== false;
+        }
     }
 
 ?>

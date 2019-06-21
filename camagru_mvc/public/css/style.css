@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Questrial');
 
-html {
+html, body {
 	padding: 0;
 	margin: 0;
 }
 
 body {
 	background-color: #EC576B;
-	padding: 0 3%;
 	margin: 0 auto;
 	color: rgb(104, 100, 102);
 	font-family: 'Montserrat', sans-serif;
@@ -34,25 +33,32 @@ ul {
 }
 
 body > header,
-header a,
 body > footer {
+	display: flex;
+	align-items: center;
 	color: white;
+	padding: 0 3%;
 }
+
 
 body > header {
 	height: 10vh;
 	min-height: 40px;
 	font-size: 1.9em;
+	justify-content: center;
+}
+
+header > nav {
+	width: 100%;
 }
 
 header > nav > ul {
-	padding: 0 0.5em;
+	padding: 0 0.5vh;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
 	align-items: flex-end;
 }
-
 
 header > nav > ul > li:first-child {
 	font-family: 'Questrial', sans-serif;
@@ -69,9 +75,7 @@ header > nav > ul > li:last-child:hover {
 }
 
 footer {
-	display: flex;
 	justify-content: flex-end;
-	align-items: center;
 	align-content: baseline;
 	min-height: 40px;
 	height: 7vh;

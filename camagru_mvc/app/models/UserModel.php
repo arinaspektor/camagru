@@ -3,11 +3,10 @@
     class User extends Model
     {
         public $errors = [];
+        public $predata = [];
 
         public function __construct($data)
         {
-            parent::__construct();
-
             foreach ($data as $key => $value) {
                 $this->$key = $value;
             };
@@ -15,27 +14,20 @@
 
         public function saveUser()
         {
-            $this->validate();
+            $this->validate_userdata();
 
             if (empty($this->errors)) {
-                $passwd_hash = password_hash($this->passwd, PASSWORD_DEFAULT);
+                $this->userdata['username'] = $this->username;
+                $this->userdata['user_email'] = $this->uemail;
+                $this->userdata['hashed_password'] = password_hash($this->passwd, PASSWORD_DEFAULT);
 
-                $sql = 'INSERT INTO users (username, user_email, hashed_password) 
-                        VALUES (:uname, :email, :passwd_hash)';
-    
-                $stmt = $this->db->prepare($sql);
-    
-                $stmt->bindValue(':uname', $this->username, PDO::PARAM_STR);
-                $stmt->bindValue(':email', $this->uemail, PDO::PARAM_STR);
-                $stmt->bindValue(':passwd_hash', $passwd_hash, PDO::PARAM_STR);
-    
-                return $stmt->execute();
+                return Db::insertData("users", $this->userdata);
             }
             return false;
         }
 
 
-        public function validate()
+        public function validate_userdata()
         {
             $this->validate_name();
             $this->validate_email();
@@ -49,15 +41,11 @@
                 $this->errors[] = 'Username is required';
             }
 
-            if(strlen($this->username) < 6) {
-                $this->errors[] = 'Please, enter at least 6 characters for the username';
+            if(strlen($this->username) < 6 || strlen($this->username) > 20) {
+                $this->errors[] = 'Username must be min 6 and max 20 characters long';
             }
 
-            if(strlen($this->username) > 20) {
-                $this->errors[] = 'Maximum length of username is 20 characters';
-            }
-
-            if ($this->isTaken("username", $this->username)) {
+            if (Db::alreadyExists("users", "username", $this->username)) {
                 $this->errors[] = 'This username is already taken';
             }
 
@@ -70,7 +58,7 @@
                 $this->errors[] = 'Invalid email';
             }
 
-            if ($this->isTaken("user_email", $this->uemail)) {
+            if (Db::alreadyExists("users", "user_email", $this->uemail)) {
                 $this->errors[] = 'This email is already taken';
             }
         }
@@ -78,19 +66,15 @@
 
         public function validate_passwd()
         {
-            if(strlen($this->passwd) < 8) {
-                $this->errors[] = 'Passwords must be at least 8 characters long';
-            }
-
-            if(strlen($this->passwd) > 20) {
-                $this->errors[] = 'Maximum length of passwd is 20 characters';
+            if(strlen($this->passwd) < 8 || strlen($this->passwd) > 20) {
+                $this->errors[] = 'Passwords must be min 8 and max 20 characters long';
             }
 
             if (!preg_match('/[a-z]/', $this->passwd)) {
                $this->errors[] = 'Password needs at least one lowercase letter';
             }
 
-            if (!preg_match('/[AZ-z]/', $this->passwd)) {
+            if (!preg_match('/[A-Z]/', $this->passwd)) {
                 $this->errors[] = 'Password needs at least one uppercase letter';
              }
 
@@ -105,16 +89,7 @@
         }
 
         
-        protected function isTaken($column, $value)
-        {
-            $sql = "SELECT * FROM users WHERE $column = :val";
 
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':val', $value, PDO::PARAM_STR);
-
-            $stmt->execute();
-            return $stmt->fetch() !== false;
-        }
 
     }
 

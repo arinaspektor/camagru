@@ -10,7 +10,8 @@
         
         public function actionLogin()
         {
-            $this->view->generate('login.php', 'main_template.php', 'Sign in');
+            $this->view_data['page_title'] = 'Sign in';
+            $this->view->generate('login.php', 'main_template.php', $this->view_data);
         }
 
     }

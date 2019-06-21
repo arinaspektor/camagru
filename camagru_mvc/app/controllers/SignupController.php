@@ -3,14 +3,16 @@
 
     class SignupController extends Controller
     {
+
         public function __construct()
         {
             parent::__construct();
+            $this->view_data['page_title'] = 'Sign up';
         }
 
         public function actionIndex()
         {
-            $this->view->generate('signup.php', 'main_template.php', 'Sign up');
+            $this->view->generate('signup.php', 'main_template.php', $this->view_data);
         }
 
         public function actionCreate()
@@ -19,10 +21,11 @@
 
                 $user = new User($_POST);
 
-                if ($user->saveUser()){
+                if ($user->saveUser()) {
                     header('Location: ' . WWW_ROOT . '/');
                 } else {
-                    var_dump($user->errors);
+                    $this->view_data['errors'] = $user->errors;
+                    $this->view->generate('signup.php', 'main_template.php', $this->view_data);
                 }
 
             } else {
