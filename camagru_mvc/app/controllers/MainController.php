@@ -3,15 +3,18 @@
     class MainController extends Controller
     {
         public function __construct()
-	    {
-            parent::__construct();
+        {
+            $this->view_data['page_title'] = 'Home';
         }
 
         public function actionIndex()
         {
-            $this->view_data['page_title'] = 'Main';
-            $this->view->generate('main.php', 'main_template.php', $this->view_data);
+            if (isset($_SESSION['user'])) {
+                redirect('/feed');
+            }
+            View::generate('welcome.php', 'welcome_template.php', $this->view_data);
         }
+
     }
 
 ?>

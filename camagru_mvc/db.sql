@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL UNIQUE,
     user_email VARCHAR(50) NOT NULL UNIQUE,
+    verified tinyint(1) DEFAULT 0,
+    token VARCHAR(255),
     hashed_password VARCHAR(255) NOT NULL
     );

@@ -6,32 +6,42 @@
 
         public function __construct()
         {
-            parent::__construct();
             $this->view_data['page_title'] = 'Sign up';
         }
 
+        
         public function actionIndex()
         {
-            $this->view->generate('signup.php', 'main_template.php', $this->view_data);
+            View::generate('signup.php', 'main_template.php', $this->view_data);
         }
 
+        
         public function actionCreate()
         {
             if (isset($_POST['btn-signup'])) {
 
                 $user = new User($_POST);
+                $this->view_data['user'] = $user;
 
                 if ($user->saveUser()) {
-                    header('Location: ' . WWW_ROOT . '/');
+                    $_SESSION['email'] = $this->view_data['user']->uemail;
+                    $this->redirect('/success');
                 } else {
-                    $this->view_data['errors'] = $user->errors;
-                    $this->view->generate('signup.php', 'main_template.php', $this->view_data);
+                    View::generate('signup.php', 'main_template.php', $this->view_data);
                 }
-
             } else {
-                header('Location: ' . WWW_ROOT . '/');
+                $this->redirect('/');
             }
-            
+        }
+
+
+        public function actionSuccess()
+        {
+            if (isset($_SESSION['email'])) {
+                View::generate('success.php', 'main_template.php', $this->view_data);
+            } else {
+                $this->redirect('/');
+            }
         }
     }
 

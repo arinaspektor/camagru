@@ -1,1 +1,0 @@
-<?php echo "main page is coming..."; ?>

@@ -8,16 +8,19 @@
 	<title>Camagru | <?php echo $view_data['page_title']; ?> </title>
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/style.css'; ?>">
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/main.css'; ?>">
+	<?php if ($view_data['page_title'] === 'Sign in' || $view_data['page_title'] === 'Sign up') {
+		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
+	}?>
 </head>
 <body>
 	<header>
 		<nav>
 			<ul>
 				<li>
-					<img src="<?php echo IMAGES_PATH . '/camera-shutter.svg'; ?>" alt="logo image" width="25em">
+					<img src="<?php echo IMAGES_PATH . '/camera-shutter.svg'; ?>" alt="logo image" width="25em" height="auto">
 					<a href="<?php echo WWW_ROOT . '/'; ?>">Camagru</a>
 				</li>
-				<li <?php if ($view_data['page_title'] === 'Sign in') { echo "style='display: none;'"; } ?> >
+				<li <?php if ($view_data['page_title'] === 'Sign in' || isset($_SESSION['user'])) { echo "style='display: none;'"; } ?> >
 					<a href=" <?php echo WWW_ROOT . '/login'; ?> ">Sign in</a>
 				</li>
 

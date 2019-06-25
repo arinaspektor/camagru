@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Questrial');
 
-html, body {
+html, body, ul {
 	padding: 0;
 	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
 }
 
 body {
@@ -13,14 +17,13 @@ body {
 	font-size: 18px;
 	background-image: url("../images/Confetti-Doodles.svg");
 	background-size: cover;
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
 	min-width: 320px;
 	min-height: 480px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	box-sizing: border-box;
 }
 
 a {
@@ -42,9 +45,9 @@ body > footer {
 
 
 body > header {
-	height: 10vh;
+	height: 9vh;
 	min-height: 40px;
-	font-size: 1.9em;
+	font-size: 1.8em;
 	justify-content: center;
 }
 
@@ -53,11 +56,10 @@ header > nav {
 }
 
 header > nav > ul {
-	padding: 0 0.5vh;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
-	align-items: flex-end;
+	align-items: baseline;
 }
 
 header > nav > ul > li:first-child {
@@ -67,7 +69,7 @@ header > nav > ul > li:first-child {
 
 header > nav > ul > li:last-child {
 	font-weight: lighter;
-	font-size: 0.6em;
+	font-size: 0.65em;
 }
 
 header > nav > ul > li:last-child:hover {
@@ -106,4 +108,5 @@ input:hover {
 	body {
 		font-size: 16px;
 	}
+
 }

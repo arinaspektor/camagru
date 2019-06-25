@@ -2,12 +2,12 @@
 
     abstract class Controller
     {
-        public $view;
         public $view_data = [];
 
-        public function __construct()
+        public function redirect($url)
         {
-            $this->view = new View();
+            header('Location: ' . WWW_ROOT . $url, true, 303);
+            exit;
         }
 
     }

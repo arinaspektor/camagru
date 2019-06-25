@@ -3,10 +3,12 @@
     class User extends Model
     {
         public $errors = [];
-        public $predata = [];
 
-        public function __construct($data)
+        public function __construct($data = [])
         {
+            self::$class_name = 'User';
+            self::$table = 'Users';
+
             foreach ($data as $key => $value) {
                 $this->$key = $value;
             };
@@ -17,11 +19,12 @@
             $this->validate_userdata();
 
             if (empty($this->errors)) {
-                $this->userdata['username'] = $this->username;
-                $this->userdata['user_email'] = $this->uemail;
-                $this->userdata['hashed_password'] = password_hash($this->passwd, PASSWORD_DEFAULT);
+                $userdata = [];
+                $userdata['username'] = $this->username;
+                $userdata['user_email'] = $this->uemail;
+                $userdata['hashed_password'] = password_hash($this->passwd, PASSWORD_DEFAULT);
 
-                return Db::insertData("users", $this->userdata);
+                return Db::insertData(self::$table, $userdata);
             }
             return false;
         }
@@ -45,7 +48,7 @@
                 $this->errors[] = 'Username must be min 6 and max 20 characters long';
             }
 
-            if (Db::alreadyExists("users", "username", $this->username)) {
+            if (Db::alreadyExists(self::$table, $column="username", $this->username, self::$class_name)) {
                 $this->errors[] = 'This username is already taken';
             }
 
@@ -58,7 +61,7 @@
                 $this->errors[] = 'Invalid email';
             }
 
-            if (Db::alreadyExists("users", "user_email", $this->uemail)) {
+            if (Db::alreadyExists(self::$table, $column="user_email", $this->uemail, self::$class_name)) {
                 $this->errors[] = 'This email is already taken';
             }
         }
@@ -89,7 +92,18 @@
         }
 
         
+        static public function authenticate($email, $password)
+        {
+            $user = new self;
+            $user = Db::findByValue(self::$table, 'user_email', $email, self::$class_name);
 
+            if ($user) {
+                if (password_verify($password, $user->hashed_password)) {
+                    return $user;
+                }
+            }
+            return false;
+        }
 
     }
 

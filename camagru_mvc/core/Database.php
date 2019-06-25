@@ -18,6 +18,7 @@
             self::setDatabase(self::$pdo);
         }
 
+        
         static private function setDatabase($pdo)
         {
             try {
@@ -29,15 +30,12 @@
             }
         }
 
-        // public function getConnection()
-        // {
-        //     return self::$pdo;
-        // }
 
         static public function destroyConnection()
         {
             self::$pdo = null;
         }
+
 
         static public function insertData($table, $data = [])
         {
@@ -53,20 +51,30 @@
                 $param = ":$key";
                 $stmt->bindValue($param, $value, PDO::PARAM_STR);
             }
-
             return $stmt->execute();
         }
 
-        static public function alreadyExists($table, $column, $value)
+
+        static public function findByValue($table, $column, $value, $class)
         {
             $sql = "SELECT * FROM $table WHERE $column = :val";
 
             $stmt = self::$pdo->prepare($sql);
-            $stmt->bindParam(':val', $value, PDO::PARAM_STR);
+            $stmt->bindValue(':val', $value, PDO::PARAM_STR);
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
 
             $stmt->execute();
-            return $stmt->fetch() !== false;
+
+            return $stmt->fetch();
         }
+
+
+        static public function alreadyExists($table, $column, $value, $class)
+        {
+            return (self::findByValue($table, $column, $value, $class) !== false);
+        }
+
     }
 
 ?>

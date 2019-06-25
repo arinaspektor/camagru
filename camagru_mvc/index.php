@@ -6,7 +6,7 @@
     error_reporting(E_ALL);
 
     define('ROOT', realpath(dirname(__FILE__)));
-    define('WWW_ROOT', dirname($_SERVER['SCRIPT_NAME']));
+    define('WWW_ROOT', 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']));
     define('CORE', ROOT . '/core');
     
     define('STYLES_PATH', WWW_ROOT . '/public/css');
