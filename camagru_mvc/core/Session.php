@@ -7,8 +7,17 @@
             session_start();
         }
 
+        static public function pushData($key, $value)
+        {
+            session_regenerate_id(true);
+
+            $_SESSION[$key] = $value;
+        }
+
         static public function destroy()
         {
+            $_SESSION = [];
+
             if (ini_get("session.use_cookies")) {
                 $params = session_get_cookie_params();
                 setcookie(session_name(), '', time() - 42000,
@@ -16,7 +25,6 @@
                     $params["secure"], $params["httponly"]
                 );
             }
-
             session_destroy();
         }
     }

@@ -71,6 +71,10 @@ header > nav > ul > li:first-child {
 	letter-spacing: 1.5px;
 }
 
+header > nav > ul > li:first-child > a:hover {
+	text-decoration: none;
+}
+
 header > nav > ul > li:last-child {
 	padding: 0 5px;
 	font-weight: lighter;

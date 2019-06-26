@@ -9,8 +9,8 @@
 
         public function actionIndex()
         {
-            if (isset($_SESSION['user'])) {
-                redirect('/feed');
+            if (isset($_SESSION['user_id'])) {
+                $this->redirect('/feed');
             } else {
                 View::generate('welcome.php', 'welcome_template.php', $this->view_data);
             }

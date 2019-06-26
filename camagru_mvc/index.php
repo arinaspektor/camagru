@@ -18,7 +18,7 @@
     require_once(CORE . '/View.php');
     
     Session::start();
-    
+
     $router = new Router();
     $router->run();
  ?>

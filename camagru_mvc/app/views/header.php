@@ -21,7 +21,7 @@
 					<a href="<?php echo WWW_ROOT . '/feed'; ?>">Camagru</a>
 				</li>
 
-				<?php if (isset($_SESSION['user'])) {?>
+				<?php if (isset($_SESSION['user_id'])) {?>
 
 				<li><a href="<?php echo PRIVATE_PATH . '/profile'; ?>">aspektor</a>
 					<ul class="dropdown">
@@ -30,9 +30,9 @@
 					</ul>
 				</li>
 
-				<?php } else if ($view_data['page_title'] !== 'Sign in') { ?>
+				<?php } else { ?>
 
-					<li>
+					<li <?php if ($view_data['page_title'] === 'Sign in') { echo 'style="display: none;"';} ?>>
 						<a href=" <?php echo WWW_ROOT . '/login'; ?> ">Sign in</a>
 					</li>
 

@@ -8,7 +8,7 @@
         'create' => 'signup/create',
         'success' => 'signup/success',
         'feed' => 'feed/index',
-        'logout' => 'login/destroy',
+        'logout' => 'login/logout',
         '' => 'main/index'
     );
 

@@ -21,6 +21,7 @@
             $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
 
             if ($user) {
+                Session::pushData('user_id', $user->user_id);
                 $this->redirect('/feed');
             } else {
                 $this->view_data['uemail'] = $_POST['uemail'];
@@ -28,9 +29,10 @@
             }
         }
 
-        public function actionDestroy()
+        public function actionLogout()
         {
             Session::destroy();
+            $this->redirect('/');
         }
 
     }
