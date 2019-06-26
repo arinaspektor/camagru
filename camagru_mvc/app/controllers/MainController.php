@@ -11,8 +11,9 @@
         {
             if (isset($_SESSION['user'])) {
                 redirect('/feed');
+            } else {
+                View::generate('welcome.php', 'welcome_template.php', $this->view_data);
             }
-            View::generate('welcome.php', 'welcome_template.php', $this->view_data);
         }
 
     }

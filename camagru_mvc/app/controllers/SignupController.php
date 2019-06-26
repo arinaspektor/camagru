@@ -24,7 +24,7 @@
                 $this->view_data['user'] = $user;
 
                 if ($user->saveUser()) {
-                    $_SESSION['email'] = $this->view_data['user']->uemail;
+                    $_SESSION['user_email'] = $this->view_data['user']->uemail;
                     $this->redirect('/success');
                 } else {
                     View::generate('signup.php', 'main_template.php', $this->view_data);
@@ -37,7 +37,7 @@
 
         public function actionSuccess()
         {
-            if (isset($_SESSION['email'])) {
+            if (isset($_SESSION['user_email'])) {
                 View::generate('success.php', 'main_template.php', $this->view_data);
             } else {
                 $this->redirect('/');

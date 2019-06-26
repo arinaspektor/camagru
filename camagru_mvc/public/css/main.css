@@ -11,20 +11,24 @@ main {
 }
 
 .container,
+.welcome,
 .start {
 	display: flex;
 	align-items: center;
 }
 
-.container {
+.container,
+.welcome {
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-evenly;
+}
+
+.container {
 	background-color: rgba(255, 255, 255, 0.65);
 	min-width: 320px;
 	height: 100%;
 	width: 100%;
 	min-height: 400px;
-	min-width: 320px;
 }
 
 .container h3 {
@@ -32,18 +36,56 @@ main {
 	line-height: 1.2em;
 	font-size: 3.5em;
 	color: #EC576B;
+	margin-bottom: 10%;
 }
 
 .start {
-	 justify-content: space-between;
-	 width: 32%;
+	width: 100%;
+	justify-content: space-between;
+	margin-bottom: 5%;
 }
 
 .start > a {
 	display: block;
-	font-size: 1.5em;
-	border: 1px solid black;
-	border-radius: 3px;
-	padding: 0.5em 1.5em;
+	font-size: 1.3em;
+	font-weight: lighter;
+	border: 2px solid white;
+	border-radius: 5px;
+	padding: 0.5em 2em;
+	transition: all 0.3s ease;
+	color: white;
+	text-transform: uppercase;
 } 
 
+.start > a:first-child {
+	background-color: rgb(78, 197, 193);
+	border-color: #4EC5C1;
+}
+
+.start > a:hover {
+	font-size: 1.4em;
+	filter: saturate(150%);
+	-webkit-filter: saturate(150%);
+}
+
+.welcome > p {
+	font-weight: 300;
+	font-size: 0.9em;
+}
+
+.welcome > p > a {
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.welcome > p > a:hover {
+	font-size: 1.1em;
+	text-decoration: underline;
+	color: #EC576B;
+}
+
+@media (max-width: 320px) {
+	.container {
+		font-size: 14px;
+	}
+}

@@ -31,6 +31,10 @@ a {
 	color: inherit;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
 ul {
 	list-style: none;
 }
@@ -68,12 +72,30 @@ header > nav > ul > li:first-child {
 }
 
 header > nav > ul > li:last-child {
+	padding: 0 5px;
 	font-weight: lighter;
 	font-size: 0.65em;
+	position: relative;
 }
 
-header > nav > ul > li:last-child:hover {
-	text-decoration: underline;
+.dropdown {
+	padding: 6px 5px;
+	left: -2px;
+	display: none;
+	position: absolute;
+	/* border: 1px solid white; */
+	width: 100%;
+}
+
+.dropdown li {
+	display: block;
+	font-size: 0.9em;
+	text-align: right;
+	padding: 2px 0;
+}
+
+header > nav > ul > li:last-child:hover .dropdown {
+	display: block;
 }
 
 footer {

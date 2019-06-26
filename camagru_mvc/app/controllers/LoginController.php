@@ -21,13 +21,16 @@
             $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
 
             if ($user) {
-                $this->redirect('/');
+                $this->redirect('/feed');
             } else {
-
                 $this->view_data['uemail'] = $_POST['uemail'];
                 $this->actionIndex();
-
             }
+        }
+
+        public function actionDestroy()
+        {
+            Session::destroy();
         }
 
     }

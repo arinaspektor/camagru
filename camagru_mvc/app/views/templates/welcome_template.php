@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/main.css'; ?>">
 </head>
 <body>
-        
+	
 		<?php include(ROOT . '/app/views/' . $content_view); ?>
 		
 </body>

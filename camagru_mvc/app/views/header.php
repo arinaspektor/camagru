@@ -18,20 +18,26 @@
 			<ul>
 				<li>
 					<img src="<?php echo IMAGES_PATH . '/camera-shutter.svg'; ?>" alt="logo image" width="25em" height="auto">
-					<a href="<?php echo WWW_ROOT . '/'; ?>">Camagru</a>
-				</li>
-				<li <?php if ($view_data['page_title'] === 'Sign in' || isset($_SESSION['user'])) { echo "style='display: none;'"; } ?> >
-					<a href=" <?php echo WWW_ROOT . '/login'; ?> ">Sign in</a>
+					<a href="<?php echo WWW_ROOT . '/feed'; ?>">Camagru</a>
 				</li>
 
-				<!-- Когда будет готова регистрация ил логин добавить -->
-				<!-- <li><a href=" # <?php echo PRIVATE_PATH . '/profile'; ?>">Profile</a>
-					<ul>
-						<li><a>View my profile</a></li>
-						<li><a>Settings</a></li>
-						<li><a>Sign out</a></li>
+				<?php if (isset($_SESSION['user'])) {?>
+
+				<li><a href="<?php echo PRIVATE_PATH . '/profile'; ?>">aspektor</a>
+					<ul class="dropdown">
+						<li><a href=" <?php echo WWW_ROOT . '/settings'; ?>">settings</a></li>
+						<li><a href=" <?php echo WWW_ROOT . '/logout'; ?>">logout</a></li>
 					</ul>
-				</li> -->
+				</li>
+
+				<?php } else if ($view_data['page_title'] !== 'Sign in') { ?>
+
+					<li>
+						<a href=" <?php echo WWW_ROOT . '/login'; ?> ">Sign in</a>
+					</li>
+
+				<?php }; ?>
+				
 			</ul>
 		</nav>
 	</header>
