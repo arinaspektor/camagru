@@ -1,7 +1,5 @@
 <?php
 
-    require_once(ROOT . '/app/models/UserModel.php');
-
     class LoginController extends Controller {
 
         function __construct()
@@ -18,11 +16,12 @@
 
         public function actionNew()
         {
+
             $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
 
             if ($user) {
-                Session::pushData('user_id', $user->user_id);
-                $this->redirect('/feed');
+                Auth::login($user);
+                $this->redirect(Auth::getRequestedPage());
             } else {
                 $this->view_data['uemail'] = $_POST['uemail'];
                 $this->actionIndex();
@@ -31,7 +30,8 @@
 
         public function actionLogout()
         {
-            Session::destroy();
+            Auth::logout();
+
             $this->redirect('/');
         }
 

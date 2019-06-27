@@ -13,7 +13,7 @@
                 $this->$key = $value;
             };
         }
-
+        
         public function saveUser()
         {
             $this->validate_userdata();
@@ -95,7 +95,7 @@
         static public function authenticate($email, $password)
         {
             $user = new self;
-            $user = Db::findByValue(self::$table, 'user_email', $email, self::$class_name);
+            $user = self::findByEmail($email);
 
             if ($user) {
                 if (password_verify($password, $user->hashed_password)) {
@@ -105,11 +105,14 @@
             return false;
         }
 
-        static public function is_logged_in()
-        {
-            return isset($_SESSION['user_id']);
+
+        static public function findById($id) {
+            return Db::findByValue(self::$table, $column="user_id", $id, self::$class_name);
         }
 
+        static public function findByEmail($email) {
+            return Db::findByValue(self::$table, $column='user_email', $email, self::$class_name);
+        }
     }
 
 ?>

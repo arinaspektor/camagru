@@ -113,6 +113,7 @@ form input {
 	outline: inherit;
 }
 
+
 form .focus-input {
 	height: 4vh;
 	color: inherit;
@@ -178,6 +179,11 @@ form input[type=submit]:active {
 	font-size: 1em;
 	font-weight: bolder;
 	text-align: left;
+}
+
+p.error {
+	font-size: 0.8em;
+	color: #a53d4b;
 }
 
 .success h3 {

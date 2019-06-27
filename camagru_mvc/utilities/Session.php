@@ -7,12 +7,6 @@
             session_start();
         }
 
-        static public function pushData($key, $value)
-        {
-            session_regenerate_id(true);
-
-            $_SESSION[$key] = $value;
-        }
 
         static public function destroy()
         {

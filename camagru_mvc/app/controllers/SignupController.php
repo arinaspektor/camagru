@@ -1,5 +1,4 @@
 <?php
-    require_once(ROOT . '/app/models/UserModel.php');
 
     class SignupController extends Controller
     {
