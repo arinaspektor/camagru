@@ -12,7 +12,7 @@
 						<p class="error">Invalid email or password</p>
 					<?php };?>
 
-					<a href="#">Forget your password?</a>
+					<a href="<?php echo WWW_ROOT . '/forgot'; ?>">Forget your password?</a>
 				</div>
 				<input type="submit" name="btn-signin" value="Go!">
 			</div>

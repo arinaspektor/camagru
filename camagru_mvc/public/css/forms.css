@@ -15,7 +15,8 @@ form,
 	min-width: 320px;
 }
 
-form {	
+form#login,
+form#signup {	
 	max-height: 650px;
 	width: 90%;
 	max-width: 420px;
@@ -64,16 +65,21 @@ form#signup .centered,
 }
 
 form h3 {
+	font-size: 1.7em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+form#login h3,
+form#success h3 {
 	display: flex;
 	align-items: center;
-	text-transform: uppercase;
 	text-shadow: -2.5px -2.5px 0px #4EC5C1;
-	text-align: center;
 	background: repeating-linear-gradient(45deg, #0e0d0c, #4EC5C1 1px, white 2px, white 3px);
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-	font-size: 1.7em;
+	
 }
 
 form#login h3 {
@@ -125,7 +131,8 @@ form .focus-input {
 	position: relative;
 }
 
-form#login .focus-input {
+form#login .focus-input,
+form#reset .focus-input {
 	font-size: 0.9em;
 }
 
@@ -139,7 +146,8 @@ form .focus-input:focus {
 	border-image-slice: 1;
 }
 
-form input[type=submit] {
+form input[type=submit]
+{
 	flex-grow: 0.1;
 	border-radius: 20px;
 	background-color: rgb(78, 197, 193);
@@ -191,7 +199,8 @@ p.error {
 	margin: 0.5em 0 1.5em;
 }
 
-.success {
+.success,
+#reset {
 	background-color: rgba(255, 255, 255, 0.65);
 	justify-content: space-around;
 	width: 70%;
@@ -212,6 +221,23 @@ p.error {
 	margin: 2% 0;
 	text-align: center;
 }
+
+form#reset input {
+	border-image: none;
+}
+
+form#reset button {
+	font-size: 0.8em;
+	text-transform: uppercase;
+	font-weight: lighter;
+	margin-top: 8%;
+	padding: 2% 5%;
+	border-radius: 5px;
+	color: white;
+	background-color:  rgba(78, 197, 193, 0.9);
+}
+
+
 
 @media (max-height: 830px) and (max-width: 420px) {
 	form#login h3 {

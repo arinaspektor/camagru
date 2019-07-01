@@ -105,6 +105,16 @@
             return false;
         }
 
+        static public function sendPassReset($email)
+        {
+            $user = new self;
+            $user = self::findByEmail($email);
+
+            if ($user) {
+                
+            }
+            return false;
+        }
 
         static public function findById($id) {
             return Db::findByValue(self::$table, $column="user_id", $id, self::$class_name);

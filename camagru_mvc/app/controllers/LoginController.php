@@ -16,7 +16,6 @@
 
         public function actionNew()
         {
-
             $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
 
             if ($user) {

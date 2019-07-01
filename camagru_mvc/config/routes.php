@@ -9,6 +9,8 @@
         'success' => 'signup/success',
         'feed' => 'feed/index',
         'logout' => 'login/logout',
+        'forgot' => 'password/forgot',
+        'reset' => 'password/reset',
         '' => 'main/index'
     );
 

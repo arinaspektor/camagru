@@ -8,7 +8,7 @@
 	<title>Camagru | <?php echo $view_data['page_title']; ?> </title>
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/style.css'; ?>">
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/main.css'; ?>">
-	<?php if ($view_data['page_title'] === 'Sign in' || $view_data['page_title'] === 'Sign up') {
+	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset'])) {
 		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
 	}?>
 </head>

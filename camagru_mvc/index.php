@@ -1,4 +1,6 @@
 <?php 
+
+    // phpinfo();
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
@@ -12,6 +14,8 @@
     define('STYLES_PATH', WWW_ROOT . '/public/css');
     define('IMAGES_PATH', WWW_ROOT . '/public/images');
 
+    
+
     require_once(UTIL . '/Session.php');
     require_once(UTIL . '/Database.php');
     require_once(UTIL . '/Auth.php');
@@ -24,6 +28,7 @@
     require_once(CORE . '/View.php');
 
     require_once(MODELS . '/UserModel.php');
+    require_once(MODELS . '/MailModel.php');
     
     Session::start();
     
