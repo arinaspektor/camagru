@@ -16,7 +16,7 @@ form,
 }
 
 form#login,
-form#signup {	
+form#signup {
 	max-height: 650px;
 	width: 90%;
 	max-width: 420px;
@@ -71,7 +71,7 @@ form h3 {
 }
 
 form#login h3,
-form#success h3 {
+form#signup h3 {
 	display: flex;
 	align-items: center;
 	text-shadow: -2.5px -2.5px 0px #4EC5C1;
@@ -79,7 +79,7 @@ form#success h3 {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-	
+
 }
 
 form#login h3 {
@@ -251,7 +251,7 @@ form#reset button {
 	.centered {
 		flex-grow: 0.75;
 	}
-	
+
 	form .focus-input {
 		height: 6vh;
 	}
@@ -265,10 +265,10 @@ form#reset button {
 	form input {
 		font-size: 1em;
 	}
-	
+
 	.passwd a {
 		font-size: 0.9em;
-	} 
+	}
 }
 
 @media (max-width: 320px) {

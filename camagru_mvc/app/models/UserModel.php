@@ -13,7 +13,7 @@
                 $this->$key = $value;
             };
         }
-        
+
         public function saveUser()
         {
             $this->validate_userdata();
@@ -91,7 +91,7 @@
 
         }
 
-        
+
         static public function authenticate($email, $password)
         {
             $user = new self;
@@ -111,7 +111,7 @@
             $user = self::findByEmail($email);
 
             if ($user) {
-                
+                return true;
             }
             return false;
         }
