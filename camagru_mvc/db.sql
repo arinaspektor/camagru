@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(20) NOT NULL UNIQUE,
     user_email VARCHAR(50) NOT NULL UNIQUE,
     verified tinyint(1) DEFAULT 0,
-    token VARCHAR(255),
-    hashed_password VARCHAR(255) NOT NULL
+    hashed_password VARCHAR(255) NOT NULL,
+    token_hash VARCHAR(255),
+    token_expires_at DATETIME
     );

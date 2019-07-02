@@ -37,7 +37,7 @@
         }
 
 
-        static public function insertData($table, $data = [])
+        static public function insert($table, $data)
         {
             $sql = "INSERT INTO $table (";
             $sql .= join(', ', array_keys($data));
@@ -45,15 +45,38 @@
             $sql .= join(', :', array_keys($data));
             $sql .= ")";
 
+            return self::bindValues($sql, $data);
+        }
+
+
+        static public function update($table, $data, $where)
+        {
+            $sql = "UPDATE $table SET ";
+            
+            $last = array_key_last($data);
+            foreach (array_keys($data) as $key) {
+                $sql .= $key  . " = :" . $key;
+                if ($key !== $last) {
+                    $sql .= ", ";
+                }
+            }
+
+            $sql .= " WHERE " . key($where) . " = :" . key($where);
+            return self::bindValues($sql, array_merge($data, $where));
+        }
+
+
+        static private function bindValues($sql, $data)
+        {  
             $stmt = self::$pdo->prepare($sql);
 
             foreach ($data as $key => $value) {
                 $param = ":$key";
                 $stmt->bindValue($param, $value, PDO::PARAM_STR);
             }
+
             return $stmt->execute();
         }
-
 
         static public function findByValue($table, $column, $value, $class)
         {
@@ -69,7 +92,7 @@
             return $stmt->fetch();
         }
 
-
+        
         static public function alreadyExists($table, $column, $value, $class)
         {
             return (self::findByValue($table, $column, $value, $class) !== false);

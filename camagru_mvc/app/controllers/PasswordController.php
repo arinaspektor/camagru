@@ -14,12 +14,18 @@
 
         public function actionReset()
         {
-            if (isset($_POST['uemail']) && filter_var($this->uemail, FILTER_VALIDATE_EMAIL)) {
+            if (isset($_POST['uemail'])) {
+
                 $_SESSION['user_email'] = $_POST['uemail'];
+                
                 if (User::sendPassReset($_POST['uemail'])) {
-                  $this->view_data['text'] = 'reset your password';
-                  View::generate("success.php", "main_template.php", $this->view_data);
+                    $this->view_data['text'] = 'reset your password';
+                    View::generate("success.php", "main_template.php", $this->view_data);
+                } else {
+                    $this->view_data['error'] = true;
+                    $this->actionForgot();
                 }
+
             } else {
               $this->redirect('/');
             }

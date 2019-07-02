@@ -13,7 +13,7 @@
                 $this->$key = $value;
             };
         }
-
+        
         public function saveUser()
         {
             $this->validate_userdata();
@@ -24,7 +24,7 @@
                 $userdata['user_email'] = $this->uemail;
                 $userdata['hashed_password'] = password_hash($this->passwd, PASSWORD_DEFAULT);
 
-                return Db::insertData(self::$table, $userdata);
+                return Db::insert(self::$table, $userdata);
             }
             return false;
         }
@@ -91,7 +91,7 @@
 
         }
 
-
+        
         static public function authenticate($email, $password)
         {
             $user = new self;
@@ -105,16 +105,44 @@
             return false;
         }
 
+
         static public function sendPassReset($email)
         {
             $user = new self;
             $user = self::findByEmail($email);
 
             if ($user) {
-                return true;
+                $passwd_token = $user->startPassReset();
+                
+                if ($passwd_token) {
+                    $url =  WWW_ROOT . "/" . $passwd_token;
+                    return Mail::resetPassword($url);
+                }
+                return false;
             }
             return false;
         }
+
+
+        private function startPassReset()
+        {
+            $token = new Token();
+            $hashed_token = $token->getHash();
+
+            $expiry_timestamp = time() + 60 * 60 * 24;
+
+            $data = [   'token_hash' => $hashed_token,
+                        'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
+                    ];
+
+            $where = ['user_id' => $this->user_id];
+
+            if (Db::update(self::$table, $data, $where)) {
+                return $token->getValue();
+            }
+            return false;
+        }
+
 
         static public function findById($id) {
             return Db::findByValue(self::$table, $column="user_id", $id, self::$class_name);
