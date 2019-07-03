@@ -10,7 +10,8 @@
         'feed' => 'feed/index',
         'logout' => 'login/logout',
         'forgot' => 'password/forgot',
-        'reset' => 'password/reset',
+        'reset/([A-Za-z0-9]+)' => "password/reset/1",
+        'reset' => 'password/requestReset',
         '' => 'main/index'
     );
 

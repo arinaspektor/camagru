@@ -14,6 +14,7 @@
             };
         }
         
+
         public function saveUser()
         {
             $this->validate_userdata();
@@ -106,16 +107,16 @@
         }
 
 
-        static public function sendPassReset($email)
+        static public function sendPassReset()
         {
             $user = new self;
-            $user = self::findByEmail($email);
+            $user = self::findByEmail($_SESSION['user_email']);
 
             if ($user) {
-                $passwd_token = $user->startPassReset();
+                $passwd_token = $user->setToken();
                 
                 if ($passwd_token) {
-                    $url =  WWW_ROOT . "/" . $passwd_token;
+                    $url =  WWW_ROOT . '/reset' . '/' . $passwd_token;
                     return Mail::resetPassword($url);
                 }
                 return false;
@@ -123,13 +124,29 @@
             return false;
         }
 
+        static public function sendAccountConfirm()
+        {
+            $user = new self;
+            $user = self::findByEmail($_SESSION['user_email']);
 
-        private function startPassReset()
+            if ($user) {
+                $account_token = $user->setToken();
+                
+                if ($account_token) {
+                    $url =  WWW_ROOT . "/getstarted" . "/" . $account_token;
+                    return Mail::confirmAccount($url);
+                }
+                return false;
+            }
+            return false;
+        }
+
+        private function setToken()
         {
             $token = new Token();
             $hashed_token = $token->getHash();
 
-            $expiry_timestamp = time() + 60 * 60 * 24;
+            $expiry_timestamp = time() + 60 * 60 * 2;
 
             $data = [   'token_hash' => $hashed_token,
                         'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
@@ -144,9 +161,26 @@
         }
 
 
+        static public function findByToken($token)
+        {
+            $user = new self;
+            $token = new Token($token);
+            $hashed_token = $token->getHash();
+
+            $user = Db::findByValue(self::$table, $column="token_hash", $hashed_token, self::$class_name);
+
+            if ($user) {
+                if (strtotime($user->token_expires_at) > time()) {
+                    return $user;
+                }
+            }
+        }
+
+
         static public function findById($id) {
             return Db::findByValue(self::$table, $column="user_id", $id, self::$class_name);
         }
+
 
         static public function findByEmail($email) {
             return Db::findByValue(self::$table, $column='user_email', $email, self::$class_name);

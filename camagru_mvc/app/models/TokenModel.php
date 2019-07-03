@@ -6,11 +6,6 @@
 
         public function __construct($token_value = null)
         {
-            // if ($token_value) {
-            //     $this->token = $token_value;
-            // } else {
-            //     $this->token = bin2hex(random_bytes(16));
-            // }
             $this->token = $token_value ?? bin2hex(random_bytes(16));
         }
 

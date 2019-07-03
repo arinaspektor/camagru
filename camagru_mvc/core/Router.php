@@ -3,6 +3,7 @@
     class Router {
     
         private $routes;
+        public  $param = null;
         
         public function __construct() {
             $routesPath = ROOT . '/config/routes.php';
@@ -20,28 +21,26 @@
             $result = [];
 
             foreach ($this->routes as $uriPattern => $path) {
-                if (preg_match("~$uriPattern~", $uri)) {  
+                if (preg_match("~$uriPattern~", $uri)) { 
                     $segments = explode('/', $path);
+
+                    if (count($segments) > 2) {
+                        $params = explode('/', $uri);
+                        $this->param = end($params);
+                    }
+
                     $controllerName = ucfirst(array_shift($segments) . 'Controller');
                     $actionName =  'action' . ucfirst(array_shift($segments));
-                    
-                    $controllerFile = ROOT .'/app/controllers/' . $controllerName . '.php';
 
+                    $controllerFile = ROOT .'/app/controllers/' . $controllerName . '.php';
                     if (file_exists($controllerFile)) {
                         include_once($controllerFile);
 
-                        $controllerObject = new $controllerName;
+                        $controllerObject = new $controllerName($this->param);
                         $controllerObject->$actionName();
             
                         break ;
                     }
-
-                    // $controllerObject = new $controllerName;
-                    // $result = $controllerObject->$actionName();
-                    
-                    // if ($result != null) {
-                    //     break ;
-                    // }
                 }
             }
 

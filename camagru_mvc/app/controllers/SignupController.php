@@ -2,10 +2,12 @@
 
     class SignupController extends Controller
     {
+        private $token;
 
-        public function __construct()
+        public function __construct($token = null)
         {
             $this->view_data['page_title'] = 'Sign up';
+            $this->token = $token;
         }
 
         
@@ -38,7 +40,7 @@
         {
             if (isset($_SESSION['user_email'])) {
 
-                if (Mail::confirmAccount()) {
+                if (User::sendAccountConfirm()) {
                     View::generate('success.php', 'main_template.php', $this->view_data);
                 } else {
                     echo "some problems";

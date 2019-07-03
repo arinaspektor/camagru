@@ -3,7 +3,6 @@
     class Mail
     {
         public $headers;
-        public $subject;
         public $to;
 
         private function __construct()
@@ -22,7 +21,7 @@
         static public function confirmAccount($url)
         {
             $mail = new self;
-            $mail->subject = "Account confirmation"; 
+            $subject = "Account confirmation"; 
             
             $text = "
             <h4>Hi!</h4>
@@ -37,14 +36,14 @@
             
             <p>Thank you for joining to Camagru!</p>"; 
            
-            return self::send($mail->to, $mail->subject, $text, $mail->headers);
+            return self::send($mail->to, $subject, $text, $mail->headers);
         }
 
 
         static public function resetPassword($url)
         {
             $mail = new self;
-            $mail->subject = "Password recovery";
+            $subject = "Password recovery";
 
             $text = "
             <h4>Hi!</h4>
@@ -55,7 +54,7 @@
 
             <p>Thank you for using Camagru!</p>";
 
-            return self::send($mail->to, $mail->subject, $text, $mail->headers);
+            return self::send($mail->to, $subject, $text, $mail->headers);
         }
 
     }

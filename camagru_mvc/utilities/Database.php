@@ -60,23 +60,10 @@
                     $sql .= ", ";
                 }
             }
-
             $sql .= " WHERE " . key($where) . " = :" . key($where);
             return self::bindValues($sql, array_merge($data, $where));
         }
 
-
-        static private function bindValues($sql, $data)
-        {  
-            $stmt = self::$pdo->prepare($sql);
-
-            foreach ($data as $key => $value) {
-                $param = ":$key";
-                $stmt->bindValue($param, $value, PDO::PARAM_STR);
-            }
-
-            return $stmt->execute();
-        }
 
         static public function findByValue($table, $column, $value, $class)
         {
@@ -96,6 +83,19 @@
         static public function alreadyExists($table, $column, $value, $class)
         {
             return (self::findByValue($table, $column, $value, $class) !== false);
+        }
+
+
+        static private function bindValues($sql, $data)
+        {  
+            $stmt = self::$pdo->prepare($sql);
+
+            foreach ($data as $key => $value) {
+                $param = ":$key";
+                $stmt->bindValue($param, $value, PDO::PARAM_STR);
+            }
+
+            return $stmt->execute();
         }
 
     }
