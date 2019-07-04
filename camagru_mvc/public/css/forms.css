@@ -1,7 +1,7 @@
 
 form,
-.success,
-.success > div  {
+.message,
+.message > div  {
 	display: flex;
 	flex-direction: column;
 	align-content: center;
@@ -9,14 +9,15 @@ form,
 }
 
 form,
-.success {
+.message {
 	border-radius: 12px;
 	box-shadow: 0 0 15px rgba(0, 0 , 0, 0.3);
 	min-width: 320px;
 }
 
 form#login,
-form#signup {
+form#signup,
+form#settings {
 	max-height: 650px;
 	width: 90%;
 	max-width: 420px;
@@ -194,12 +195,12 @@ p.error {
 	color: #a53d4b;
 }
 
-.success h3 {
+.message h3 {
 	text-transform: uppercase;
 	margin: 0.5em 0 1.5em;
 }
 
-.success,
+.message,
 #reset {
 	background-color: rgba(255, 255, 255, 0.65);
 	justify-content: space-around;
@@ -208,7 +209,7 @@ p.error {
 	padding: 4%;
 }
 
-.success > div {
+.message > div {
 	justify-content: space-evenly;
 	font-size: 0.8em;
 	background-color: rgba(78, 197, 193, 0.2);
@@ -216,10 +217,15 @@ p.error {
 	border-radius: 5px;
 }
 
-.success > div > p {
+.message > div > p {
 	display: block;
 	margin: 2% 0;
 	text-align: center;
+}
+
+.message a {
+	text-decoration: underline;
+	color: #a53d4b;
 }
 
 form#reset input {
@@ -240,12 +246,12 @@ form#reset button {
 
 
 @media (max-height: 830px) and (max-width: 420px) {
-	form#login h3 {
-		font-size: 1.5em;
+	form h3 {
+		font-size: 1.48em;
 	}
 
-	form#signup h3 {
-		font-size: 1.48em;
+	form#login h3 {
+		font-size: 1.5em;
 	}
 
 	.centered {
@@ -273,7 +279,7 @@ form#reset button {
 
 @media (max-width: 320px) {
 	form,
-	.success {
+	.message {
 		border-radius: 0;
 	}
 }

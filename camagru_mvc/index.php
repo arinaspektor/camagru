@@ -19,6 +19,7 @@
     require_once(UTIL . '/Session.php');
     require_once(UTIL . '/Database.php');
     require_once(UTIL . '/Auth.php');
+    require_once(UTIL . '/Flash.php');
 
     require_once(ROOT . '/setup.php');
 

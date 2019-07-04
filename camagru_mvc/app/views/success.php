@@ -1,4 +1,4 @@
-<div class="success">
+<div class="message">
     <img src="<?php echo IMAGES_PATH . '/success.svg'; ?>" width="15%">
     <h3><?php if ($view_data['page_title'] === 'Sign up') { echo "Registration ";} ?>success</h3>
     <div>

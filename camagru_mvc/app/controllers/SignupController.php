@@ -26,7 +26,11 @@
 
                 if ($user->saveUser()) {
                     $_SESSION['user_email'] = $this->view_data['user']->uemail;
-                    $this->redirect('/success');
+                    if ($user->sendAccountConfirm()) {
+                        $this->redirect('/success');
+                    } else {
+                        echo "some problems";
+                    }
                 } else {
                     View::generate('signup.php', 'main_template.php', $this->view_data);
                 }
@@ -39,17 +43,50 @@
         public function actionSuccess()
         {
             if (isset($_SESSION['user_email'])) {
-
-                if (User::sendAccountConfirm()) {
                     View::generate('success.php', 'main_template.php', $this->view_data);
-                } else {
-                    echo "some problems";
-                }
-                
-            } else {
+            }  else {
                 $this->redirect('/');
             }
         }
+
+
+        public function actionConfirm()
+        {
+            $user = User::findByToken($this->token);
+
+            if ($user) {
+                $user->varify($this->token);
+                $this->redirect('/login'); // в идеале сделать флеш сообщение, что aккаунт подтверждён, залогинтесь
+            } else {
+                View::generate("expired.php", "main_template.php", $this->view_data);
+                exit ;
+            }
+        }
+
+        public function actionRequestConfirm()
+        {
+            View::generate('request_confirm.php', 'main_template.php', $this->view_data);
+        }
+
+        public function actionReConfirm()
+        {
+            if (isset($_POST['uemail'])) {
+                $user = User::findByEmail($_POST['uemail']);
+
+                if ($user) {
+                    if ($user->verified) {
+                        $this->redirect('/login'); // сделать флеш сообщение, что аккаунт уже верифицирован
+                    } else {
+                        if ($user->sendAccountConfirm()) {
+                            $this->redirect('/success');
+                        }
+                    }
+                } else {
+                    $this->redirect('/signup'); // сделать флеш сообщение, что нужно сначала зарегестрироваться
+                }
+            }
+        }
+
     }
 
 

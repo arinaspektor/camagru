@@ -8,7 +8,7 @@
 	<title>Camagru | <?php echo $view_data['page_title']; ?> </title>
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/style.css'; ?>">
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/main.css'; ?>">
-	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset'])) {
+	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset', 'Profile'])) {
 		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
 	}?>
 </head>
@@ -23,7 +23,7 @@
 
 				<?php if (isset($_SESSION['user_id'])) {?>
 
-				<li><a href="<?php echo PRIVATE_PATH . '/profile'; ?>">aspektor</a>
+				<li><a href="<?php echo WWW_ROOT . '/profile'; ?>"><?php echo htmlentities($_SESSION['username']); ?></a>
 					<ul class="dropdown">
 						<li><a href=" <?php echo WWW_ROOT . '/settings'; ?>">settings</a></li>
 						<li><a href=" <?php echo WWW_ROOT . '/logout'; ?>">logout</a></li>

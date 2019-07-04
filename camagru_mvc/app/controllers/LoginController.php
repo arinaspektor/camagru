@@ -19,7 +19,12 @@
             $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
 
             if ($user) {
+                $_SESSION['username'] = $user->username;
+
                 Auth::login($user);
+
+                Flash::addMessage('Login successfull');
+
                 $this->redirect(Auth::getRequestedPage());
             } else {
                 $this->view_data['uemail'] = $_POST['uemail'];

@@ -10,10 +10,12 @@
             $this->token = $token;
         }
 
+
         public function actionForgot()
         {
             View::generate("request_reset.php", "main_template.php", $this->view_data);
         }
+
 
         public function actionRequestReset()
         {
@@ -21,14 +23,21 @@
 
                 $_SESSION['user_email'] = $_POST['uemail'];
                 
-                if (User::sendPassReset()) {
-                    $this->view_data['text'] = 'reset your password';
-                    View::generate("success.php", "main_template.php", $this->view_data);
-                } else {
-                    $this->view_data['error'] = true;
-                    $this->actionForgot();
-                }
+                $user = User::findByEmail($_SESSION['user_email']);
 
+                if ($user) {
+
+                    if (!$user->verified) {
+                        echo "you need confirm your account first"; //флеш сообщение
+                    } else if ($user->sendPassReset()) {
+                        $this->view_data['text'] = 'reset your password';
+                        View::generate("success.php", "main_template.php", $this->view_data);
+                    } else {
+                        $this->view_data['error'] = true;
+                        $this->actionForgot();
+                    }
+    
+                }
             } else {
               $this->redirect('/');
             }
@@ -40,12 +49,32 @@
             $user = User::findByToken($this->token);
 
             if ($user) {
+                $_SESSION['token'] = $this->token;
                 View::generate("reset.php", "main_template.php", $this->view_data);
             } else {
-                echo "some problems";
+                View::generate("expired.php", "main_template.php", $this->view_data);
+                exit ;
             }
         }
 
+
+        public function actionPassReset()
+        {
+            if (isset($_SESSION['token'])) {
+                $user = User::findByToken($_SESSION['token']);
+                
+                if($user->resetPassword($_POST)) {
+                    unset($_SESSION['token']);
+                    $this->redirect('/login'); // в идеале сделать флеш сообщение, что пароль успешно изменен, залогинтесь
+                } else {
+                    $this->view_data['user'] = $user;
+                    View::generate("reset.php", "main_template.php", $this->view_data);
+                }
+            } else {
+                $this->redirect('/');
+            }
+          
+        }
 
     }
 

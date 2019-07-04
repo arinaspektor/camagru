@@ -25,7 +25,7 @@
 
         static public function getRequestedPage()
         {
-            $_SESSION['return_to'] ?? '/';
+            return $_SESSION['return_to'] ?? '/';
         }
 
         

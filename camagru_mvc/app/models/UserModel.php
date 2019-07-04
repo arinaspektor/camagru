@@ -20,14 +20,51 @@
             $this->validate_userdata();
 
             if (empty($this->errors)) {
-                $userdata = [];
-                $userdata['username'] = $this->username;
-                $userdata['user_email'] = $this->uemail;
-                $userdata['hashed_password'] = password_hash($this->passwd, PASSWORD_DEFAULT);
+                $hashed_passwd = password_hash($this->passwd, PASSWORD_DEFAULT);
 
+                $token = new Token();
+                $hashed_token = $token->getHash();
+                $expiry_timestamp = time() + 60 * 60 * 24;
+
+                $this->account_token = $token->getValue();
+
+                $userdata = [
+                    'username' => $this->username,
+                    'user_email' => $this->uemail,
+                    'hashed_password' => $hashed_passwd,
+                    'token_hash' => $hashed_token,
+                    'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
+                ];
+                
                 return Db::insert(self::$table, $userdata);
             }
             return false;
+        }
+    
+
+        static public function authenticate($email, $password)
+        {
+            $user = self::findByEmail($email);
+
+            if ($user && $user->verified) {
+                if (password_verify($password, $user->hashed_password)) {
+                    return $user;
+                } 
+            }
+            return false;
+        }
+
+
+        public function varify()
+        {
+            $data = [   'verified' => 1,
+                        'token_hash' => NULL,
+                        'token_expires_at' => NULL
+            ];
+
+            $where = [ 'user_id' =>  $this->user_id];
+
+            return Db::update(self::$table, $data, $where);
         }
 
 
@@ -92,61 +129,57 @@
 
         }
 
-        
-        static public function authenticate($email, $password)
-        {
-            $user = new self;
-            $user = self::findByEmail($email);
 
-            if ($user) {
-                if (password_verify($password, $user->hashed_password)) {
-                    return $user;
-                }
+        public function sendAccountConfirm()
+        {
+            $url =  WWW_ROOT . "/getstarted" . "/" . $this->account_token;
+            return Mail::confirmAccount($url);
+        }
+
+
+
+        public function sendPassReset()
+        {
+            $passwd_token = $this->setToken();
+
+            if ($passwd_token) {
+                $url =  WWW_ROOT . '/reset' . '/' . $passwd_token;
+                return Mail::resetPassword($url);
             }
             return false;
         }
 
 
-        static public function sendPassReset()
+        public function resetPassword($data)
         {
-            $user = new self;
-            $user = self::findByEmail($_SESSION['user_email']);
+            $this->passwd = $data['passwd'];
+            $this->dup_passwd = $data['dup_passwd'];
 
-            if ($user) {
-                $passwd_token = $user->setToken();
-                
-                if ($passwd_token) {
-                    $url =  WWW_ROOT . '/reset' . '/' . $passwd_token;
-                    return Mail::resetPassword($url);
-                }
-                return false;
+            $this->validate_passwd();
+
+            if (empty($this->errors)) {
+                $hashed_passwd = password_hash($this->passwd, PASSWORD_DEFAULT);
+
+                $data = [
+                    'hashed_password' => $hashed_passwd,
+                    'token_hash' => NULL,
+                    'token_expires_at' => NULL
+                ];
+
+                $where = ['user_id' => $this->user_id];
+
+                return Db::update(self::$table, $data, $where);
             }
             return false;
         }
 
-        static public function sendAccountConfirm()
-        {
-            $user = new self;
-            $user = self::findByEmail($_SESSION['user_email']);
-
-            if ($user) {
-                $account_token = $user->setToken();
-                
-                if ($account_token) {
-                    $url =  WWW_ROOT . "/getstarted" . "/" . $account_token;
-                    return Mail::confirmAccount($url);
-                }
-                return false;
-            }
-            return false;
-        }
 
         private function setToken()
         {
             $token = new Token();
             $hashed_token = $token->getHash();
 
-            $expiry_timestamp = time() + 60 * 60 * 2;
+            $expiry_timestamp = time() + 60 * 60 * 24;
 
             $data = [   'token_hash' => $hashed_token,
                         'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
@@ -161,13 +194,12 @@
         }
 
 
-        static public function findByToken($token)
+        static public function findByToken($value)
         {
-            $user = new self;
-            $token = new Token($token);
+            $token = new Token($value);
             $hashed_token = $token->getHash();
 
-            $user = Db::findByValue(self::$table, $column="token_hash", $hashed_token, self::$class_name);
+            $user = Db::findByValue($table='Users', $column="token_hash", $hashed_token, $class='User');
 
             if ($user) {
                 if (strtotime($user->token_expires_at) > time()) {
@@ -178,12 +210,12 @@
 
 
         static public function findById($id) {
-            return Db::findByValue(self::$table, $column="user_id", $id, self::$class_name);
+            return Db::findByValue($table='Users', $column="user_id", $id, $class='User');
         }
 
 
         static public function findByEmail($email) {
-            return Db::findByValue(self::$table, $column='user_email', $email, self::$class_name);
+            return Db::findByValue($table='Users', $column='user_email', $email, $class='User');
         }
     }
 

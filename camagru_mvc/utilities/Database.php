@@ -71,7 +71,7 @@
 
             $stmt = self::$pdo->prepare($sql);
             $stmt->bindValue(':val', $value, PDO::PARAM_STR);
-
+            
             $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
 
             $stmt->execute();
