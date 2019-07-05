@@ -12,7 +12,8 @@ main {
 
 .container,
 .welcome,
-.start {
+.start,
+.top {
 	display: flex;
 	align-items: center;
 }
@@ -87,6 +88,43 @@ main {
 	text-decoration: underline;
 	color: #EC576B;
 }
+
+.top {
+	width: 100%;
+	padding: 4em 2em 2em 2em;
+	background-color: rgba(255, 255, 255, 0.85);
+	flex-direction: column;
+}
+
+.top img {
+	background-color:aqua;
+}
+
+.ava {
+	background-color:aqua;
+	padding: 1.2em;
+	border-radius: 50%;
+	box-sizing: content-box;
+}
+
+.edit-link {
+	display: block;
+	padding: 0.4em 1em;
+	text-transform: uppercase;
+	color:  rgb(78, 197, 193);
+	border: 1px solid;
+	border-radius: 2px;
+	font-size: 0.9em;
+	transition: all 0.3s linear;
+}
+
+.edit-link:hover {
+	text-decoration: none;
+	font-size: 1em;
+	filter: saturate(150%);
+	-webkit-filter: saturate(150%);
+}
+
 
 @media (max-width: 320px) {
 	.container {

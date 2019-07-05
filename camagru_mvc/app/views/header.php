@@ -11,6 +11,7 @@
 	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset', 'Profile'])) {
 		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
 	}?>
+	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/main.js'; ?>"></script>
 </head>
 <body>
 	<header>
@@ -25,7 +26,7 @@
 
 				<li><a href="<?php echo WWW_ROOT . '/profile'; ?>"><?php echo htmlentities($_SESSION['username']); ?></a>
 					<ul class="dropdown">
-						<li><a href=" <?php echo WWW_ROOT . '/settings'; ?>">settings</a></li>
+						<!-- <li><a href=" <?php echo WWW_ROOT . '/settings'; ?>">settings</a></li> -->
 						<li><a href=" <?php echo WWW_ROOT . '/logout'; ?>">logout</a></li>
 					</ul>
 				</li>

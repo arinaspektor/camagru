@@ -19,5 +19,3 @@
 		</div>
 		<p>Don't have an account? <a href="<?php echo WWW_ROOT . '/signup'; ?>">Sign up here</a></p>
 	</form>
-
-

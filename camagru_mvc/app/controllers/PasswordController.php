@@ -28,7 +28,7 @@
                 if ($user) {
 
                     if (!$user->verified) {
-                        echo "you need confirm your account first"; //флеш сообщение
+                        Flash::addMessage('You need confirm your account at first. Check your email');
                     } else if ($user->sendPassReset()) {
                         $this->view_data['text'] = 'reset your password';
                         View::generate("success.php", "main_template.php", $this->view_data);
@@ -65,7 +65,10 @@
                 
                 if($user->resetPassword($_POST)) {
                     unset($_SESSION['token']);
-                    $this->redirect('/login'); // в идеале сделать флеш сообщение, что пароль успешно изменен, залогинтесь
+
+                    Flash::addMessage("Success. You can login with new password");
+
+                    $this->redirect('/login');
                 } else {
                     $this->view_data['user'] = $user;
                     View::generate("reset.php", "main_template.php", $this->view_data);

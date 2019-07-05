@@ -56,7 +56,10 @@
 
             if ($user) {
                 $user->varify($this->token);
-                $this->redirect('/login'); // в идеале сделать флеш сообщение, что aккаунт подтверждён, залогинтесь
+
+                Flash::addMessage("Your account is successfully verified");
+
+                $this->redirect('/login');
             } else {
                 View::generate("expired.php", "main_template.php", $this->view_data);
                 exit ;
@@ -75,14 +78,19 @@
 
                 if ($user) {
                     if ($user->verified) {
-                        $this->redirect('/login'); // сделать флеш сообщение, что аккаунт уже верифицирован
+
+                        Flash::addMessage("Your account is verified already");
+
+                        $this->redirect('/login');
                     } else {
                         if ($user->sendAccountConfirm()) {
                             $this->redirect('/success');
                         }
                     }
                 } else {
-                    $this->redirect('/signup'); // сделать флеш сообщение, что нужно сначала зарегестрироваться
+                    Flash::addMessage("Sign up first");
+
+                    $this->redirect('/signup');
                 }
             }
         }

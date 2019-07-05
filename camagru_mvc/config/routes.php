@@ -9,6 +9,7 @@
         'success' => 'signup/success',
         'profile' => 'profile/index',
         'settings' => 'profile/settings',
+        'edit' => 'profile/edit',
         'getstarted/([A-Za-z0-9]+)' => 'signup/confirm/1',
         'requestConfirm' => 'signup/requestConfirm',
         'reConfirm' => 'signup/reConfirm',
