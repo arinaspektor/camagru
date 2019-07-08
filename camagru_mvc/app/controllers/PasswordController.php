@@ -19,9 +19,9 @@
 
         public function actionRequestReset()
         {
-            if (isset($_POST['uemail'])) {
+            if (isset($_POST['user_email'])) {
 
-                $_SESSION['user_email'] = $_POST['uemail'];
+                $_SESSION['user_email'] = $_POST['user_email'];
                 
                 $user = User::findByEmail($_SESSION['user_email']);
 

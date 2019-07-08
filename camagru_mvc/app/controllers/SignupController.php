@@ -25,11 +25,11 @@
                 $this->view_data['user'] = $user;
 
                 if ($user->saveUser()) {
-                    $_SESSION['user_email'] = $this->view_data['user']->uemail;
+                    $_SESSION['user_email'] = $this->view_data['user']->user_email;
                     if ($user->sendAccountConfirm()) {
                         $this->redirect('/success');
                     } else {
-                        echo "some problems";
+                        $this->actionIndex();
                     }
                 } else {
                     View::generate('signup.php', 'main_template.php', $this->view_data);
@@ -73,8 +73,8 @@
 
         public function actionReConfirm()
         {
-            if (isset($_POST['uemail'])) {
-                $user = User::findByEmail($_POST['uemail']);
+            if (isset($_POST['user_email'])) {
+                $user = User::findByEmail($_POST['user_email']);
 
                 if ($user) {
                     if ($user->verified) {

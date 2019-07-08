@@ -14,6 +14,7 @@
     
     define('STYLES_PATH', WWW_ROOT . '/public/css');
     define('IMAGES_PATH', WWW_ROOT . '/public/images');
+    define('STORAGE_PATH', IMAGES_PATH . '/storage');
     define('SCRIPT_PATH', WWW_ROOT . '/public/js');
 
 

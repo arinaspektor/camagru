@@ -30,7 +30,7 @@
 
                 $userdata = [
                     'username' => $this->username,
-                    'user_email' => $this->uemail,
+                    'user_email' => $this->user_email,
                     'hashed_password' => $hashed_passwd,
                     'token_hash' => $hashed_token,
                     'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
@@ -40,7 +40,29 @@
             }
             return false;
         }
-    
+
+
+        public function updateUser()
+        {
+            $this->validate_userdata($this->passwd);
+
+            if (empty($this->errors)) {
+                $userdata = [
+                    'username' => $this->username,
+                    'user_email' => $this->user_email,
+                ];
+                
+                if ($this->passwd) {
+                    $hashed_passwd = password_hash($this->passwd, PASSWORD_DEFAULT);
+
+                    $userdata['hashed_password'] = $hashed_passwd;
+                }
+                
+                return Db::update(self::$table, $userdata, $where = [ 'user_id' => $_SESSION['user_id' ]]);
+            }
+            return false;
+        }
+
 
         static public function authenticate($email, $password)
         {
@@ -68,11 +90,14 @@
         }
 
 
-        public function validate_userdata()
+        public function validate_userdata($to_cahge_passwd = true)
         {
             $this->validate_name();
             $this->validate_email();
-            $this->validate_passwd();
+
+            if ($to_cahge_passwd) {
+                $this->validate_passwd();
+            }
         }
 
 
@@ -86,7 +111,8 @@
                 $this->errors[] = 'Username must be min 6 and max 20 characters long';
             }
 
-            if (Db::alreadyExists(self::$table, $column="username", $this->username, self::$class_name)) {
+            if (! isset($_SESSION['user_id']) && 
+                Db::alreadyExists(self::$table, $column="username", $this->username, self::$class_name)) {
                 $this->errors[] = 'This username is already taken';
             }
 
@@ -95,11 +121,12 @@
 
         public function validate_email()
         {
-            if (filter_var($this->uemail, FILTER_VALIDATE_EMAIL) === false) {
+            if (filter_var($this->user_email, FILTER_VALIDATE_EMAIL) === false) {
                 $this->errors[] = 'Invalid email';
             }
 
-            if (Db::alreadyExists(self::$table, $column="user_email", $this->uemail, self::$class_name)) {
+            if (! isset($_SESSION['user_id'])
+                && Db::alreadyExists(self::$table, $column="user_email", $this->user_email, self::$class_name)) {
                 $this->errors[] = 'This email is already taken';
             }
         }

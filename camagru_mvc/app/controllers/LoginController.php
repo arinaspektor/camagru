@@ -16,7 +16,7 @@
 
         public function actionNew()
         {
-            $user = User::authenticate($_POST['uemail'], $_POST['passwd']);
+            $user = User::authenticate($_POST['user_email'], $_POST['passwd']);
 
             if ($user) {
                 $_SESSION['username'] = $user->username;
@@ -27,7 +27,7 @@
 
                 $this->redirect(Auth::getRequestedPage());
             } else {
-                $this->view_data['uemail'] = $_POST['uemail'];
+                $this->view_data['user_email'] = $_POST['user_email'];
                 $this->actionIndex();
             }
         }

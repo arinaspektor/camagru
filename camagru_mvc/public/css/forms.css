@@ -277,6 +277,22 @@ label {
 	font-weight: lighter;
 }
 
+form.upload_photo {
+	display: none;
+	position: relative;
+	top: -40%;
+	flex-direction: row;
+	justify-content: space-evenly;
+	background-color: white;
+	height: 80px;
+	width: 90%;
+	max-width: 420px;
+	z-index: 2;
+}
+
+form.upload_photo input {
+	width: auto;
+}
 
 @media (max-height: 830px) and (max-width: 420px) {
 	form h3 {

@@ -16,7 +16,7 @@
 				<?php };?>
 
 				<input class="focus-input" type="text" name="username" autofocus value="<?php echo $view_data['user']->username ?? '';?>" placeholder="Username" minlength="6" maxlength="20" required  />
-				<input class="focus-input" type="email" name="uemail" autofocus value="<?php echo $view_data['user']->uemail ?? '';?>" placeholder="Email" required />
+				<input class="focus-input" type="email" name="user_email" autofocus value="<?php echo $view_data['user']->user_email ?? '';?>" placeholder="Email" required />
 				<input class="focus-input" type="password" name="passwd"  value="" placeholder="Password" minlength="8" maxlength="20" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$" title="Must contain at least one number, one uppercase and lowercase letter, 8-20 characters long" required />
 				<input class="focus-input" type="password" name="dup_passwd" value="" placeholder="Confirm password" required />
 			</div>

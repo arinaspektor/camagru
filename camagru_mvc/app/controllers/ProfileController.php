@@ -4,11 +4,11 @@
     {
         public $user;
 
-        public function __construct()
+        public function __construct($user = null)
         {
             $this->view_data['page_title'] = 'Profile';
 
-            $this->user = User::findById($_SESSION['user_id']);
+            $this->user = $user ?? User::findById($_SESSION['user_id']);
 
             $this->view_data['user'] = $this->user;
         }
@@ -32,16 +32,24 @@
         public function actionEdit()
         {
             if (isset($_POST['btn-edit'])) {
+
                 $notifications = $_POST['email_notes'];
                 unset($_POST['email_notes']);
 
-                if (isset($_POST['passwd']) && $this->user->resetPassword([ 'passwd' => $_POST['passwd'],
-                'dup_passwd' => $_POST['dup_passwd'] ])) {
-                        echo "ok!";
-                } else {
-                    $this->view_data['user'] = $user;
-                    $this->actionSettings();
+                $new = new User($_POST);
+
+                if ($new->updateUser()) {
+
+                    $_SESSION['user_email'] = $new->user_email;
+
+                    Flash::addMessage('Changes applied successfully');
+
+                    $this->redirect('/profile');
                 }
+                
+                $this->view_data['user'] = $new;
+                $this->actionSettings();
+
             } else {
                 $this->redirect('/');
             }

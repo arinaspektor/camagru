@@ -4,11 +4,11 @@
 
 			<div class="put-data">
 
-				<input class="focus-input" type="email" name="uemail" autofocus value="<?php echo $view_data['uemail'] ?? '';?>" placeholder="Email" required>
+				<input class="focus-input" type="email" name="user_email" autofocus value="<?php echo $view_data['user_email'] ?? '';?>" placeholder="Email" required>
 				<div class="passwd">
 					<input class="focus-input" type="password" name="passwd" value="" placeholder="Password"  minlength="8" maxlength="20" required>
 
-					<?php if (isset($view_data['uemail'])) { ?>
+					<?php if (isset($view_data['user_email'])) { ?>
 						<p class="error">Invalid email or password</p>
 					<?php };?>
 
