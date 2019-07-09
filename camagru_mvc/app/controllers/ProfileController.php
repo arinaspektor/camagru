@@ -46,13 +46,33 @@
 
                     $this->redirect('/profile');
                 }
-                
+
                 $this->view_data['user'] = $new;
                 $this->actionSettings();
 
             } else {
                 $this->redirect('/');
             }
+        }
+
+
+        public function actionUploadAva()
+        {
+
+            if (isset($_POST['submit'])) {
+              $ava = new Photo($_FILES['ava']);
+
+              if ($ava->upload($_FILES['ava'])) {
+                Flash::addMessage('Your profile photo has changed successfully');
+              } else {
+                Flash::addMessage($ava->custom_error);
+              }
+              $this->redirect('/settings');
+
+            } else {
+              $this->redirect('/');
+            }
+
         }
 
 

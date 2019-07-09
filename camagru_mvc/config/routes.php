@@ -19,6 +19,7 @@
         'reset/passwd' => 'password/passReset',
         'reset/([A-Za-z0-9]+)' => 'password/reset/1',
         'reset' => 'password/requestReset',
+        'upload_ava' => 'profile/uploadAva',
         '' => 'main/index'
     );
 

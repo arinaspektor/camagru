@@ -56,7 +56,7 @@ main {
 	transition: all 0.3s ease;
 	color: white;
 	text-transform: uppercase;
-} 
+}
 
 .start > a:first-child {
 	background-color: rgb(78, 197, 193);
@@ -159,11 +159,11 @@ main {
 		font-size: 14px;
 	}
 
-	.top img,
-	.ava {
+	.top img {
 		width: 3em;
 		height: 3em;
 	}
+
 
 	.top h3 {
 		margin: 8px 0;

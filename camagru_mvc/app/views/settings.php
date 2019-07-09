@@ -2,7 +2,7 @@
 			<div class="centered">
 
 				<div class="ava">
-					<img src="<?php echo IMAGES_PATH . '/pikachu_ava.svg';?>" width="90em" height="90em"/>
+					<img src="<?php echo IMAGES_PATH . '/pikachu_ava.svg';?>" width="85em" height="85em"/>
 				</div>
 
 				<a class="edit-link get-photo" onclick="openForm()">Edit photo</a>
@@ -32,13 +32,12 @@
 			</div>
 			<input type="submit" name="btn-edit" value="Save">
 			<a href="profile">Cancel</a>
-			
+
 		</form>
 
 		<div class="layer"></div>
-		<form class="upload_photo" action="upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="ava">
+		<form class="upload_photo" action="upload_ava" method="post" enctype="multipart/form-data">
+			<input type="file" name="ava" required>
 			<button type="submit" name="submit">Upload</button>
 			<a href="<?php echo WWW_ROOT . '/settings'; ?>">Cancel</a>
 		</form>
-

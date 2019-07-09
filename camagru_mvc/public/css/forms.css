@@ -26,10 +26,6 @@ form#settings {
 	background-color: rgba(255, 255, 255, 0.85);
 }
 
-form#settings {
-	justify-content: space-evenly;
-}
-
 .centered,
 .put-data,
 .passwd {
