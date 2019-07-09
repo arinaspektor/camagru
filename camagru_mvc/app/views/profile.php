@@ -15,7 +15,7 @@
 
 <div class="layer"></div>
 <form class="upload_photo" action="upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="uploaded">
+		<input type="file" name="uploaded" required>
         <button type="submit" name="submit">Upload</button>
         <a href="<?php echo WWW_ROOT . '/profile'; ?>">Cancel</a>
 </form>

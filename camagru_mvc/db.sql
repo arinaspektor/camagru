@@ -10,3 +10,9 @@ CREATE TABLE IF NOT EXISTS users (
     token_hash VARCHAR(255),
     token_expires_at DATETIME
     );
+
+CREATE TABLE IF NOT EXISTS profileimg (
+    id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(10) NOT NULL,
+    status tinyint(1) DEFAULT 0
+    );

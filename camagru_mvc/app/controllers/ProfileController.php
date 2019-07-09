@@ -63,12 +63,12 @@
               $ava = new Photo($_FILES['ava']);
 
               if ($ava->upload($_FILES['ava'])) {
+                
                 Flash::addMessage('Your profile photo has changed successfully');
               } else {
                 Flash::addMessage($ava->custom_error);
               }
               $this->redirect('/settings');
-
             } else {
               $this->redirect('/');
             }

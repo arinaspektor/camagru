@@ -2,58 +2,77 @@
 
   class Photo extends Model
   {
-    public $custom_error;
-    // private $extn;
+    public $custom_error = null;
+    public $user_id;
     static private $allowed = ['jpg', 'jpeg', 'png'];
+    private $extn;
+
 
     public function __construct($data = [])
     {
-        // $allowed = ['jpg', 'jpeg', 'png'];
+      // self::$class_name = 'Photo';
+      self::$table = 'Profileimg';
+      $this->user_id = $_SESSION['user_id'];
 
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        };
+      foreach ($data as $key => $value) {
+        $this->$key = $value;
+      };
     }
 
 
     public function upload() {
 
-      $extn = strtolower(end(explode('.', $this->name)));
+      $prepare_extn = explode('.', $this->name);
+      $this->extn = strtolower(end($prepare_extn));
 
-      if (in_array($extn, self::$allowed)) {
+      $this->validate_file_data();
 
-        if ($this->error === 0) {
+      if (! $this->custom_error) {
 
-          if ($this->size <= 2 * MB) {
+        $fileNameNew = 'ava_' . $this->user_id . '.' . $this->extn;
+        $fileDestination = STORAGE_PATH . '/profile' . '/' . $fileNameNew;
 
-            $fileNameNew = uniqid('', true) . '.' . $extn;
-            $fileDestination = STORAGE_PATH . '/' . $fileNameNew;
-
-            if (!is_dir(STORAGE_PATH)) {
-                mkdir(STORAGE_PATH);   // line 63
-            }
-
-            if (! move_uploaded_file($this->tmp_name, $fileDestination)) {
-              $this->custom_error = 'There was an error uploading your file';
-            }
-
-          } else {
-            $this->custom_error = 'Your file is too big. Max size is 2Mb';
-          }
-
-        } else {
-          $this->custom_error = 'There was an error uploading your file';
+        if (!is_dir(STORAGE_PATH . '/profile')) {
+            mkdir(STORAGE_PATH . '/profile');
         }
 
-      } else {
-        $this->custom_error = "Files of $this->extn format are not allowed. Try another one";
+        if (! move_uploaded_file($this->tmp_name, $fileDestination)) {
+          $this->custom_error = 'An error occured while uploading your file. Please, try again';
+        } else {
+          $this->savePhoto($fileNameNew);
+        }
+
       }
 
-      return ! isset($this->custom_error);
-
+      return ! $this->custom_error;
     }
 
 
+    private function validate_file_data()
+    {
+      if (! $this->name) {
+        $this->custom_error = 'You have to choose the file';
+      } else if (! in_array($this->extn, self::$allowed)) {
+        $this->custom_error = "Files of $this->extn format are not allowed. Try another one";
+      } else if ($this->error !== 0) {
+        $this->custom_error = 'An error occured while uploading your file. Please, try again';
+      } else if ($this->size > 2 * MB) {
+        $this->custom_error = 'Your file is too big. Max size is 2Mb';
+      }
+    }
+
+
+    public function savePhoto($file)
+    {
+      $data = [
+        'user_id' => $this->user_id,
+        'status' => 1
+      ];
+  
+      return Db::insert(self::$table, $data);
+    }
+
+    
   }
 
 

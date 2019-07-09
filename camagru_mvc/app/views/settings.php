@@ -37,7 +37,7 @@
 
 		<div class="layer"></div>
 		<form class="upload_photo" action="upload_ava" method="post" enctype="multipart/form-data">
-			<input type="file" name="ava" required>
+			<input type="file" name="ava" >
 			<button type="submit" name="submit">Upload</button>
 			<a href="<?php echo WWW_ROOT . '/settings'; ?>">Cancel</a>
 		</form>
