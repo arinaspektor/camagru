@@ -1,17 +1,16 @@
 <?php
 
-  class Photo extends Model
+  class Image extends Model
   {
     public $custom_error = null;
     public $user_id;
+    public $src;
     static private $allowed = ['jpg', 'jpeg', 'png'];
     private $extn;
 
 
     public function __construct($data = [])
     {
-      // self::$class_name = 'Photo';
-      self::$table = 'Profileimg';
       $this->user_id = $_SESSION['user_id'];
 
       foreach ($data as $key => $value) {
@@ -20,7 +19,7 @@
     }
 
 
-    public function upload() {
+    public function uploadProfileImg() {
 
       $prepare_extn = explode('.', $this->name);
       $this->extn = strtolower(end($prepare_extn));
@@ -30,7 +29,7 @@
       if (! $this->custom_error) {
 
         $fileNameNew = 'ava_' . $this->user_id . '.' . $this->extn;
-        $fileDestination = STORAGE_PATH . '/profile' . '/' . $fileNameNew;
+        $this->src = STORAGE_PATH . '/profile' . '/' . $fileNameNew;
 
         if (!is_dir(STORAGE_PATH . '/profile')) {
             mkdir(STORAGE_PATH . '/profile');
@@ -38,8 +37,6 @@
 
         if (! move_uploaded_file($this->tmp_name, $fileDestination)) {
           $this->custom_error = 'An error occured while uploading your file. Please, try again';
-        } else {
-          $this->savePhoto($fileNameNew);
         }
 
       }
@@ -62,17 +59,6 @@
     }
 
 
-    public function savePhoto($file)
-    {
-      $data = [
-        'user_id' => $this->user_id,
-        'status' => 1
-      ];
-  
-      return Db::insert(self::$table, $data);
-    }
-
-    
   }
 
 

@@ -60,10 +60,10 @@
         {
 
             if (isset($_POST['submit'])) {
-              $ava = new Photo($_FILES['ava']);
+              $ava = new Image($_FILES['ava']);
 
-              if ($ava->upload($_FILES['ava'])) {
-                
+              if ($ava->uploadProfileImg($_FILES['ava'])) {
+                // Тут вставить код для сохранения фото в базе данных
                 Flash::addMessage('Your profile photo has changed successfully');
               } else {
                 Flash::addMessage($ava->custom_error);

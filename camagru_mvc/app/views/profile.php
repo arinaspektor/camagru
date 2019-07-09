@@ -1,6 +1,6 @@
 <div class="top">
     <div class="ava">
-        <img src="<?php echo IMAGES_PATH . '/pikachu_ava.svg';?>" width="75em" height="75em"/>
+        <img src="<?php echo $view_data['img_src']; ?>" width="75em" height="75em" >
     </div>
     <h3><?php echo htmlentities($view_data['user']->username) . "'s"; ?> space</h3>
     <a class="edit-link" href="<?php echo WWW_ROOT . '/settings'; ?>">Edit profile</a>
