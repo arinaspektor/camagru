@@ -97,20 +97,20 @@ main {
 	flex-direction: column;
 }
 
-.top img {
-	background-color:aqua;
-}
-
 .top h3 {
 	margin: 20px auto 15px;
 }
 
 .ava {
-	background-color:aqua;
-	padding: 1.2em;
+    width: 110px;
+	height: 110px;
 	border-radius: 50%;
-	box-sizing: content-box;
-}
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: aqua;
+	overflow: hidden;
+  }
 
 .edit-link {
 	display: block;
@@ -142,10 +142,40 @@ main {
 	z-index: 1;
 }
 
-#camera_wrapper {
-	display: block;
+.snap_container {
 	width: 100%;
 	height: 80%;
+	border: 3px solid rgba(255, 255, 255, 0.85);
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+/* .snap_container > div,
+.snap_container > aside {
+	border: 1px solid rgba(255, 255, 255, 0.85);
+} */
+
+.camera_wrapper {
+	flex-grow: 2;
+	min-width: 320px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+aside {
+	min-width: 320px;
+	width: 30%;
+	background-color:rgba(255, 255, 255, 0.85);
+}
+
+.images {
+	min-width: 320px;
+	border-top: 1px solid rgba(255, 255, 255, 0.85);
+	height: 30%;
+	width: 100%;
+	background-color:rgba(255, 255, 255, 0.85);
 }
 
 @media (max-width: 320px) {
@@ -158,12 +188,6 @@ main {
 	.top {
 		font-size: 14px;
 	}
-
-	.top img {
-		width: 3em;
-		height: 3em;
-	}
-
 
 	.top h3 {
 		margin: 8px 0;

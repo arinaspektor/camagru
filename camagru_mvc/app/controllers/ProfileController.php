@@ -11,7 +11,13 @@
             $this->user = $user ?? User::findById($_SESSION['user_id']);
 
             $this->view_data['user'] = $this->user;
+
+            $this->view_data['user']->profile_img_src =  $this->user->profile_img_src ?
+                                            IMAGES_PATH . '/storage/profile/' . $this->user->profile_img_src :
+                                            IMAGES_PATH . '/pikachu_ava.svg';
+
         }
+
 
         public function actionIndex()
         {
@@ -59,20 +65,36 @@
         public function actionUploadAva()
         {
 
-            if (isset($_POST['submit'])) {
-              $ava = new Image($_FILES['ava']);
-
-              if ($ava->uploadProfileImg($_FILES['ava'])) {
-                // Тут вставить код для сохранения фото в базе данных
-                Flash::addMessage('Your profile photo has changed successfully');
-              } else {
-                Flash::addMessage($ava->custom_error);
-              }
-              $this->redirect('/settings');
+            if (! isset($_POST)) {
+                $this->redirect('/');
             } else {
-              $this->redirect('/');
-            }
 
+                $ava = new ProfileImage($_FILES['ava']);
+
+                if (isset($_POST['submit'])) {
+
+                    if ($ava->uploadProfileImg($_FILES['ava'])) {
+                        Flash::addMessage('Your profile photo has changed successfully');
+                    } else {
+                        Flash::addMessage($ava->custom_error);
+                    }
+
+                } else if (isset($_POST['delete'])) {
+
+                    if (strstr($this->user->profile_img_src, "pikachu")) {
+                        Flash::addMessage('Nothing to delete');
+                    } else if ($ava->deleteProfileImg()) {
+                        Flash::addMessage('Your profile photo is deleted');
+                    } else {
+                        Flash::addMessage('Something went wrong. Try again a bit later');
+                    }
+
+                }
+
+                $this->redirect('/settings');
+
+            }
+    
         }
 
 

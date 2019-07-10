@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS users (
     hashed_password VARCHAR(255) NOT NULL,
     token_hash VARCHAR(255),
     token_expires_at DATETIME,
-    profile_img_src VARCHAR(50)
+    profile_img_src VARCHAR(255)
     );

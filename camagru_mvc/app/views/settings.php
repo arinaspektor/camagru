@@ -1,9 +1,6 @@
 	<form id="settings" action="edit" method="post">
 			<div class="centered">
-
-				<div class="ava">
-					<img src="<?php echo IMAGES_PATH . '/pikachu_ava.svg';?>" width="85em" height="85em"/>
-				</div>
+				<div class="ava" style="background-image: url('<?php echo $view_data['user']->profile_img_src; ?>');"></div>
 
 				<a class="edit-link get-photo" onclick="openForm()">Edit photo</a>
 
@@ -39,5 +36,6 @@
 		<form class="upload_photo" action="upload_ava" method="post" enctype="multipart/form-data">
 			<input type="file" name="ava" >
 			<button type="submit" name="submit">Upload</button>
-			<a href="<?php echo WWW_ROOT . '/settings'; ?>">Cancel</a>
+			<button type="submit" name="delete">Delete</button>
+			<!-- <a href="<?php echo WWW_ROOT . '/settings'; ?>">Cancel</a> -->
 		</form>

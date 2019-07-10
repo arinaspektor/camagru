@@ -35,7 +35,7 @@
     require_once(MODELS . '/UserModel.php');
     require_once(MODELS . '/MailModel.php');
     require_once(MODELS . '/TokenModel.php');
-    require_once(MODELS . '/PhotoModel.php');
+    require_once(MODELS . '/ProfileImgModel.php');
 
     Session::start();
 

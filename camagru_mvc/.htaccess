@@ -11,11 +11,12 @@ RewriteRule ^(.*)$ index.php
 # Закрыть просмотр директорий
 Options All -Indexes
 
+# ограничение размера загружаемых файлов
+php_value post_max_size 2M
+php_value upload_max_filesize 2M
+
 # set the 404 page
 # ErrorDocument 404 /error-docs/error-404.html
-
-# ограничение размера загружаемых файлов
-# php_value upload_max_filesize 20M
 
 # <FilesMatch "\.(ico|png|jpeg|svg|ttf)$">
 #	Header Set Cache-Control "max-age=3600, public"
