@@ -282,13 +282,19 @@ form.upload_photo {
 	background-color: white;
 	height: 80px;
 	width: 90%;
+	padding: 0 10px;
 	max-width: 420px;
+	font-size: 14px;
 	z-index: 2;
+	box-sizing: border-box;
 }
 
 form.upload_photo input {
-	width: auto;
+	width: 70%;
 }
+
+
+
 
 @media (max-height: 830px) and (max-width: 420px) {
 	form h3 {

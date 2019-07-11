@@ -8,16 +8,29 @@
 </section>
 <section class="snap_container">
 <!-- <a class="edit-link get-photo" onclick="openForm()">Upload photo</a> -->
-    <div class="camera_wrapper">
-        <video id="video"></video>
-        <div class="images"></div>
+    <div class="images">
+        <?php foreach ($view_data['masks'] as $src) {?>
+            <div class="wrapper">
+                <img src="<?php echo $src?>">
+            </div>
+        <?php };?>
+
     </div>
-    <aside></aside>
+    <div class="camera_wrapper">
+        <video id="video" autoplay="true">
+            Unfortunetly, your browser doesn't support video. Try another one...
+        </video>
+        <div class="button-container">
+            <button class="take-photo"><div class="circle"></div></button>
+            <button class="upload-picture" onclick="openForm()"></button>
+        </div>
+    </div>
+    <aside>
+    </aside>
 </section>
 
 <div class="layer"></div>
 <form class="upload_photo" action="upload" method="post" enctype="multipart/form-data">
 		<input type="file" name="uploaded" required>
         <button type="submit" name="submit">Upload</button>
-        <a href="<?php echo WWW_ROOT . '/profile'; ?>">Cancel</a>
 </form>

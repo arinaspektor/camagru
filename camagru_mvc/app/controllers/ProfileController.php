@@ -16,13 +16,15 @@
                                             IMAGES_PATH . '/storage/profile/' . $this->user->profile_img_src :
                                             IMAGES_PATH . '/pikachu_ava.svg';
 
+            $this->view_data['masks'] = $this->getMasks();
+
         }
 
 
         public function actionIndex()
         {
             $this->requireLogin();
-
+           
             View::generate('profile.php', 'main_template.php', $this->view_data);
         }
 
@@ -95,6 +97,19 @@
 
             }
     
+        }
+
+
+        private function getMasks()
+        {
+            $dir =  ROOT . '/public/images/masks';
+            $files = glob($dir . "/*.png");
+
+            foreach ($files as $path) {
+                $masks[] = str_replace(ROOT, WWW_ROOT, $path);
+            }
+
+            return $masks;
         }
 
 

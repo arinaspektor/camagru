@@ -3,7 +3,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	height: 83vh;
+	height: 88vh;
 	min-height: 400px;
 	justify-content: center;
 	align-items: center;
@@ -91,6 +91,7 @@ main {
 
 .top {
 	font-size: 16px;
+	min-width: 320px;
 	width: 100%;
 	padding: 1.7em 0 1em;
 	background-color: rgba(255, 255, 255, 0.85);
@@ -102,7 +103,7 @@ main {
 }
 
 .ava {
-    width: 110px;
+  	width: 110px;
 	height: 110px;
 	border-radius: 50%;
 	background-position: center center;
@@ -138,44 +139,126 @@ main {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color:rgba(232, 236, 241, 0.8);
+	background-color:rgba(232, 236, 241, 0.85);
 	z-index: 1;
 }
 
 .snap_container {
+	min-width: 320px;
 	width: 100%;
 	height: 80%;
-	border: 3px solid rgba(255, 255, 255, 0.85);
+	background-color:rgba(255, 255, 255, 0.85);
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
+	flex-wrap: wrap;
 }
-
-/* .snap_container > div,
-.snap_container > aside {
-	border: 1px solid rgba(255, 255, 255, 0.85);
-} */
 
 .camera_wrapper {
-	flex-grow: 2;
+	width: 60%;
 	min-width: 320px;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+	overflow: hidden;
+	position: relative;
 }
 
-aside {
-	min-width: 320px;
-	width: 30%;
-	background-color:rgba(255, 255, 255, 0.85);
+
+#video {
+	width: 100%;
+    height: 100%;
+	object-fit: cover;
 }
+
+.button-container {
+	position: absolute;
+	bottom: 0;
+	padding: 1% 0;
+	width: 100%;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.button-container > button {
+	padding: 0;
+}
+
+.take-photo {
+	border-radius: 50%;
+	background: none;
+	width: 60px;
+	height: 60px;
+	border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+
+.take-photo .circle {
+	margin: 0 auto;
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+
+.take-photo:hover,
+.upload-picture:hover {
+	border-color:white;
+}
+
+.take-photo:hover .circle {
+	background: white;
+}
+
+.upload-picture {
+	background: url('../images/upload.svg');
+	position: absolute;
+	right: 2%;
+	bottom: 20%;
+	width: 50px;
+	height: 50px;
+	transition: 0.3s ease all;
+}
+
+.upload-picture:hover {
+	width: 52px;
+	height: 52px;
+}
+
+/* aside {
+	
+} */
 
 .images {
-	min-width: 320px;
-	border-top: 1px solid rgba(255, 255, 255, 0.85);
-	height: 30%;
+	width: auto;
+	height: 100%;
+	overflow-y: auto;
+	padding: 0 2%;
+}
+
+.images .wrapper {
+	width: 120px;
+	height: auto;
+	margin: 5% auto;
+}
+
+.images .wrapper img {
 	width: 100%;
-	background-color:rgba(255, 255, 255, 0.85);
+	height: auto;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+  
+::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.5); 
+}
+
+::-webkit-scrollbar-thumb {
+	background:  rgba(78, 197, 193, 0.6); 
+	border-radius: 5px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(78, 197, 193, 1); 
 }
 
 @media (max-width: 320px) {
