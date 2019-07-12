@@ -5,9 +5,9 @@ html, body, ul {
 	margin: 0;
 }
 
-* {
+/* * {
 	box-sizing: border-box;
-}
+} */
 
 body {
 	background-color: #EC576B;
@@ -24,6 +24,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	box-sizing: content-box;
 }
 
 a {
