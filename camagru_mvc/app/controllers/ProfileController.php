@@ -24,7 +24,7 @@
         public function actionIndex()
         {
             $this->requireLogin();
-           
+
             View::generate('profile.php', 'main_template.php', $this->view_data);
         }
 
@@ -96,7 +96,13 @@
                 $this->redirect('/settings');
 
             }
-    
+
+        }
+
+
+        public function actionSave()
+        {
+          echo "ok!";
         }
 
 
@@ -111,6 +117,7 @@
 
             return $masks;
         }
+
 
 
     }

@@ -290,8 +290,8 @@ label {
 
 form.upload_photo {
 	display: none;
-	position: relative;
-	top: -40%;
+	position: absolute;
+	top: 50%;
 	flex-direction: row;
 	justify-content: space-evenly;
 	background-color: white;
@@ -307,7 +307,6 @@ form.upload_photo {
 form.upload_photo input {
 	width: 70%;
 }
-
 
 
 
@@ -347,4 +346,3 @@ form.upload_photo input {
 		border-radius: 0;
 	}
 }
-
