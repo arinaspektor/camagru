@@ -36,6 +36,7 @@
     require_once(MODELS . '/MailModel.php');
     require_once(MODELS . '/TokenModel.php');
     require_once(MODELS . '/ProfileImgModel.php');
+    require_once(MODELS . '/PostModel.php');
 
     Session::start();
 

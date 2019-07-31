@@ -5,9 +5,9 @@ html, body, ul {
 	margin: 0;
 }
 
-/* * {
+* {
 	box-sizing: border-box;
-} */
+}
 
 body {
 	background-color: #EC576B;
@@ -22,10 +22,9 @@ body {
 	min-width: 320px;
 	min-height: 480px;
 	display: flex;
-	flex-direction: column;
+	flex-flow: column nowrap;
 	justify-content: space-between;
-	overflow: hidden;
-	/* box-sizing: content-box; */
+	overflow-y: hidden;
 }
 
 a {
@@ -105,7 +104,7 @@ header > nav > ul > li:last-child:hover .dropdown {
 	display: block;
 }
 
-footer {
+body > footer {
 	justify-content: flex-end;
 	align-content: baseline;
 	min-height: 40px;
@@ -116,7 +115,7 @@ footer {
 	font-weight: lighter;
 }
 
-footer span {
+body > footer span {
 	padding-left: 0.3em;
 	font-size: 1.2em;
 }

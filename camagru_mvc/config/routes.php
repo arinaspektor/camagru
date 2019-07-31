@@ -20,7 +20,7 @@
         'reset/([A-Za-z0-9]+)' => 'password/reset/1',
         'reset' => 'password/requestReset',
         'upload_ava' => 'profile/uploadAva',
-        'save' => 'profile/save',
+        'post' => 'profile/newPhoto',
         '' => 'main/index'
     );
 

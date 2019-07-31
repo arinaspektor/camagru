@@ -11,8 +11,8 @@
 	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset', 'Profile'])) {
 		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
 	}?>
-	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/main.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/web.js'; ?>"></script>
+	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/main.js'; ?>"></script>
 </head>
 <body>
 	<header>

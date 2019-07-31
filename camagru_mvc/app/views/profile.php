@@ -1,6 +1,5 @@
 <section class="camagru">
-<!-- <a class="edit-link get-photo" onclick="openForm()">Upload photo</a> -->
-
+    
     <div class="snap_container">
         <div class="camera_wrapper">
             <video id="video" autoplay="true">
@@ -21,22 +20,27 @@
     </div>
 
     <aside>
-      <section class="top">
+        <div class="top">
 
-          <div class="ava" style="background-image: url('<?php echo $view_data['user']->profile_img_src; ?>');"></div>
+            <div class="ava" style="background-image: url('<?php echo $view_data['user']->profile_img_src; ?>');"></div>
 
-          <h3><?php echo htmlentities($view_data['user']->username) . "'s"; ?> space</h3>
+            <h3><?php echo htmlentities($view_data['user']->username) . "'s"; ?> space</h3>
 
-          <a class="edit-link" href="<?php echo WWW_ROOT . '/settings'; ?>">Edit profile</a>
-      </section>
-      <canvas id="canvas"></canvas>
-      <section>
-      </section>
+            <a class="edit-link" href="<?php echo WWW_ROOT . '/settings'; ?>">Edit profile</a>
+        </div>
+        <div class="photos">
+            <?php foreach ($view_data['posts'] as $src) {?>
+                <img src="<?php echo $src?>">
+            <?php };?>
+        </div>
+        <footer></footer>
     </aside>
+    
 </section>
 
 <div class="layer"></div>
 <form class="upload_photo" action="upload" method="post" enctype="multipart/form-data">
+        <span class="close" onclick="closeForm()"></span>
 		<input type="file" name="uploaded" required>
         <button type="submit" name="submit">Upload</button>
 </form>
