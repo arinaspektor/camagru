@@ -18,7 +18,7 @@
 
             $this->view_data['masks'] = $this->getMasks();
 
-            $this->view_data['posts'] = $this->getPosts();
+            // $this->view_data['posts'] = $this->getPosts();
         }
 
 
@@ -106,25 +106,25 @@
                 $this->redirect('/profile');
             }
 
-            // $post = new Post($_POST);
+            $post = new Post($_POST);
 
-            $dir = STORAGE_PATH . '/posts' . '/' .  $_SESSION['user_id'];
+            // $dir = STORAGE_PATH . '/posts' . '/' .  $_SESSION['user_id'];
 
-            $data = explode(',', $_POST['photo']);
-            $photo = base64_decode($data[1]);
+            // $data = explode(',', $_POST['photo']);
+            // $photo = base64_decode($data[1]);
     
-            $name = uniqid() . '.png';
-            $file = $dir . '/' . $name;
+            // $name = uniqid() . '.png';
+            // $file = $dir . '/' . $name;
     
-            if (! is_dir(STORAGE_PATH . '/posts')) {
-                mkdir(STORAGE_PATH . '/posts');
-            }
+            // if (! is_dir(STORAGE_PATH . '/posts')) {
+            //     mkdir(STORAGE_PATH . '/posts');
+            // }
 
-            if (! is_dir($dir)) {
-                mkdir($dir);
-            }
+            // if (! is_dir($dir)) {
+            //     mkdir($dir);
+            // }
 
-            file_put_contents($file, $photo);
+            // file_put_contents($file, $photo);
         }
 
 
@@ -141,17 +141,17 @@
         }
 
 
-        private function getPosts()
-        {
-            $dir =  ROOT . '/public/images/storage/posts/' . $_SESSION['user_id'];
-            $files = glob($dir . "/*.png");
+        // private function getPosts()
+        // {
+        //     $dir =  ROOT . '/public/images/storage/posts/' . $_SESSION['user_id'];
+        //     $files = glob($dir . "/*.png");
 
-            foreach ($files as $path) {
-                $posts[] = str_replace(ROOT, WWW_ROOT, $path);
-            }
+        //     foreach ($files as $path) {
+        //         $posts[] = str_replace(ROOT, WWW_ROOT, $path);
+        //     }
 
-            return $posts;
-        }
+        //     return $posts;
+        // }
 
     }
 

@@ -8,7 +8,7 @@ function handleVideo(stream) {
 
 
 function videoError(e) {
-    alert("Something goes wrong...");
+    alert("Unfortunetly, your browser doesn't support video, you can upload your image.");
 }
 
 
@@ -16,14 +16,10 @@ function turnOnWeb() {
     var video =  document.querySelector('#video');
 
     if (video) {
-        navigator.getUserMedia =    navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia ||
-        navigator.oGetUserMedia;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
         if (navigator.getUserMedia) {
-            navigator.getUserMedia({video: true}, handleVideo, videoError);
+            navigator.getUserMedia({audio: false, video: true}, handleVideo, videoError);
         }
         
     }
@@ -50,10 +46,11 @@ function savePhoto(picture) {
 
     var xhr = new XMLHttpRequest();
 
+    xhr.open("POST", "post", true);
+    xhr.send(formData);
+
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
         }
      };
-     xhr.open("POST", "post", true);
-     xhr.send(formData);
 }

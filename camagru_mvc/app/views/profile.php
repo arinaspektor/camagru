@@ -3,7 +3,8 @@
     <div class="snap_container">
         <div class="camera_wrapper">
             <video id="video" autoplay="true">
-                Unfortunetly, your browser doesn't support video. Try another one...
+                Unfortunetly, your browser doesn't support video.
+                You can upload your image.
             </video>
             <div class="button-container">
                 <button class="take-photo" onclick="takePhoto()"><div class="circle"></div></button>
@@ -13,7 +14,7 @@
         <div class="images">
             <?php foreach ($view_data['masks'] as $src) {?>
                 <div class="wrapper">
-                    <img src="<?php echo $src?>">
+                    <img src="<?php echo $src?>" onclick="createMask(this)">
                 </div>
             <?php };?>
         </div>
@@ -29,9 +30,9 @@
             <a class="edit-link" href="<?php echo WWW_ROOT . '/settings'; ?>">Edit profile</a>
         </div>
         <div class="photos">
-            <?php foreach ($view_data['posts'] as $src) {?>
+            <!-- <?php foreach ($view_data['posts'] as $src) {?>
                 <img src="<?php echo $src?>">
-            <?php };?>
+            <?php };?> -->
         </div>
         <footer></footer>
     </aside>
@@ -39,7 +40,7 @@
 </section>
 
 <div class="layer"></div>
-<form class="upload_photo" action="upload" method="post" enctype="multipart/form-data">
+<form class="upload_photo" enctype="multipart/form-data">
         <span class="close" onclick="closeForm()"></span>
 		<input type="file" name="uploaded" required>
         <button type="submit" name="submit">Upload</button>

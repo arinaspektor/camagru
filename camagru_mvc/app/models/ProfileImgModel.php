@@ -21,7 +21,8 @@
     }
 
 
-    public function uploadProfileImg() {
+    public function uploadProfileImg()
+    {
 
       $prepare_extn = explode('.', $this->name);
       $this->extn = strtolower(end($prepare_extn));

@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS users (
     token_expires_at DATETIME,
     profile_img_src VARCHAR(255)
     );
+
+CREATE TABLE IF NOT EXISTS posts (
+    post_id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(10) unsigned NOT NULL,
+    filename VARCHAR(255) NOT NULL UNIQUE,
+    created_at DATETIME NOT NULL
+);
