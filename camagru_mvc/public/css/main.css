@@ -140,7 +140,7 @@ main > section {
 	width: 100%;
 	height: 100%;
 	background: rgba(232, 236, 241, 0.85);
-	z-index: 1;
+	z-index: 100;
 }
 
 .camagru {
@@ -166,15 +166,25 @@ main > section {
 	height: 80%;
 	overflow: hidden;
 	position: relative;
+	text-align: center;
 }
 
 
-#video{
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+#video,
+.uploaded {
+	min-width: 100%;
+	min-height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
 	z-index: 1;
 }
+
+/* .uploaded {
+	display: none;
+	margin: 0 auto;
+	z-index: 1;
+} */
 
 .button-container {
 	position: absolute;
@@ -209,7 +219,8 @@ main > section {
 
 
 .take-photo:hover,
-.upload-picture:hover {
+.upload-picture:hover,
+.video-on:hover {
 	border-color:white;
 }
 
@@ -217,17 +228,29 @@ main > section {
 	background: white;
 }
 
-.upload-picture {
-	background: url('../images/upload.svg');
+.upload-picture,
+.video-on {
 	position: absolute;
-	right: 2%;
-	bottom: 20%;
 	width: 50px;
 	height: 50px;
 	transition: 0.3s ease all;
 }
 
-.upload-picture:hover {
+.video-on {
+	display: none;
+	background: url('../images/camera.svg');
+	left: 2%;
+	bottom: 20%;
+}
+
+.upload-picture {
+	background: url('../images/upload.svg');
+	right: 2%;
+	bottom: 20%;
+}
+
+.upload-picture:hover,
+.video-on:hover {
 	width: 52px;
 	height: 52px;
 }
@@ -262,7 +285,7 @@ canvas,
 	margin-top: 3%;
 	width: 300px;
 	min-height: 240px;
-
+	object-fit: cover;
 }
 
 canvas:first-child {
@@ -301,6 +324,7 @@ canvas:first-child {
 	position: absolute;
 	bottom: 0;
 	right: 0;
+	z-index: 2;
 }
 
 .close {
@@ -361,15 +385,27 @@ canvas:first-child {
 	}
 }
 
-@media (max-width: 420px) {
+@media (max-width: 670px) {
 	.images .wrapper img {
-		height: 50px;
+		height: 40px;
 	}
-}
 
-@media (max-width: 675px) {
+	.take-photo {
+		height: 50px;
+		width: 50px;
+	}
+
+	.take-photo .circle {
+		height: 40px;
+		width: 40px;
+	}
+
+	.upload-picture {
+		width: 40px;
+		height: 40px;
+	}
+
 	.ava {
-
 		height: 70px;
 		width: 70px;
 	}
@@ -377,6 +413,7 @@ canvas:first-child {
 	.top .edit-link {
 		order: 3;
 	}
+
 }
 
 @media (max-height: 1000px) {

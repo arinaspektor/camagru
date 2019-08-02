@@ -6,7 +6,9 @@
                 Unfortunetly, your browser doesn't support video.
                 You can upload your image.
             </video>
+            <img class="uploaded" src="">
             <div class="button-container">
+                <button class="video-on" onclick="changeMode(this)"></button>
                 <button class="take-photo" onclick="takePhoto()"><div class="circle"></div></button>
                 <button class="upload-picture" onclick="openForm()"></button>
             </div>
@@ -40,8 +42,8 @@
 </section>
 
 <div class="layer"></div>
-<form class="upload_photo" enctype="multipart/form-data">
-        <span class="close" onclick="closeForm()"></span>
-		<input type="file" name="uploaded" required>
+<form class="upload_photo" method="post" enctype="multipart/form-data" onsubmit="uploadPhoto(event)">
+        <span class="close" onclick="closeForm(this)"></span>
+		<input type="file" name="uploaded" required onchange="validateFile(event)">
         <button type="submit" name="submit">Upload</button>
 </form>

@@ -1,6 +1,11 @@
 
-var mouseOffset = {x: 0, y: 0};
-var isMouseDown = false;
+
+let mouseOffset = {x: 0, y: 0};
+let isMouseDown = false;
+let scale = 1;
+var container;
+var video;
+
 
 function openForm() {
     document.querySelector(".layer").style.display = "block";
@@ -33,30 +38,29 @@ function onMouseMove(e, item) {
 }
 
 
+function scaleMask(e, item) {
+    let delta = e.deltaY;
+
+    scale += ((delta > 0) ? 0.05 : -0.05);
+    item.style.transform = item.style.WebkitTransform = item.style.MsTransform = 'scale(' + scale + ')';
+
+    e.preventDefault();
+}
 
 function addEvents(mask) {
     mask.addEventListener('mousedown', (e) => {onMouseDown(e, mask);});
     mask.addEventListener('mousemove', (e) => {onMouseMove(e, mask);});
     mask.addEventListener('mouseup', (e) => {onMouseUp(e, mask);});
+
+    mask.addEventListener('wheel', (e) => {scaleMask(e, mask);});
+
     mask.addEventListener('dblclick', function() {
         this.remove();
-    });
-    
-    let scale = 1;
-    mask.addEventListener('wheel', function(e) {
-        let delta = e.deltaY;
-
-        scale += ((delta > 0) ? 0.1 : -0.1);
-        this.style.transform = this.style.WebkitTransform = this.style.MsTransform = 'scale(' + scale + ')';
-
-        e.preventDefault();
     });
 }
 
 
-function createMask(item)
-{
-    let container =  document.querySelector('.camera_wrapper');
+function createMask(item) {
     let prev = container.querySelector('.mask');
 
     if (prev) {
@@ -74,10 +78,25 @@ function createMask(item)
 }
 
 
-window.onload = function() {
-    var video =  document.querySelector('#video');
+function changeMode(btn) {
+    let img = container.querySelector('.uploaded');
+    let mask = container.querySelector('.mask');
 
-    var alertMsg = document.querySelector('.alert');
+    if (img.style.display == 'block') {img.style.display = "none";}
+
+    if (mask) { mask.remove(); }
+
+    video.style.display = 'block';
+    btn.style.display = 'none';
+}
+
+
+
+window.onload = function() {
+    container =  document.querySelector('.camera_wrapper');
+    video =  container.querySelector('#video');
+
+    let alertMsg = document.querySelector('.alert');
 
     if (alertMsg) {
         setTimeout(
