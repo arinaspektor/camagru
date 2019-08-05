@@ -12,8 +12,8 @@ RewriteRule ^(.*)$ index.php
 Options All -Indexes
 
 # ограничение размера загружаемых файлов
-php_value post_max_size 2M
-php_value upload_max_filesize 2M
+php_value post_max_size 5M
+php_value upload_max_filesize 5M
 
 # set the 404 page
 # ErrorDocument 404 /error-docs/error-404.html
@@ -30,5 +30,4 @@ php_value upload_max_filesize 2M
 # RewriteEngine ON
 # RewriteCond %{HTTP_REFERER} !^$
 # RewriteCond %{HTTP_REFERERER} !^http://(www\.)?mydomain.com/.*$ [NC]
-# RewriteRule \.(gif|jpeg|png)$ - [F].
-
+# RewriteRule \.(jpg|jpeg|png)$ - [F].

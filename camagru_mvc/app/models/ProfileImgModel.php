@@ -13,7 +13,7 @@
     {
       self::$table = 'Users';
       $this->user_id = $_SESSION['user_id'];
-      
+
       foreach ($data as $key => $value) {
         $this->$key = $value;
       };
@@ -56,8 +56,8 @@
         $this->custom_error = "Files of $this->extn format are not allowed. Try another one";
       } else if ($this->error !== 0) {
         $this->custom_error = 'An error occured while uploading your file. Please, try again';
-      } else if ($this->size > 2 * MB) {
-        $this->custom_error = 'Your file is too big. Max size is 2Mb';
+      } else if ($this->size > 5 * MB) {
+        $this->custom_error = 'Your file is too big. Max size is 5Mb';
       }
     }
 
@@ -74,7 +74,7 @@
     public function deleteProfileImg()
     {
       $file_pattern = STORAGE_PATH . '/profile/ava_' . $this->user_id . '.' . '*';
-    
+
       foreach (glob($file_pattern) as $file) {
         unlink($file);
       }

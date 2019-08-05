@@ -3,8 +3,8 @@
 let mouseOffset = {x: 0, y: 0};
 let isMouseDown = false;
 let scale = 1;
-var container;
-var video;
+let container = null;
+let video = null;
 
 
 function openForm() {
@@ -21,7 +21,7 @@ function openForm() {
 
 function onMouseDown(e, item) {
     e.preventDefault();
-    
+
     isMouseDown = true;
     mouseOffset = { x: item.offsetLeft - e.clientX, y: item.offsetTop - e.clientY };
 }
@@ -71,7 +71,7 @@ function createMask(item) {
 
     mask.classList.add('mask');
     mask.src = item.src;
- 
+
     container.appendChild(mask);
 
     addEvents(mask);

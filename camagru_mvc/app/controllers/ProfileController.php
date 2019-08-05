@@ -25,7 +25,7 @@
         public function actionIndex()
         {
             $this->requireLogin();
-           
+
             View::generate('profile.php', 'main_template.php', $this->view_data);
         }
 
@@ -96,7 +96,7 @@
 
                 $this->redirect('/settings');
             }
-    
+
         }
 
 
@@ -106,24 +106,24 @@
                 $this->redirect('/profile');
             }
 
-            $post = new Post($_POST);
-
+            // $post = new Post($_POST);
+            //
             // $dir = STORAGE_PATH . '/posts' . '/' .  $_SESSION['user_id'];
-
+            //
             // $data = explode(',', $_POST['photo']);
             // $photo = base64_decode($data[1]);
-    
+            //
             // $name = uniqid() . '.png';
             // $file = $dir . '/' . $name;
-    
+            //
             // if (! is_dir(STORAGE_PATH . '/posts')) {
             //     mkdir(STORAGE_PATH . '/posts');
             // }
-
+            //
             // if (! is_dir($dir)) {
             //     mkdir($dir);
             // }
-
+            //
             // file_put_contents($file, $photo);
         }
 

@@ -1,5 +1,5 @@
-const validFileExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-const maxSize = 2097152;
+const validFileExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+const maxSize = 5242880;
 let src = null;
 
 function handleVideo(stream) {
@@ -20,49 +20,63 @@ function turnOnWeb() {
     var video =  document.querySelector('#video');
 
     if (video) {
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        navigator.getUserMedia = navigator.getUserMedia
+                                || navigator.webkitGetUserMedia
+                                || navigator.mozGetUserMedia;
 
         if (navigator.getUserMedia) {
             navigator.getUserMedia({audio: false, video: true}, handleVideo, videoError);
         }
-        
+
     }
 }
 
 
 function takePhoto() {
-    let newImg = document.createElement('canvas');
+    let mask = document.querySelector('.mask');
+
+    if (! mask) { alert("Choose the mask first!"); return; }
+
+    let canvas = document.createElement('canvas');
+    let source = (video.style.display != 'none') ? video :
+                      document.querySelector('.uploaded');
+
+    source.width = canvas.width = source.offsetWidth;
+    source.height = canvas.height = source.offsetHeight;
+
+    canvas.getContext('2d').drawImage(source, 0, 0, source.width, source.height);
+
+    let picture = new Image();
+    picture.src = canvas.toDataURL('image/png');
+
     let container = document.querySelector('.photos');
-    let img = document.querySelector('.uploaded');
+    container.insertBefore(picture, container.childNodes[0]);
 
-    if (video.style.display != 'none') {
-        newImg.getContext('2d').drawImage(video, 0, 0, newImg.width, newImg.height);
-    } else {
-        newImg.getContext('2d').drawImage(img, 0, 0, newImg.width, newImg.height);
-    }
-    // newImg.getContext('2d').drawImage(video, 0, 0, newImg.width, newImg.height);
-    container.insertBefore(newImg, container.childNodes[0]);
-
-    let picture = newImg.toDataURL('image/png');
-    savePhoto(picture);
+    savePhoto(picture.src, mask);
 }
 
 
-function savePhoto(picture) {
+function savePhoto(picture, mask) {
 
     let formData = new FormData();
+    let maskData = {name: mask.src,
+                    height: mask.offsetHeight, width: mask.offsetWidth,
+                    x: mask.style.left, y: mask.style.top };
+
     formData.append('photo', picture);
-    formData.append('mask', "none yet");
+    formData.append('mask', maskData);
 
-    let xhr = new XMLHttpRequest();
+    console.log(maskData);
 
-    xhr.open("POST", "post", true);
-    xhr.send(formData);
-
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-        }
-     };
+    // let xhr = new XMLHttpRequest();
+    //
+    // xhr.open("POST", "post", true);
+    // xhr.send(formData);
+    //
+    // xhr.onreadystatechange = function() {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //     }
+    //  };
 }
 
 
@@ -74,33 +88,29 @@ function validateFile(e) {
         alert('Please upload file having extensions .jpeg/.jpg/.png/ only.');
         file.value = '';
     } else if (file.files[0].size > maxSize) {
-        alert('File is too big. Max size is 2MB.');
+        alert('File is too big. Max size is 5MB.');
     } else if (file.files && file.files[0]) {
         src = URL.createObjectURL(e.target.files[0]);
     }
 
 }
 
-
 function uploadPhoto(e) {
     if (src) {
         e.preventDefault();
 
-
         let img = container.querySelector('.uploaded');
-        img.src = src;
+        img.setAttribute('src', src);
 
         let mask = container.querySelector('.mask');
         if (mask) { mask.remove(); }
-        
+
         let btn = document.querySelector('.video-on');
-       
+
         video.style.display = 'none';
         img.style.display = 'block';
         btn.style.display = 'block';
 
-        container.appendChild(img);
-        
         closeForm();
 
     } else {

@@ -1,5 +1,5 @@
 <section class="camagru">
-    
+
     <div class="snap_container">
         <div class="camera_wrapper">
             <video id="video" autoplay="true">
@@ -38,7 +38,7 @@
         </div>
         <footer></footer>
     </aside>
-    
+
 </section>
 
 <div class="layer"></div>
