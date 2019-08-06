@@ -1,13 +1,8 @@
 <?php
 
-  class ProfileImage extends Model
+  class ProfileImage extends Image
   {
-    public $custom_error = null;
     public $new_name;
-    public $user_id;
-    static private $allowed = ['jpg', 'jpeg', 'png'];
-    private $extn;
-
 
     public function __construct($data = null)
     {
@@ -18,6 +13,7 @@
         $this->$key = $value;
       };
 
+      $this->extn = 'png';
     }
 
 
@@ -27,11 +23,11 @@
       $prepare_extn = explode('.', $this->name);
       $this->extn = strtolower(end($prepare_extn));
 
-      $this->validate_file_data();
+      $this->validate_file_data($this->name);
 
       if (! $this->custom_error) {
 
-        $this->new_name = 'ava_' . $this->user_id . '.' . $this->extn;
+        $this->new_name = 'ava_' . $this->user_id . $this->extn;
         $dest = STORAGE_PATH . '/profile' . '/' . $this->new_name;
 
         if (!is_dir(STORAGE_PATH . '/profile')) {
@@ -45,20 +41,6 @@
       }
 
       return ! $this->custom_error;
-    }
-
-
-    private function validate_file_data()
-    {
-      if (! $this->name) {
-        $this->custom_error = "You haven't chosen any file to upload";
-      } else if (! in_array($this->extn, self::$allowed)) {
-        $this->custom_error = "Files of $this->extn format are not allowed. Try another one";
-      } else if ($this->error !== 0) {
-        $this->custom_error = 'An error occured while uploading your file. Please, try again';
-      } else if ($this->size > 5 * MB) {
-        $this->custom_error = 'Your file is too big. Max size is 5Mb';
-      }
     }
 
 

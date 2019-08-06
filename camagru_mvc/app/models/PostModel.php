@@ -1,64 +1,84 @@
 <?php
 
-    class Post extends Model
+    class Post extends Image
     {
         public $picture;
+        public $name;
+        private $fullpath;
 
         public function __construct($data)
         {
+            self::$table = 'Posts';
+            $this->user_id = $_SESSION['user_id'];
+
             foreach ($data as $key => $value) {
                 $this->$key = $value;
             };
+
+            $this->decodeImg($this->file);
+
+            $this->extn = '.png';
         }
 
 
-        // private function validate_file_data()
-        // {
-        //   if (! $this->name) {
-        //     $this->custom_error = "You haven't chosen any file to upload";
-        //   } else if (! in_array($this->extn, self::$allowed)) {
-        //     $this->custom_error = "Files of $this->extn format are not allowed. Try another one";
-        //   } else if ($this->error !== 0) {
-        //     $this->custom_error = 'An error occured while uploading your file. Please, try again';
-        //   } else if ($this->size > 2 * MB) {
-        //     $this->custom_error = 'Your file is too big. Max size is 2Mb';
-        //   }
-        // }
-
         public function savePost()
         {
-            $data = explode(',', $this->photo);
-            $img = base64_decode($data[1]);
-            $name = uniqid() . '.png';
-            $dir = STORAGE_PATH . '/posts' . '/' .  $_SESSION['user_id'];
+            if ($this->preparePhoto()) {
+                return $this->mergeImages();
+            }
 
-            if (! is_dir(STORAGE_PATH . '/posts')) {
-                mkdir(STORAGE_PATH . '/posts');
+            return false;
+    
+        }
+       
+
+        private function mergeImages()
+        {   
+            $maskpath = str_replace(WWW_ROOT, ROOT, $this->mask);
+
+            $dest = imagecreatefrompng($this->fullpath);
+
+            $src = imagecreatefrompng($maskpath);
+
+            $size = getimagesize($maskpath);
+            // $src = imagescale($src, $this->width, $this->height);
+
+            imagealphablending($src, false);
+            imagesavealpha($src, true);
+
+            $x = intval($this->x);
+            $y = intval($this->y);
+
+            imagecopy($dest, $src, $x, $y, 0, 0, $size[0], $size[1]);
+
+            return imagepng($dest, $this->fullpath);
+        }
+
+        private function preparePhoto()
+        {
+            $this->name = uniqid() . $this->extn;
+            $dir = POSTS_PATH . '/' .  $this->user_id;
+
+            $this->fullpath = $dir . '/' . $this->name;
+
+            if (! is_dir(POSTS_PATH)) {
+                mkdir(POSTS_PATH);
             }
 
             if (! is_dir($dir)) {
                 mkdir($dir);
             }
-
-            $file = $dir . '/' . $name;
-
-            file_put_contents($file, $img);
-
-            return true;
-
-            // $data = explode(',', $_POST['photo']);
-            // $photo = base64_decode($data[1]);
-    
-            // $name = uniqid() . '.png';
-            // $file = STORAGE_PATH . '/posts' . '/' . $name;
-    
-            // if (!is_dir(STORAGE_PATH . '/posts')) {
-            //     mkdir(STORAGE_PATH . '/posts');
-            // }
-    
-            // file_put_contents($file, $photo);
+        
+            return file_put_contents($this->fullpath, $this->picture);
         }
-       
+
+
+        private function decodeImg($url)
+        {
+            $data = explode(',', $url);
+
+            $this->picture = base64_decode($data[1]);
+        }
     }
 
 
