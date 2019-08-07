@@ -3,6 +3,8 @@
     // phpinfo();
 
     ini_set('display_errors', 1);
+    ini_set('memory_limit', '25M');
+    
     error_reporting(E_ALL);
 
     define('ROOT', realpath(dirname(__FILE__)));
@@ -13,6 +15,8 @@
     define('MODELS', ROOT . '/app/models');\
 
     define('STORAGE_PATH',  ROOT . '/public/images/storage');
+    define('MASKS_PATH', ROOT . '/public/images/masks');
+    define('POSTS_PATH', STORAGE_PATH . '/posts');
 
     define('STYLES_PATH', WWW_ROOT . '/public/css');
     define('IMAGES_PATH', WWW_ROOT . '/public/images');
@@ -35,6 +39,7 @@
     require_once(MODELS . '/UserModel.php');
     require_once(MODELS . '/MailModel.php');
     require_once(MODELS . '/TokenModel.php');
+    require_once(MODELS . '/ImageModel.php');
     require_once(MODELS . '/ProfileImgModel.php');
     require_once(MODELS . '/PostModel.php');
 

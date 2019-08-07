@@ -38,6 +38,7 @@ function takePhoto() {
     if (! mask) { alert("Choose the mask first!"); return; }
 
     let canvas = document.createElement('canvas');
+
     let source = (video.style.display != 'none') ? video :
                       document.querySelector('.uploaded');
 
@@ -49,34 +50,10 @@ function takePhoto() {
     let picture = new Image();
     picture.src = canvas.toDataURL('image/png');
 
-    let container = document.querySelector('.photos');
-    container.insertBefore(picture, container.childNodes[0]);
+    let photos = document.querySelector('.photos');
+    photos.insertBefore(picture, photos.childNodes[0]);
 
-    savePhoto(picture.src, mask);
-}
-
-
-function savePhoto(picture, mask) {
-
-    let formData = new FormData();
-    let maskData = {name: mask.src,
-                    height: mask.offsetHeight, width: mask.offsetWidth,
-                    x: mask.style.left, y: mask.style.top };
-
-    formData.append('photo', picture);
-    formData.append('mask', maskData);
-
-    console.log(maskData);
-
-    // let xhr = new XMLHttpRequest();
-    //
-    // xhr.open("POST", "post", true);
-    // xhr.send(formData);
-    //
-    // xhr.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //     }
-    //  };
+    savePhoto(picture.src, mask, source);
 }
 
 
@@ -121,3 +98,37 @@ function uploadPhoto(e) {
     }
 
 }
+
+function savePhoto(picture, mask, source) {
+
+    let formData = new FormData();
+    
+    let x = mask.offsetLeft / source.width;
+    let y = mask.offsetTop / source.height;
+
+    let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale };
+    
+    let encoded = JSON.stringify(data);
+
+    console.log(data.x, data.y, data.scale);
+
+    formData.append('data', encoded);
+
+    let xhr = new XMLHttpRequest();
+    
+    xhr.open("POST", "post", true);
+    xhr.send(formData);
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+     };
+
+     mask.remove();
+     scale = 1;
+}
+
+//  До увеличения 500
+// После 1,6 скейла стало 800
+// чтобы получить -300 нужно 

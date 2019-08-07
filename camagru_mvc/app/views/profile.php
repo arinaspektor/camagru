@@ -1,5 +1,5 @@
 <section class="camagru">
-
+    
     <div class="snap_container">
         <div class="camera_wrapper">
             <video id="video" autoplay="true">
@@ -38,7 +38,7 @@
         </div>
         <footer></footer>
     </aside>
-
+    
 </section>
 
 <div class="layer"></div>
@@ -47,3 +47,4 @@
 		<input type="file" name="uploaded" required onchange="validateFile(event)">
         <button type="submit" name="submit">Upload</button>
 </form>
+ 

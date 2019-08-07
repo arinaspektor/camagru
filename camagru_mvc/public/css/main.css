@@ -314,11 +314,10 @@ aside > footer {
 
 .mask {
 	display: block;
-	height: 50%;
 	width: auto;
 	position: absolute;
-	bottom: 0;
-	right: 0;
+	top: 0;
+	left: 0;
 	z-index: 2;
 }
 

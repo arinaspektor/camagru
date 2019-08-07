@@ -1,10 +1,9 @@
-
+let container = null;
+let video = null;
 
 let mouseOffset = {x: 0, y: 0};
 let isMouseDown = false;
 let scale = 1;
-let container = null;
-let video = null;
 
 
 function openForm() {
@@ -93,9 +92,6 @@ function changeMode(btn) {
 
 
 window.onload = function() {
-    container =  document.querySelector('.camera_wrapper');
-    video =  container.querySelector('#video');
-
     let alertMsg = document.querySelector('.alert');
 
     if (alertMsg) {
@@ -106,5 +102,11 @@ window.onload = function() {
             3000);
     }
 
-    turnOnWeb();
+    if( window.location.pathname.includes('/profile') ) {
+        container =  document.querySelector('.camera_wrapper');
+        video =  container.querySelector('#video');
+
+        turnOnWeb();
+    }
+
 }

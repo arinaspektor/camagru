@@ -24,6 +24,8 @@
         public function savePost()
         {
             if ($this->preparePhoto()) {
+                // add to db
+
                 return $this->mergeImages();
             }
 
@@ -37,22 +39,47 @@
             $maskpath = str_replace(WWW_ROOT, ROOT, $this->mask);
 
             $dest = imagecreatefrompng($this->fullpath);
-
             $src = imagecreatefrompng($maskpath);
 
             $size = getimagesize($maskpath);
-            // $src = imagescale($src, $this->width, $this->height);
+            $dst_size = getimagesize($this->fullpath);
+    
+            $width = $size[0] * floatval($this->scale);
+            $height = $size[1] * floatval($this->scale);
 
             imagealphablending($src, false);
             imagesavealpha($src, true);
 
-            $x = intval($this->x);
-            $y = intval($this->y);
+            $dst_x = $dst_size[0] * floatval($this->x);
+            $dst_y = $dst_size[1] * floatval($this->y);
 
-            imagecopy($dest, $src, $x, $y, 0, 0, $size[0], $size[1]);
+            if ($this->scale !== 1) {
+                $tmp = imagescale($src, $width, $height);
+                imagedestroy($src);
+                $src = $tmp;
 
-            return imagepng($dest, $this->fullpath);
+                // $offset_x = $size[0] / floatval($this->scale);
+                // $offset_y = $size[1] / floatval($this->scale);
+
+                // $offset_y = ;
+            }
+
+            imagecopy($dest, $src, $dst_x, $dst_y, 0, 0, $width, $height);
+
+            $res = imagepng($dest, $this->fullpath);
+
+            imagedestroy($dest);
+            imagedestroy($src);
+
+            $arr = array($this->x, $this->y, $this->scale, $height, $width, $dst_x, $dst_y);
+
+            // return $res;
+            return $arr;
         }
+
+//  До увеличения 500
+// После 1,6 скейла стало 800
+// чтобы получить -300 нужно 
 
         private function preparePhoto()
         {

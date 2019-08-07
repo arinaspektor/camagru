@@ -105,33 +105,24 @@
             if (! isset($_POST)) {
                 $this->redirect('/profile');
             }
+            
+            $decoded = json_decode($_POST['data'], true);
 
-            // $post = new Post($_POST);
-            //
-            // $dir = STORAGE_PATH . '/posts' . '/' .  $_SESSION['user_id'];
-            //
-            // $data = explode(',', $_POST['photo']);
-            // $photo = base64_decode($data[1]);
-            //
-            // $name = uniqid() . '.png';
-            // $file = $dir . '/' . $name;
-            //
-            // if (! is_dir(STORAGE_PATH . '/posts')) {
-            //     mkdir(STORAGE_PATH . '/posts');
+            $post = new Post($decoded);
+
+            var_dump($post->savePost());
+            // if ($post->savePost()) {
+            //     echo 'ok!';
+            // } else {
+            //     echo $post->custom_error;
             // }
-            //
-            // if (! is_dir($dir)) {
-            //     mkdir($dir);
-            // }
-            //
-            // file_put_contents($file, $photo);
+
         }
 
 
         private function getMasks()
         {
-            $dir =  ROOT . '/public/images/masks';
-            $files = glob($dir . "/*.png");
+            $files = glob(MASKS_PATH . "/*.png");
 
             foreach ($files as $path) {
                 $masks[] = str_replace(ROOT, WWW_ROOT, $path);
