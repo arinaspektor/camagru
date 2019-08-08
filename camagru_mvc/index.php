@@ -4,7 +4,8 @@
 
     ini_set('display_errors', 1);
     ini_set('memory_limit', '25M');
-    
+    date_default_timezone_set('Europe/Kiev');
+
     error_reporting(E_ALL);
 
     define('ROOT', realpath(dirname(__FILE__)));
@@ -20,6 +21,7 @@
 
     define('STYLES_PATH', WWW_ROOT . '/public/css');
     define('IMAGES_PATH', WWW_ROOT . '/public/images');
+    define('POSTS_WWW_PATH', IMAGES_PATH . '/storage/posts');
     define('SCRIPT_PATH', WWW_ROOT . '/public/js');
 
     define('MB', 1048576);

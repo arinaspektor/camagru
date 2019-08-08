@@ -3,21 +3,21 @@
     class ProfileController extends Controller
     {
         public $user;
+        private $folder;
 
         public function __construct($user = null)
         {
-            $this->view_data['page_title'] = 'Profile';
-
             $this->user = $user ?? User::findById($_SESSION['user_id']);
 
+            $this->view_data['page_title'] = 'Profile';
             $this->view_data['user'] = $this->user;
-
             $this->view_data['user']->profile_img_src =  $this->user->profile_img_src ?
                                             IMAGES_PATH . '/storage/profile/' . $this->user->profile_img_src :
                                             IMAGES_PATH . '/pikachu_ava.svg';
 
             $this->view_data['masks'] = $this->getMasks();
 
+            $this->folder = POSTS_WWW_PATH . '/' . $this->user->user_id;
             // $this->view_data['posts'] = $this->getPosts();
         }
 
@@ -110,13 +110,14 @@
 
             $post = new Post($decoded);
 
-            var_dump($post->savePost());
-            // if ($post->savePost()) {
-            //     echo 'ok!';
-            // } else {
-            //     echo $post->custom_error;
-            // }
+            $filename = $post->savePost();
 
+            if ($filename) {
+                $url = $this->folder . '/' . $filename;
+                echo $url;
+            } else {
+                echo 'error';
+            }
         }
 
 
@@ -134,7 +135,7 @@
 
         // private function getPosts()
         // {
-        //     $dir =  ROOT . '/public/images/storage/posts/' . $_SESSION['user_id'];
+        //     $dir =  POSTS_PATH . $_SESSION['user_id'];
         //     $files = glob($dir . "/*.png");
 
         //     foreach ($files as $path) {

@@ -64,9 +64,11 @@ function createMask(item) {
 
     if (prev) {
         prev.remove();
+        scale = 1;
     }
 
     let mask = document.createElement('img');
+
 
     mask.classList.add('mask');
     mask.src = item.src;

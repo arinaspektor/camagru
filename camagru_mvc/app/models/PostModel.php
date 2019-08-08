@@ -23,16 +23,29 @@
 
         public function savePost()
         {
-            if ($this->preparePhoto()) {
-                // add to db
-
-                return $this->mergeImages();
+            if ($this->preparePhoto() &&
+                $this->mergeImages() &&
+                $this->saveToDb()) {
+                    return $this->name;
+              
             }
 
             return false;
     
         }
-       
+
+        
+        private function saveToDb()
+        {
+            $data = [
+                'user_id' => $this->user_id,
+                'filename' => $this->name,
+                'created_at' => date('Y-m-d H:i:s', time())
+            ];
+
+            return Db::insert(self::$table, $data);
+        }
+
 
         private function mergeImages()
         {   
@@ -58,28 +71,24 @@
                 imagedestroy($src);
                 $src = $tmp;
 
-                // $offset_x = $size[0] / floatval($this->scale);
-                // $offset_y = $size[1] / floatval($this->scale);
+                $offset_x = ($width - $size[0]) / 2;
+                $offset_y = ($height - $size[1]) / 2;
 
-                // $offset_y = ;
+                $dst_x -= $offset_x;
+                $dst_y -= $offset_y;
             }
 
-            imagecopy($dest, $src, $dst_x, $dst_y, 0, 0, $width, $height);
+            imageflip($dest, IMG_FLIP_HORIZONTAL);
 
+            imagecopy($dest, $src, $dst_x, $dst_y, 0, 0, $width, $height);
             $res = imagepng($dest, $this->fullpath);
 
             imagedestroy($dest);
             imagedestroy($src);
 
-            $arr = array($this->x, $this->y, $this->scale, $height, $width, $dst_x, $dst_y);
-
-            // return $res;
-            return $arr;
+            return $res;
         }
 
-//  До увеличения 500
-// После 1,6 скейла стало 800
-// чтобы получить -300 нужно 
 
         private function preparePhoto()
         {

@@ -45,13 +45,10 @@ function takePhoto() {
     source.width = canvas.width = source.offsetWidth;
     source.height = canvas.height = source.offsetHeight;
 
-    canvas.getContext('2d').drawImage(source, 0, 0, source.width, source.height);
+    canvas.getContext('2d').drawImage(source, 0, 0, source.width, source.height);;
 
     let picture = new Image();
     picture.src = canvas.toDataURL('image/png');
-
-    let photos = document.querySelector('.photos');
-    photos.insertBefore(picture, photos.childNodes[0]);
 
     savePhoto(picture.src, mask, source);
 }
@@ -99,6 +96,21 @@ function uploadPhoto(e) {
 
 }
 
+
+function showResult(url)
+{
+    if (url === 'error') {
+        alert('Something went wront... Please, try again!');
+    } else {
+        let photos = document.querySelector('.photos');
+        let picture = new Image();
+        
+        picture.src = url;
+        photos.insertBefore(picture, photos.childNodes[0]);
+    }
+}
+
+
 function savePhoto(picture, mask, source) {
 
     let formData = new FormData();
@@ -107,28 +119,22 @@ function savePhoto(picture, mask, source) {
     let y = mask.offsetTop / source.height;
 
     let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale };
-    
+
+    console.log(data);
     let encoded = JSON.stringify(data);
-
-    console.log(data.x, data.y, data.scale);
-
     formData.append('data', encoded);
 
     let xhr = new XMLHttpRequest();
-    
+
     xhr.open("POST", "post", true);
     xhr.send(formData);
     
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           showResult(this.responseText);
         }
      };
 
      mask.remove();
      scale = 1;
 }
-
-//  До увеличения 500
-// После 1,6 скейла стало 800
-// чтобы получить -300 нужно 
