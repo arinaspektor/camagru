@@ -1,6 +1,15 @@
 const validFileExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 const maxSize = 5242880;
 let src = null;
+let uploaded = 0;
+
+
+
+function viewPost(source) {
+    let tohide = document.querySelector('.snap_container');
+
+    tohide.style.display = 'none';
+}
 
 function handleVideo(stream) {
     try {
@@ -17,7 +26,7 @@ function videoError(e) {
 
 
 function turnOnWeb() {
-    var video =  document.querySelector('#video');
+    video =  document.querySelector('#video');
 
     if (video) {
         navigator.getUserMedia = navigator.getUserMedia
@@ -38,9 +47,12 @@ function takePhoto() {
     if (! mask) { alert("Choose the mask first!"); return; }
 
     let canvas = document.createElement('canvas');
+    let source = video;
 
-    let source = (video.style.display != 'none') ? video :
-                      document.querySelector('.uploaded');
+    if (video.style.display == 'none') {
+        source =  document.querySelector('.uploaded');
+        uploaded = 1;
+    }
 
     source.width = canvas.width = source.offsetWidth;
     source.height = canvas.height = source.offsetHeight;
@@ -68,6 +80,7 @@ function validateFile(e) {
     }
 
 }
+
 
 function uploadPhoto(e) {
     if (src) {
@@ -118,9 +131,8 @@ function savePhoto(picture, mask, source) {
     let x = mask.offsetLeft / source.width;
     let y = mask.offsetTop / source.height;
 
-    let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale };
+    let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale, upld: uploaded};
 
-    console.log(data);
     let encoded = JSON.stringify(data);
     formData.append('data', encoded);
 

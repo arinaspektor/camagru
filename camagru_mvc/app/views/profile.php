@@ -14,11 +14,13 @@
             </div>
         </div>
         <div class="images">
+
             <?php foreach ($view_data['masks'] as $src) {?>
                 <div class="wrapper">
                     <img src="<?php echo $src?>" onclick="createMask(this)">
                 </div>
             <?php };?>
+
         </div>
     </div>
 
@@ -32,10 +34,20 @@
             <a class="edit-link" href="<?php echo WWW_ROOT . '/settings'; ?>">Edit profile</a>
         </div>
         <div class="photos">
-            <!-- <?php foreach ($view_data['posts'] as $src) {?>
-                <img src="<?php echo $src?>">
-            <?php };?> -->
-        </div>
+
+            <?php if (isset($view_data['posts'])) {
+                    foreach ($view_data['posts'] as $src) {?>
+                    <!-- <div class="post"> -->
+                        <img src="<?php echo $src?>">
+                        <!-- <div class="likes">
+                            <img src="<?php echo IMAGES_PATH . '/heart.svg'; ?>" alt="like">
+                        </div>
+                    </div> -->
+                    
+            <?php   }
+                  };?>
+
+        </d>
         <footer></footer>
     </aside>
     

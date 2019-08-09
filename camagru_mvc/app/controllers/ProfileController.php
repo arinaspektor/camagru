@@ -15,10 +15,10 @@
                                             IMAGES_PATH . '/storage/profile/' . $this->user->profile_img_src :
                                             IMAGES_PATH . '/pikachu_ava.svg';
 
-            $this->view_data['masks'] = $this->getMasks();
-
             $this->folder = POSTS_WWW_PATH . '/' . $this->user->user_id;
-            // $this->view_data['posts'] = $this->getPosts();
+
+            $this->getMasks();
+            $this->getPosts();
         }
 
 
@@ -126,24 +126,21 @@
             $files = glob(MASKS_PATH . "/*.png");
 
             foreach ($files as $path) {
-                $masks[] = str_replace(ROOT, WWW_ROOT, $path);
+                $this->view_data['masks'][] = str_replace(ROOT, WWW_ROOT, $path);
             }
-
-            return $masks;
         }
 
 
-        // private function getPosts()
-        // {
-        //     $dir =  POSTS_PATH . $_SESSION['user_id'];
-        //     $files = glob($dir . "/*.png");
+        private function getPosts()
+        {
+            
+            $posts = Post::getAllPosts($this->user->user_id);
 
-        //     foreach ($files as $path) {
-        //         $posts[] = str_replace(ROOT, WWW_ROOT, $path);
-        //     }
-
-        //     return $posts;
-        // }
+            foreach ($posts as $name) {
+                // echo $value;
+                $this->view_data['posts'][] = $this->folder . '/' . $name;
+            }
+        }
 
     }
 

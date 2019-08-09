@@ -31,7 +31,6 @@
             }
 
             return false;
-    
         }
 
         
@@ -78,7 +77,9 @@
                 $dst_y -= $offset_y;
             }
 
-            imageflip($dest, IMG_FLIP_HORIZONTAL);
+            if (! $this->upld) {
+                imageflip($dest, IMG_FLIP_HORIZONTAL);
+            }
 
             imagecopy($dest, $src, $dst_x, $dst_y, 0, 0, $width, $height);
             $res = imagepng($dest, $this->fullpath);
@@ -114,6 +115,17 @@
             $data = explode(',', $url);
 
             $this->picture = base64_decode($data[1]);
+        }
+
+
+        static public function getAllPosts($user_id)
+        {
+            $sql = "SELECT `filename`";
+            $sql .= " FROM `Posts`";
+            $sql .= " WHERE `user_id` = $user_id";
+            $sql .= " ORDER BY `created_at` DESC";
+
+            return Db::findAllByValue($sql);
         }
     }
 

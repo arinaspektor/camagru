@@ -65,18 +65,27 @@
         }
 
 
-        static public function findByValue($table, $column, $value, $class)
+        static public function findByValue($table, $column, $value, $class = null)
         {
             $sql = "SELECT * FROM $table WHERE $column = :val";
 
             $stmt = self::$pdo->prepare($sql);
             $stmt->bindValue(':val', $value, PDO::PARAM_STR);
             
-            $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
+            if ($class) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
+            }
 
             $stmt->execute();
-
             return $stmt->fetch();
+        }
+
+
+        static public function findAllByValue($sql)
+        {
+            $data = self::$pdo->query($sql);
+
+            return $data->fetchAll(PDO::FETCH_COLUMN);
         }
 
         

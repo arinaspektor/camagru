@@ -157,7 +157,7 @@ main > section {
 .snap_container {
 	min-width: 320px;
 	text-align: end;
-	flex: 1 0 0;
+	flex: 4 0 0;
 	height: 100%;
 }
 
@@ -265,7 +265,7 @@ aside {
 	display: flex;
 	flex-direction: column;
 	min-width: 320px;
-	flex: 1 0 0;
+	flex: 3 0 0;
 	background: rgba(255, 255, 255, 0.3);
 }
 
@@ -290,7 +290,7 @@ aside > footer {
 {
 	width: 250px;
 	height: 250px;
-	object-fit: fill;
+	object-fit: cover;
 	border: 2px solid white;
 }
 
