@@ -21,6 +21,7 @@
         'reset' => 'password/requestReset',
         'upload_ava' => 'profile/uploadAva',
         'post' => 'profile/newPhoto',
+        // 'view' => 'profile/viewPost',
         '' => 'main/index'
     );
 

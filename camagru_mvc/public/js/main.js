@@ -6,16 +6,28 @@ let isMouseDown = false;
 let scale = 1;
 
 
+
+function viewPost(item) {
+    let post = document.querySelector('.post');
+
+    let tohide = document.querySelector('.snap_container');
+
+    tohide.style.display = 'none';
+    post.style.display = 'flex';
+
+    document.querySelector('.post > img').src = item.src;
+}
+
 function openForm() {
     document.querySelector(".layer").style.display = "block";
     document.querySelector(".upload_photo").style.display = "flex";
 }
 
+
  function closeForm() {
     document.querySelector(".layer").style.display = "none";
     document.querySelector(".upload_photo").style.display = "none";
 }
-
 
 
 function onMouseDown(e, item) {
@@ -68,7 +80,6 @@ function createMask(item) {
     }
 
     let mask = document.createElement('img');
-
 
     mask.classList.add('mask');
     mask.src = item.src;

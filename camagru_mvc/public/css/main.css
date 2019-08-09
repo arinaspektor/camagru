@@ -278,20 +278,49 @@ aside > footer {
 	flex: 5 0 0;
 	min-height: 250px;
 	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
-	align-items: flex-start;
-	align-content: flex-start;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
-.photos > img
-{
-	width: 250px;
-	height: 250px;
-	object-fit: cover;
+
+.photos img
+{	
+	width: 100%;
+	max-width: 500px;
+	height: auto;
+	/* object-fit: cover; */
 	border: 2px solid white;
+}
+
+
+.post {
+	display: none;
+	flex-direction: column;
+	flex: 4 0 0;
+}
+
+.post > * {
+	width: 100%;
+}
+
+.post > img {
+	height: auto;
+    max-height: 70%;
+    object-fit: cover;
+    min-width: 300px;
+}
+
+.post > .wrapper {
+	padding: 1em;
+}
+
+.likes {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
 }
 
 .images {

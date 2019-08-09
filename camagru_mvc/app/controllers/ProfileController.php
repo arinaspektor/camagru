@@ -15,7 +15,7 @@
                                             IMAGES_PATH . '/storage/profile/' . $this->user->profile_img_src :
                                             IMAGES_PATH . '/pikachu_ava.svg';
 
-            $this->folder = POSTS_WWW_PATH . '/' . $this->user->user_id;
+            $this->path = POSTS_WWW_PATH . '/' . $this->user->user_id;
 
             $this->getMasks();
             $this->getPosts();
@@ -100,6 +100,20 @@
         }
 
 
+        // public function actionViewPost()
+        // {
+        //     if (! isset($_POST)) {
+        //         $this->redirect('/profile');
+        //     }
+
+        //     $this
+        //     // $arr = explode('/', $fullname);
+        //     $html = file_get_contents($fullname);
+            
+        //     echo $html;
+        // }
+
+
         public function actionNewPhoto()
         {
             if (! isset($_POST)) {
@@ -113,7 +127,7 @@
             $filename = $post->savePost();
 
             if ($filename) {
-                $url = $this->folder . '/' . $filename;
+                $url = $this->path . '/' . $filename;
                 echo $url;
             } else {
                 echo 'error';
@@ -133,12 +147,10 @@
 
         private function getPosts()
         {
-            
             $posts = Post::getAllPosts($this->user->user_id);
 
             foreach ($posts as $name) {
-                // echo $value;
-                $this->view_data['posts'][] = $this->folder . '/' . $name;
+                $this->view_data['posts'][] = $this->path . '/' . $name;
             }
         }
 

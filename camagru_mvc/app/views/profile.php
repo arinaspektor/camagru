@@ -1,5 +1,14 @@
 <section class="camagru">
-    
+    <div class="post">
+            <img src="" alt="">
+            <div class="wrapper">
+                <div class="likes">
+                    <img src="<?php echo IMAGES_PATH . '/heart.svg'?>" alt="" width="25em" height="25em">
+                    <p>22</p>
+                </div>
+               
+            </div>
+    </div>
     <div class="snap_container">
         <div class="camera_wrapper">
             <video id="video" autoplay="true">
@@ -37,17 +46,11 @@
 
             <?php if (isset($view_data['posts'])) {
                     foreach ($view_data['posts'] as $src) {?>
-                    <!-- <div class="post"> -->
-                        <img src="<?php echo $src?>">
-                        <!-- <div class="likes">
-                            <img src="<?php echo IMAGES_PATH . '/heart.svg'; ?>" alt="like">
-                        </div>
-                    </div> -->
-                    
+                        <img src="<?php echo $src?>" onclick="viewPost(this)"> 
             <?php   }
                   };?>
 
-        </d>
+        </div>
         <footer></footer>
     </aside>
     
