@@ -4,13 +4,6 @@ let src = null;
 let uploaded = 0;
 
 
-
-function viewPost(source) {
-    let tohide = document.querySelector('.snap_container');
-
-    tohide.style.display = 'none';
-}
-
 function handleVideo(stream) {
     try {
         video.srcObject = stream;
@@ -57,7 +50,7 @@ function takePhoto() {
     source.width = canvas.width = source.offsetWidth;
     source.height = canvas.height = source.offsetHeight;
 
-    canvas.getContext('2d').drawImage(source, 0, 0, source.width, source.height);;
+    canvas.getContext('2d').drawImage(source, 0, 0, source.offsetWidth,source.offsetHeight);
 
     let picture = new Image();
     picture.src = canvas.toDataURL('image/png');
@@ -119,6 +112,7 @@ function showResult(url)
         let picture = new Image();
         
         picture.src = url;
+        picture.addEventListener('click', (e) => {viewPost(picture);});
         photos.insertBefore(picture, photos.childNodes[0]);
     }
 }
