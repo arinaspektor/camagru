@@ -2,13 +2,13 @@
 
     class Image extends Model
     {
-        static private $allowed = ['.jpg', '.jpeg', '.png'];
+        static private $allowed = ['jpg', 'jpeg', 'png'];
         public $custom_error = null;
         public $user_id;
         protected $extn;
 
 
-        protected function validate_file_data($namee)
+        protected function validate_file_data($name)
         {
             if (! $name) {
                 $this->custom_error = "You haven't chosen any file to upload";

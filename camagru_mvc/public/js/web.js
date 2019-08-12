@@ -80,19 +80,29 @@ function uploadPhoto(e) {
         e.preventDefault();
 
         let img = container.querySelector('.uploaded');
-        img.setAttribute('src', src);
+        img.style.height = 100 + '%';
+        img.style.width = 'auto';
+        img.src = src;
+        
 
         let mask = container.querySelector('.mask');
         if (mask) { mask.remove(); }
 
-        let btn = document.querySelector('.video-on');
+        img.onload = function() {
+            let btn = document.querySelector('.video-on');
+            let snap = document.querySelector('.snap_container');
 
-        video.style.display = 'none';
-        img.style.display = 'block';
-        btn.style.display = 'block';
+            video.style.display = 'none';
+            img.style.display = 'block';
+            btn.style.display = 'block';
 
-        closeForm();
+            let w = img.width;
+    
+            snap.style.flex = 'none';
+            snap.width = snap.style.width = w + 'px';
 
+            closeForm();
+        }
     } else {
 
         alert('Something went wrong. Try again');

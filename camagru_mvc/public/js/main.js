@@ -34,6 +34,7 @@ function onMouseDown(e, item) {
     e.preventDefault();
 
     isMouseDown = true;
+
     mouseOffset = { x: item.offsetLeft - e.clientX, y: item.offsetTop - e.clientY };
 }
 
@@ -116,7 +117,7 @@ window.onload = function() {
     }
 
     if( window.location.pathname.includes('/profile') ) {
-        container =  document.querySelector('.camera_wrapper');
+        container = document.querySelector('.camera_wrapper');
         video =  container.querySelector('#video');
 
         turnOnWeb();

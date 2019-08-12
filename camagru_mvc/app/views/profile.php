@@ -1,12 +1,13 @@
 <section class="camagru">
     <div class="post">
+            <span class="del" onclick=""></span>
             <img src="" alt="">
             <div class="wrapper">
                 <div class="likes">
                     <img src="<?php echo IMAGES_PATH . '/heart.svg'?>" alt="" width="25em" height="25em">
                     <p>22</p>
                 </div>
-               
+                <div class="comments"></div>
             </div>
     </div>
     <div class="snap_container">
