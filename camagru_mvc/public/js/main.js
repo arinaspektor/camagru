@@ -1,4 +1,5 @@
 let container = null;
+let mask_container = null;
 let video = null;
 
 let mouseOffset = {x: 0, y: 0};
@@ -12,10 +13,18 @@ function viewPost(item) {
 
     let tohide = document.querySelector('.snap_container');
 
-    tohide.style.display = 'none';
-    post.style.display = 'flex';
+    // post.style.display = 'flex';
+    
+    let img = document.querySelector('.post > img');
+    img.src = item.src;
 
-    document.querySelector('.post > img').src = item.src;
+    img.onload = function() {
+        tohide.style.display = 'none';
+        post.style.display = 'flex';
+        post.style.flex = 'none';
+        post.width = img.width + 'px';
+    }
+
 }
 
 function openForm() {
@@ -34,7 +43,7 @@ function onMouseDown(e, item) {
     e.preventDefault();
 
     isMouseDown = true;
-
+  
     mouseOffset = { x: item.offsetLeft - e.clientX, y: item.offsetTop - e.clientY };
 }
 
@@ -44,8 +53,19 @@ function onMouseUp(e, item) {
 
 function onMouseMove(e, item) {
     if (isMouseDown) {
-        item.style.left = e.clientX + mouseOffset.x + 'px';
-        item.style.top = e.clientY + mouseOffset.y + 'px';
+        let x = e.clientX + mouseOffset.x;
+        let y = e.clientY + mouseOffset.y;
+        
+        let minX = (item.width * scale - item.offsetWidth) / 2;
+        let minY = (item.height * scale - item.offsetHeight) / 2;
+        let maxX = mask_container.offsetWidth + minX - item.width * scale;
+        let maxY = mask_container.offsetHeight + minY - item.height * scale;
+
+        x = x < minX ? minX : (x > maxX ? maxX : x);
+        y = y < minY ? minY : (y > maxY ? maxY : y);
+        
+        item.style.left = x + 'px';
+        item.style.top = y + 'px';
     }
 }
 
@@ -54,6 +74,7 @@ function scaleMask(e, item) {
     let delta = e.deltaY;
 
     scale += ((delta > 0) ? 0.05 : -0.05);
+  
     item.style.transform = item.style.WebkitTransform = item.style.MsTransform = 'scale(' + scale + ')';
 
     e.preventDefault();
@@ -74,6 +95,7 @@ function addEvents(mask) {
 
 function createMask(item) {
     let prev = container.querySelector('.mask');
+    mask_container = uploaded ? document.querySelector('.img-container') : container;
 
     if (prev) {
         prev.remove();
@@ -85,7 +107,7 @@ function createMask(item) {
     mask.classList.add('mask');
     mask.src = item.src;
 
-    container.appendChild(mask);
+    mask_container.appendChild(mask);
 
     addEvents(mask);
 }
@@ -99,6 +121,7 @@ function changeMode(btn) {
 
     if (mask) { mask.remove(); }
 
+    uploaded = 0;
     video.style.display = 'block';
     btn.style.display = 'none';
 }

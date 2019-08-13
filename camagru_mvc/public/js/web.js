@@ -36,23 +36,18 @@ function turnOnWeb() {
 
 function takePhoto() {
     let mask = document.querySelector('.mask');
-
+    
     if (! mask) { alert("Choose the mask first!"); return; }
 
+    let source = uploaded ? document.querySelector('.uploaded') : video;
     let canvas = document.createElement('canvas');
-    let source = video;
-
-    if (video.style.display == 'none') {
-        source =  document.querySelector('.uploaded');
-        uploaded = 1;
-    }
+    let picture = new Image();
 
     source.width = canvas.width = source.offsetWidth;
     source.height = canvas.height = source.offsetHeight;
 
     canvas.getContext('2d').drawImage(source, 0, 0, source.offsetWidth,source.offsetHeight);
 
-    let picture = new Image();
     picture.src = canvas.toDataURL('image/png');
 
     savePhoto(picture.src, mask, source);
@@ -79,27 +74,24 @@ function uploadPhoto(e) {
     if (src) {
         e.preventDefault();
 
+        uploaded = 1;
+        let img_container = container.querySelector('.img-container');
         let img = container.querySelector('.uploaded');
-        img.style.height = 100 + '%';
-        img.style.width = 'auto';
+        let mask = container.querySelector('.mask');
+        let btn = document.querySelector('.video-on');
+
         img.src = src;
         
-
-        let mask = container.querySelector('.mask');
         if (mask) { mask.remove(); }
 
         img.onload = function() {
-            let btn = document.querySelector('.video-on');
-            let snap = document.querySelector('.snap_container');
-
             video.style.display = 'none';
-            img.style.display = 'block';
+            img_container.style.display = 'block';
             btn.style.display = 'block';
 
             let w = img.width;
     
-            snap.style.flex = 'none';
-            snap.width = snap.style.width = w + 'px';
+            img_container.width = img_container.style.width = w + 'px';
 
             closeForm();
         }
