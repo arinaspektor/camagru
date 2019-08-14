@@ -127,6 +127,21 @@
 
             return Db::findAllByValue($sql);
         }
+
+
+        static public function deletePost($src)
+        {
+            $file = str_replace(WWW_ROOT, ROOT, $src);
+           
+            $s = explode('/', $src);
+            $value = end($s);
+
+            if (Db::deleteOne($table='Posts', $column='filename', $value)) {
+                return unlink($file);
+            }
+
+            return false;
+        }
     }
 
 

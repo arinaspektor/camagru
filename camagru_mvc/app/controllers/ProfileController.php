@@ -7,6 +7,8 @@
 
         public function __construct($user = null)
         {
+            $this->requireLogin();
+            
             $this->user = $user ?? User::findById($_SESSION['user_id']);
 
             $this->view_data['page_title'] = 'Profile';
@@ -100,20 +102,6 @@
         }
 
 
-        // public function actionViewPost()
-        // {
-        //     if (! isset($_POST)) {
-        //         $this->redirect('/profile');
-        //     }
-
-        //     $this
-        //     // $arr = explode('/', $fullname);
-        //     $html = file_get_contents($fullname);
-            
-        //     echo $html;
-        // }
-
-
         public function actionNewPhoto()
         {
             if (! isset($_POST)) {
@@ -132,6 +120,20 @@
             } else {
                 echo 'error';
             }
+        }
+
+
+        public function actionDeletePost()
+        {
+            if (! isset($_POST)) {
+                $this->redirect('/profile');
+            }
+
+            if (! Post::deletePost($_POST['src'])) {
+                Flash::addMessage('Something went wrong. Please, try again!');
+                echo 'error';
+            }
+            
         }
 
 

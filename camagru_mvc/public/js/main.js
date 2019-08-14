@@ -7,22 +7,54 @@ let isMouseDown = false;
 let scale = 1;
 
 
+function deletePost() {
+
+    let formData = new FormData();
+    let post =  document.querySelector('.post');
+    let img = post.querySelector('img');
+
+    formData.append('src', img.src);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "delete", true);
+    xhr.send(formData);
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText != 'error') {
+                let list = document.querySelector('.photos').childNodes;
+
+                for (let i=0; i < list.length; i++) {
+                    if (list[i].src == img.src) {
+                        list[i].remove();
+                        break ;
+                    }
+                }
+
+                img.src = null;
+                post.style.display = 'none';
+                document.querySelector('.snap_container').style.display = 'flex';
+            }
+        }
+     };
+
+}
+
 
 function viewPost(item) {
     let post = document.querySelector('.post');
-
     let tohide = document.querySelector('.snap_container');
-
-    // post.style.display = 'flex';
-    
+    let h = tohide.offsetHeight;
     let img = document.querySelector('.post > img');
+
     img.src = item.src;
 
     img.onload = function() {
+        console.log(h);
         tohide.style.display = 'none';
         post.style.display = 'flex';
-        post.style.flex = 'none';
-        post.width = img.width + 'px';
+        post.style.height = h + 'px';
     }
 
 }
@@ -113,17 +145,18 @@ function createMask(item) {
 }
 
 
-function changeMode(btn) {
-    let img = container.querySelector('.uploaded');
+function changeMode(btn = null) {
+    let img_container = container.querySelector('.img-container');
     let mask = container.querySelector('.mask');
 
-    if (img.style.display == 'block') {img.style.display = "none";}
+    if (img_container.style.display == 'flex') {img_container.style.display = "none";}
 
     if (mask) { mask.remove(); }
 
     uploaded = 0;
     video.style.display = 'block';
-    btn.style.display = 'none';
+
+    if (btn) {btn.style.display = 'none'; }
 }
 
 

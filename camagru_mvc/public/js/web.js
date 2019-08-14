@@ -5,11 +5,12 @@ let uploaded = 0;
 
 
 function handleVideo(stream) {
+
     try {
         video.srcObject = stream;
-      } catch (error) {
+    } catch (error) {
         video.src = URL.createObjectURL(mediaSource);
-      }
+    }
 }
 
 
@@ -43,8 +44,8 @@ function takePhoto() {
     let canvas = document.createElement('canvas');
     let picture = new Image();
 
-    source.width = canvas.width = source.offsetWidth;
-    source.height = canvas.height = source.offsetHeight;
+    canvas.width = source.offsetWidth;
+    canvas.height = source.offsetHeight;
 
     canvas.getContext('2d').drawImage(source, 0, 0, source.offsetWidth,source.offsetHeight);
 
@@ -82,16 +83,32 @@ function uploadPhoto(e) {
 
         img.src = src;
         
-        if (mask) { mask.remove(); }
+        if (mask) { mask.remove(); } 
 
         img.onload = function() {
-            video.style.display = 'none';
-            img_container.style.display = 'block';
-            btn.style.display = 'block';
 
-            let w = img.width;
-    
-            img_container.width = img_container.style.width = w + 'px';
+            if (img_container.style.display != 'flex') {
+
+                let flex_basis = video.clientHeight;
+                container.style.flexBasis = flex_basis + 'px';
+
+                video.style.display = 'none';
+                img_container.style.display = 'flex';
+                btn.style.display = 'block';
+            }
+           
+            let w = img.naturalWidth;
+            let h = img.naturalHeight;
+            let cw = container.offsetWidth;
+            let ch = container.offsetHeight;
+
+            if ((w > cw && h > ch && w > h) || h > w || (w == h && cw >= ch)) {
+                img.style.height = (h > ch ? ch : h) + 'px';
+                img.style.width = "auto";
+            } else {
+                img.style.width = (w > cw ? cw : w) + 'px';
+                img.style.height = "auto";
+            }
 
             closeForm();
         }
@@ -124,8 +141,8 @@ function savePhoto(picture, mask, source) {
 
     let formData = new FormData();
     
-    let x = mask.offsetLeft / source.width;
-    let y = mask.offsetTop / source.height;
+    let x = mask.offsetLeft / source.offsetWidth;
+    let y = mask.offsetTop / source.offsetHeight;
 
     let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale, upld: uploaded};
 
