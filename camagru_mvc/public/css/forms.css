@@ -184,6 +184,31 @@ form input[type=submit]:active {
 	transform: translateY(1px);
 }
 
+form#add-comment {
+	width: 100%;
+	border-radius: 0;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	background: rgba(255, 255, 255, 0.3);
+	position: absolute;
+	bottom: 0;
+}
+
+form#add-comment textarea {
+	flex: 10 0 0;
+	font-size: 0.7em;
+	background: 0;
+	padding: 1% 2% 1% 3%;
+}
+
+form#add-comment button {
+	flex: 1 0 0;
+	font-size: 0.8em;
+	background: 0;
+	color: rgb(78, 197, 193);
+	border-left: 1px solid grey;
+}
+
 .errors {
 	font-size: 0.75em;
 	font-weight: lighter;

@@ -26,16 +26,12 @@
 
         public function actionIndex()
         {
-            $this->requireLogin();
-
             View::generate('profile.php', 'main_template.php', $this->view_data);
         }
 
 
         public function actionSettings()
         {
-            $this->requireLogin();
-
             View::generate('settings.php', 'main_template.php', $this->view_data);
         }
 
@@ -133,6 +129,16 @@
                 Flash::addMessage('Something went wrong. Please, try again!');
                 echo 'error';
             }
+            
+        }
+
+
+        public function actionAddComment()
+        {
+            if (! isset($_POST)) {
+                $this->redirect('/profile');
+            }
+
             
         }
 

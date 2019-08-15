@@ -7,6 +7,39 @@ let isMouseDown = false;
 let scale = 1;
 
 
+function addComment(e, form) {
+    e.preventDefault();
+
+    let text = form.querySelector('textarea').value;
+
+    if (text != '') {
+        
+        let photo = document.querySelector('.post > img');
+        let formData = new FormData();
+
+        formData.append('text', text);
+        formData.append('src', photo.src);
+
+        let xhr = new XMLHttpRequest();
+       
+        xhr.open("POST", "comment", true);
+        xhr.send(formData);
+    
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+         };
+
+    } else {
+        alert('Please, add some text first!');
+    }
+   
+
+}
+
+
+
 function deletePost() {
 
     let formData = new FormData();
@@ -45,13 +78,12 @@ function deletePost() {
 function viewPost(item) {
     let post = document.querySelector('.post');
     let tohide = document.querySelector('.snap_container');
-    let h = tohide.offsetHeight;
+    let h = tohide.offsetHeight ? tohide.offsetHeight : post.offsetHeight;
     let img = document.querySelector('.post > img');
 
     img.src = item.src;
 
     img.onload = function() {
-        console.log(h);
         tohide.style.display = 'none';
         post.style.display = 'flex';
         post.style.height = h + 'px';
@@ -71,12 +103,15 @@ function openForm() {
 }
 
 
+
+
 function onMouseDown(e, item) {
     e.preventDefault();
 
-    isMouseDown = true;
-  
-    mouseOffset = { x: item.offsetLeft - e.clientX, y: item.offsetTop - e.clientY };
+    if (item.offsetHeight * scale < mask_container.offsetHeight && item.offsetWidth * scale < mask_container.offsetWidth ) {
+        isMouseDown = true;
+        mouseOffset = { x: item.offsetLeft - e.clientX, y: item.offsetTop - e.clientY };
+    }
 }
 
 function onMouseUp(e, item) {
@@ -100,7 +135,6 @@ function onMouseMove(e, item) {
         item.style.top = y + 'px';
     }
 }
-
 
 function scaleMask(e, item) {
     let delta = e.deltaY;

@@ -25,7 +25,7 @@
 
       if (! $this->custom_error) {
 
-        $this->new_name = 'ava_' . $this->user_id . $this->extn;
+        $this->new_name = 'ava_' . $this->user_id . '.' . $this->extn;
         $dest = STORAGE_PATH . '/profile' . '/' . $this->new_name;
 
         if (!is_dir(STORAGE_PATH . '/profile')) {

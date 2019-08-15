@@ -16,7 +16,14 @@
                     <img src="<?php echo IMAGES_PATH . '/heart.svg'?>" alt="" width="25em" height="25em">
                     <p>22</p>
                 </div>
-                <div class="comments"></div>
+                <div class="comments">
+                    <p><span></span></p>
+                </div>
+                <form id="add-comment" method='post' onsubmit="addComment(event, this)">
+                        <textarea name="" id="" cols="" rows="2" placeholder='Add a comment...' required
+></textarea>
+                        <button type="submit">Post</button>
+                </form>
             </div>
     </div>
     <div class="snap_container">

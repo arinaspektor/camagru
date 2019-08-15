@@ -165,12 +165,12 @@ main > section {
 	min-width: 320px;
 	/* text-align: end; */
 	flex: 3 0 0;
-	height: 100%;
+	/* height: 100%; */
+	position: relative;
 }
 
 .post  {
 	display: none;
-	position: relative;
 }
 
 .camera_wrapper {
@@ -331,20 +331,17 @@ aside > footer {
 
 .post > img {
 	min-width: 300px;
-	max-height: 100%;
+	max-height: 70%;
 	max-width: 100%;
 	object-fit: contain;
 	/* background: darkcyan; */
-}
-
-.post > .wrapper {
-	padding: 1em;
 }
 
 .likes {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
+	margin-left: 1em;
 }
 
 .images {

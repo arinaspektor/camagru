@@ -22,6 +22,7 @@
         'upload_ava' => 'profile/uploadAva',
         'post' => 'profile/newPhoto',
         'delete' => 'profile/deletePost',
+        'comment' => 'profile/addComent',
         // 'view' => 'profile/viewPost',
         '' => 'main/index'
     );

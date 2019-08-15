@@ -122,6 +122,7 @@ body > footer span {
 }
 
 input,
+textarea, 
 button,
 input:focus,
 input:hover {
