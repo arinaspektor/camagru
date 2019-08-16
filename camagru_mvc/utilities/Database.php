@@ -92,12 +92,20 @@
         }
 
 
-        static public function findAllByValue($sql)
+        static public function findColumnByValue($sql)
         {
             $data = self::$pdo->query($sql);
 
             return $data->fetchAll(PDO::FETCH_COLUMN);
         }
+
+        static public function findAllByValue($sql)
+        {
+            $data = self::$pdo->query($sql);
+
+            return $data->fetchAll();
+        }
+
 
         
         static public function alreadyExists($table, $column, $value, $class)

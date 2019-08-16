@@ -118,14 +118,35 @@
         }
 
 
-        static public function getAllPosts($user_id)
+        static public function getAllPostsById($user_id)
         {
             $sql = "SELECT `filename`";
             $sql .= " FROM `Posts`";
             $sql .= " WHERE `user_id` = $user_id";
             $sql .= " ORDER BY `created_at` DESC";
 
+            return Db::findColumnByValue($sql);
+        }
+
+
+        static public function getAllPosts()
+        {
+            $sql = "SELECT *";
+            $sql .= " FROM `Posts`";
+            $sql .= " ORDER BY `created_at` DESC";
+
             return Db::findAllByValue($sql);
+        }
+
+
+        static public function findUsernameById($user_id)
+        {
+            $sql = "SELECT `username`";
+            $sql .= " FROM `Users`";
+            $sql .= " WHERE `user_id` = $user_id";
+            $sql .= " LIMIT 1";
+
+            return Db::findColumnByValue($sql);
         }
 
 

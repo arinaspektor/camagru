@@ -155,7 +155,7 @@
 
         private function getPosts()
         {
-            $posts = Post::getAllPosts($this->user->user_id);
+            $posts = Post::getAllPostsById($this->user->user_id);
 
             foreach ($posts as $name) {
                 $this->view_data['posts'][] = $this->path . '/' . $name;

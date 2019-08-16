@@ -18,3 +18,16 @@ CREATE TABLE IF NOT EXISTS posts (
     filename VARCHAR(255) NOT NULL UNIQUE,
     created_at DATETIME NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS likes (
+    like_id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    post_id INT(10) unsigned NOT NULL,
+    user_id INT(10) unsigned NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    comment_id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    text VARCHAR(255) NOT NULL,
+    post_id INT(10) unsigned NOT NULL,
+    user_id INT(10) unsigned NOT NULL
+);

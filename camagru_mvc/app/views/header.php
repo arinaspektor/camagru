@@ -8,9 +8,10 @@
 	<title>Camagru | <?php echo $view_data['page_title']; ?> </title>
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/style.css'; ?>">
 	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/main.css'; ?>">
-	<?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset', 'Profile'])) {
+	<link rel="stylesheet" href="<?php echo STYLES_PATH . '/forms.css'; ?>">
+	<!-- <?php if (in_array($view_data['page_title'], ['Sign in', 'Sign up', 'Reset', 'Profile', 'Feed'])) {
 		echo '<link rel="stylesheet" href="' . STYLES_PATH . '/forms.css">';
-	}?>
+	}?> -->
 	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/web.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo SCRIPT_PATH . '/main.js'; ?>"></script>
 </head>

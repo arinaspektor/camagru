@@ -190,6 +190,9 @@ form#add-comment {
 	flex-flow: row nowrap;
 	align-items: stretch;
 	background: rgba(255, 255, 255, 0.3);
+}
+
+div.post from#add-comment {
 	position: absolute;
 	bottom: 0;
 }

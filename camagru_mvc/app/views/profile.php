@@ -19,8 +19,8 @@
                 <div class="comments">
                     <p><span></span></p>
                 </div>
-                <form id="add-comment" method='post' onsubmit="addComment(event, this)">
-                        <textarea name="" id="" cols="" rows="2" placeholder='Add a comment...' required
+                <form id="add-comment" method='post' onsubmit="addComment(event, this)" >
+                        <textarea name="" id="" cols="" rows="2" placeholder='Add a comment...' maxlength='200' required
 ></textarea>
                         <button type="submit">Post</button>
                 </form>
@@ -47,7 +47,7 @@
                 <div class="wrapper">
                     <img src="<?php echo $src?>" onclick="createMask(this)">
                 </div>
-            <?php };?>
+            <?php }?>
 
         </div>
     </div>

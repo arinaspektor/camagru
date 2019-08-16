@@ -240,7 +240,7 @@
             return Db::findByValue($table='Users', $column="user_id", $id, $class='User');
         }
 
-
+       
         static public function findByEmail($email) {
             return Db::findByValue($table='Users', $column='user_email', $email, $class='User');
         }
