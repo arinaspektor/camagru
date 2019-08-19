@@ -57,6 +57,7 @@
             return self::send($mail->to, $subject, $text, $mail->headers);
         }
 
+
     }
  
 
