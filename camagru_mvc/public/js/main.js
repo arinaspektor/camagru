@@ -7,18 +7,56 @@ let isMouseDown = false;
 let scale = 1;
 
 
+
+function addLike(obj) {
+
+    let src = obj.src;
+    let replace = 'liked';
+    let new_src = 'unliked';
+    let like = false;
+
+    if (src.indexOf('unliked') !== -1) {
+        replace = 'unliked';
+        new_src = 'liked';
+        like = true;
+    }
+
+    let formData = new FormData();
+
+    formData.append('like', like);
+    formData.append('post_id', obj.closest('article').id);
+
+    let xhr = new XMLHttpRequest();
+       
+    xhr.open("POST", "like", true);
+    xhr.send(formData);
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response != 'error') {
+                obj.src = src.replace(replace, new_src);
+                obj.nextElementSibling.innerText = this.response;
+            }   
+        }
+     };
+
+}
+
+
 function addComment(e, form) {
     e.preventDefault();
 
     let text = form.querySelector('textarea').value;
 
-    if (text != '') {
-        
-        let photo = document.querySelector('.post > img');
+    if (text == '') {
+        alert('Please, add some text first!');
+    } else if (text.length > 200) {
+        alert('Max length of comment is 200 characters!');
+    } else {
         let formData = new FormData();
 
         formData.append('text', text);
-        formData.append('src', photo.src);
+        formData.append('post_id', form.closest('article').id);
 
         let xhr = new XMLHttpRequest();
        
@@ -27,15 +65,23 @@ function addComment(e, form) {
     
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+                if (this.response != 'error') {
+                    let decoded = JSON.parse(this.response);
+
+                    let comment = document.createElement('p');
+                    let author = document.createElement('span');
+                    let toappend = form.closest('article').querySelector('.comments');
+
+                    author.innerText = decoded['author'];
+                    comment.innerText =  decoded['comment'];
+
+                    comment.insertBefore(author, comment.childNodes[0]);
+                    toappend.appendChild(comment);
+                }
+
             }
          };
-
-    } else {
-        alert('Please, add some text first!');
     }
-   
-
 }
 
 

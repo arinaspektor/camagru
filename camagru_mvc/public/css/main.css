@@ -145,7 +145,6 @@ main > section {
 }
 
 .camagru {
-	/* height: 88vh; */
 	width: 95vw;
 	min-width: 320px;
 	background: rgba(255, 255, 255, 0.85);
@@ -338,9 +337,11 @@ aside > footer {
 
 div.post > img {
 	min-width: 300px;
-	max-height: 70%;
-	max-width: 100%;
-	object-fit: contain;
+	height: auto;
+	max-height: 100%;
+	width: 100%;
+	object-fit: cover;
+	overflow-y: scroll;
 }
 
 article.post > img {
@@ -364,6 +365,15 @@ article.post > img {
 	font-size: 0.8em;
     font-weight: lighter;
     padding-left: 1%;
+}
+
+.comments p {
+	font-size: 0.8em;
+	padding-left: 3%;
+}
+.comments p span {
+	font-weight: lighter;
+	padding-right: 1%;
 }
 
 .images {

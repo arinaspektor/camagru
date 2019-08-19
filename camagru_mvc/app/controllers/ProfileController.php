@@ -139,8 +139,45 @@
                 $this->redirect('/profile');
             }
 
+            if (! ($comment = trim($_POST['text']))
+                || $comment == ''
+                || strlen($comment) > 200
+                || ! Post::addComment($_POST['post_id'], $comment, $this->user->user_id))
+            {
+                Flash::addMessage('Something went wrong. Please, try again!');
+                echo 'error';
+            } else {
+                $arr = array('comment' => htmlentities($comment) , 'author' => htmlentities($this->user->username));
+                echo json_encode($arr);
+
+                // отправить email
+            }
+
+        }
+
+
+        public function actionAddLike()
+        {
+            if (! isset($_POST)) {
+                $this->redirect('/profile');
+            }
+
+            if ($_POST['like'] == 'true') {
+                $success = Post::addLike($_POST['post_id'], $this->user->user_id);
+            } else {
+                $success = Post::removeLike($_POST['post_id'], $this->user->user_id);
+            }
+
+            if (! $success) {
+                Flash::addMessage('Something went wrong. Please, try again!');
+                echo 'error';
+            } else {
+                $likes = Post::countLikes($_POST['post_id']);
+                echo implode($likes[0]);
+            }
             
         }
+
 
 
         private function getMasks()
