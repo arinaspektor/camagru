@@ -33,7 +33,8 @@
                     'user_email' => $this->user_email,
                     'hashed_password' => $hashed_passwd,
                     'token_hash' => $hashed_token,
-                    'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp)
+                    'token_expires_at' => date('Y-m-d H:i:s', $expiry_timestamp),
+                    'be_notified' => 1
                 ];
                 
                 return Db::insert(self::$table, $userdata);
@@ -50,6 +51,7 @@
                 $userdata = [
                     'username' => $this->username,
                     'user_email' => $this->user_email,
+                    'be_notified' => $this->be_notified
                 ];
                 
                 if ($this->passwd) {
@@ -221,6 +223,16 @@
         }
 
 
+        public function sendNotification($who, $post_id)
+        {
+            $url =  WWW_ROOT . '/post' . '/' . $post_id;
+
+            $mail = new Mail($this->user_email);
+
+            $mail->sendNotification(ucfirst($who), $url);
+        }
+
+
         static public function findByToken($value)
         {
             $token = new Token($value);
@@ -236,12 +248,27 @@
         }
 
 
-        static public function findById($id) {
+        static public function findUserByPost($post_id)
+        {
+            $sql = "SELECT `user_id`";
+            $sql .= " FROM `Posts`";
+            $sql .= " WHERE `post_id` = $post_id";
+            $sql .= " LIMIT 1";
+
+            $user_id = implode(Db::findColumnByValue($sql));
+           
+            return Db::findByValue($table='Users', $column="user_id", $user_id, $class='User');
+        }
+
+
+        static public function findById($id)
+        {
             return Db::findByValue($table='Users', $column="user_id", $id, $class='User');
         }
 
        
-        static public function findByEmail($email) {
+        static public function findByEmail($email)
+        {
             return Db::findByValue($table='Users', $column='user_email', $email, $class='User');
         }
     }

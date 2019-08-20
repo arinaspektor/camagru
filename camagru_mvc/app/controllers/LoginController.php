@@ -32,6 +32,7 @@
             }
         }
 
+        
         public function actionLogout()
         {
             Auth::logout();

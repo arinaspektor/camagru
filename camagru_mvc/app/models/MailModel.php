@@ -5,9 +5,9 @@
         public $headers;
         public $to;
 
-        private function __construct()
+        public function __construct($to = null)
         {
-            $this->to  = $_SESSION['user_email'];
+            $this->to  = $to ?? $_SESSION['user_email'];
             $this->headers = 'From: noreply@camagru' . "\r\n";
             $this->headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
         }
@@ -58,6 +58,20 @@
         }
 
 
+       public function sendNotification($who, $url)
+        {
+            $subject = "New comment on your post";
+
+            $text = "
+            <h4>Hi!</h4>
+
+            <p>$who has just commented on your post. Click <a href = $url>here</a> to have a look and/or reply.</p>
+
+            <p>Thank you for using Camagru!</p>";
+
+            return self::send($this->to, $subject, $text, $this->headers);
+
+        }
     }
  
 

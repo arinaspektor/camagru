@@ -35,6 +35,34 @@ function turnOnWeb() {
 }
 
 
+function savePhoto(picture, mask, source) {
+
+    let formData = new FormData();
+    
+    let x = mask.offsetLeft / source.offsetWidth;
+    let y = mask.offsetTop / source.offsetHeight;
+
+    let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale, upld: uploaded};
+
+    let encoded = JSON.stringify(data);
+    formData.append('data', encoded);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "post", true);
+    xhr.send(formData);
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+           showResult(this.responseText);
+        }
+     };
+
+     mask.remove();
+     scale = 1;
+}
+
+
 function takePhoto() {
     let mask = document.querySelector('.mask');
     
@@ -134,32 +162,4 @@ function showResult(url)
         picture.addEventListener('click', (e) => {viewPost(picture);});
         photos.insertBefore(picture, photos.childNodes[0]);
     }
-}
-
-
-function savePhoto(picture, mask, source) {
-
-    let formData = new FormData();
-    
-    let x = mask.offsetLeft / source.offsetWidth;
-    let y = mask.offsetTop / source.offsetHeight;
-
-    let data = { file: picture, mask: mask.src, x: x, y: y, scale: scale, upld: uploaded};
-
-    let encoded = JSON.stringify(data);
-    formData.append('data', encoded);
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open("POST", "post", true);
-    xhr.send(formData);
-    
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           showResult(this.responseText);
-        }
-     };
-
-     mask.remove();
-     scale = 1;
 }

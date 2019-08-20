@@ -23,7 +23,7 @@
 					<input class="focus-input" type="password" name="dup_passwd" value="" placeholder="Confirm password" />
 
 					<label>
-						<input type="checkbox" name="email_notes" checked="checked">
+						<input type="checkbox" name="be_notified" <?php if ($view_data['user']->be_notified) { echo 'checked';}?> value='1'>
 					I want to receive email notifications about comments</label>
 				</div>
 			</div>

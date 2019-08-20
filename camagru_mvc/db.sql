@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
     hashed_password VARCHAR(255) NOT NULL,
     token_hash VARCHAR(255),
     token_expires_at DATETIME,
-    profile_img_src VARCHAR(255)
+    profile_img_src VARCHAR(255),
+    be_notified tinyint(1) DEFAULT 1
     );
 
 CREATE TABLE IF NOT EXISTS posts (

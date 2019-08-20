@@ -24,6 +24,15 @@
             }
         }
 
+
+        public function requirePost($arr, $redirect_to)
+        {
+            if (! isset($arr) || empty($arr)) {
+                $this->redirect($redirect_to);
+            } 
+
+        }
+
     }
 
 ?>

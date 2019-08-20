@@ -24,7 +24,7 @@ function addLike(obj) {
     let formData = new FormData();
 
     formData.append('like', like);
-    formData.append('post_id', obj.closest('article').id);
+    formData.append('post_id', obj.closest('.post').id);
 
     let xhr = new XMLHttpRequest();
        
@@ -56,7 +56,7 @@ function addComment(e, form) {
         let formData = new FormData();
 
         formData.append('text', text);
-        formData.append('post_id', form.closest('article').id);
+        formData.append('post_id', form.closest('.post').id);
 
         let xhr = new XMLHttpRequest();
        
@@ -65,15 +65,15 @@ function addComment(e, form) {
     
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                if (this.response != 'error') {
-                    let decoded = JSON.parse(this.response);
+                let decoded = JSON.parse(this.response);
 
+                if (decoded.error == "false") {
                     let comment = document.createElement('p');
                     let author = document.createElement('span');
-                    let toappend = form.closest('article').querySelector('.comments');
+                    let toappend = form.closest('.post').querySelector('.comments');
 
-                    author.innerText = decoded['author'];
-                    comment.innerText =  decoded['comment'];
+                    author.innerText = decoded.author;
+                    comment.innerText =  decoded.comment;
 
                     comment.insertBefore(author, comment.childNodes[0]);
                     toappend.appendChild(comment);
@@ -87,11 +87,12 @@ function addComment(e, form) {
 
 
 function deletePost() {
-
+  
     let formData = new FormData();
-    let post =  document.querySelector('.post');
+    let post = document.querySelector('.post');
     let img = post.querySelector('img');
 
+    formData.append('post_id', post.id);
     formData.append('src', img.src);
 
     let xhr = new XMLHttpRequest();
@@ -112,17 +113,51 @@ function deletePost() {
                 }
 
                 img.src = null;
-                post.style.display = 'none';
+                post.parentElement.style.display = 'none';
                 document.querySelector('.snap_container').style.display = 'flex';
             }
         }
      };
 
+
 }
 
 
-function viewPost(item) {
-    let post = document.querySelector('.post');
+function showInfo(data) {
+    console.log(data);
+
+    let likeimg = document.querySelector('.likes img');
+    // let src = window.location.hostname+'/'
+
+    document.querySelector('.likes p').innerText = data.likes;
+
+    // if (data.liked == "") {
+    //     console.log(src);
+    // }
+
+}
+
+
+
+function getInfo(id) {
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "view/"+id, true);
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let decoded = JSON.parse(this.response);
+
+            showInfo(decoded);
+        }
+    }
+
+}
+
+
+function viewPost(item, id) {
+    let post = document.querySelector('.post-container');
     let tohide = document.querySelector('.snap_container');
     let h = tohide.offsetHeight ? tohide.offsetHeight : post.offsetHeight;
     let img = document.querySelector('.post > img');
@@ -130,6 +165,8 @@ function viewPost(item) {
     img.src = item.src;
 
     img.onload = function() {
+        post.querySelector('.post').id = id;
+        getInfo(id);
         tohide.style.display = 'none';
         post.style.display = 'flex';
         post.style.height = h + 'px';

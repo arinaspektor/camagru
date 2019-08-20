@@ -120,12 +120,12 @@
 
         static public function getAllPostsById($user_id)
         {
-            $sql = "SELECT `filename`";
+            $sql = "SELECT *";
             $sql .= " FROM `Posts`";
             $sql .= " WHERE `user_id` = $user_id";
             $sql .= " ORDER BY `created_at` DESC";
 
-            return Db::findColumnByValue($sql);
+            return Db::findAllByValue($sql);
         }
 
 
@@ -159,7 +159,6 @@
             return Db::findAllByValue($sql);
         }
 
-
         static public function countLikes($post_id)
         {
             $sql = "SELECT COUNT(*)";
@@ -181,14 +180,11 @@
         }
 
 
-        static public function deletePost($src)
+        static public function deletePost($post_id, $src)
         {
             $file = str_replace(WWW_ROOT, ROOT, $src);
-           
-            $s = explode('/', $src);
-            $value = end($s);
 
-            if (Db::deleteOne($table='Posts', $column='filename', $value)) {
+            if (Db::deleteOne($table='Posts', $column='post_id', $post_id)) {
                 return unlink($file);
             }
 
@@ -228,6 +224,7 @@
 
             return Db::insert($table, $data);
         }
+
 
     }
 

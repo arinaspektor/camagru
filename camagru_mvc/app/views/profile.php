@@ -8,12 +8,13 @@
 </div>
 
 <section class="camagru">
-    <div class="post">
+    <div class="post-container">
+        <div class="post">
             <span class="del" onclick="deletePost()"></span>
             <img src="" alt="">
             <div class="wrapper">
                 <div class="likes">
-                    <img src="<?php echo IMAGES_PATH . '/heart.svg'?>" alt="" width="25em" height="25em">
+                    <img src="<?php echo IMAGES_PATH . '/unliked.svg'?>" alt="" width="15em" height="15em">
                     <p>22</p>
                 </div>
                 <div class="comments">
@@ -21,10 +22,11 @@
                 </div>
                 <form id="add-comment" method='post' onsubmit="addComment(event, this)" >
                         <textarea name="" id="" cols="" rows="2" placeholder='Add a comment...' maxlength='200' required
-></textarea>
+                ></textarea>
                         <button type="submit">Post</button>
                 </form>
             </div>
+        </div>
     </div>
     <div class="snap_container">
         <div class="camera_wrapper">
@@ -56,8 +58,8 @@
         <div class="photos">
 
             <?php if (isset($view_data['posts'])) {
-                    foreach ($view_data['posts'] as $src) {?>
-                        <img src="<?php echo $src?>" onclick="viewPost(this)"> 
+                    foreach ($view_data['posts'] as $post) {?>
+                        <img src="<?php echo $post['src']; ?>" onclick="viewPost(this, <?php echo $post['id']; ?>)"> 
             <?php   }
                   };?>
 

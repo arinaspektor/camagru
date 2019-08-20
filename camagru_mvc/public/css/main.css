@@ -162,25 +162,25 @@ main > section {
 	max-width: 600px;
 }
 
-
-.snap_container,
-article {
-	display: flex;
-}
-
 .snap_container,
 .post {
+	display: flex;
 	flex-direction: column;
 	min-width: 320px;
 }
 
 .snap_container,
 div.post {
-	flex: 3 0 0;
 	position: relative;
 }
 
-div.post  {
+.snap_container,
+.post-container  {
+	flex: 3 0 0;
+	justify-content: center;
+}
+
+.post-container  {
 	display: none;
 }
 

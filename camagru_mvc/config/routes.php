@@ -20,11 +20,12 @@
         'reset/([A-Za-z0-9]+)' => 'password/reset/1',
         'reset' => 'password/requestReset',
         'upload_ava' => 'profile/uploadAva',
-        'post' => 'profile/newPhoto',
-        'delete' => 'profile/deletePost',
-        'comment' => 'profile/addComment',
-        'like' => 'profile/addLike',
-        // 'view' => 'profile/viewPost',
+        'post/([0-9]+)' => 'post/index/1',
+        'post' => 'post/newPhoto',
+        'delete' => 'post/deletePost',
+        'comment' => 'post/addComment',
+        'like' => 'post/addLike',
+        'view/([0-9]+)' => 'post/getPostInfo/1',
         '' => 'main/index'
     );
 
