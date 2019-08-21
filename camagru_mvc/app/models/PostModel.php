@@ -27,7 +27,6 @@
                 $this->mergeImages() &&
                 $this->saveToDb()) {
                     return $this->name;
-              
             }
 
             return false;
@@ -118,6 +117,48 @@
         }
 
 
+        static public function getAllInfo($id, $user_id) {
+            $data = [];
+
+            $likes = self::countLikes($id);
+            $comments = self::getAllComments($id);
+
+            $data['likes'] = implode($likes[0]);
+            $data['liked'] = implode(self::isLikedByUser($id, $user_id));
+
+            for ($i=0; $i < sizeof($comments); $i++) {
+                $data['comments'][$i]['text'] = $comments[$i]['text'];
+                $data['comments'][$i]['author'] = implode(self::findUsernameById($comments[$i]['user_id']));
+            }
+
+            return $data;
+        }
+
+
+        static public function getPostFilename($post_id)
+        {
+            $sql = "SELECT `filename`";
+            $sql .= " FROM `Posts`";
+            $sql .= " WHERE `post_id` = $post_id";
+            $sql .= " LIMIT 1";
+
+            return Db::findColumnByValue($sql);
+        }
+
+
+        static public function getPostIdByFilename($filename)
+        {
+            $name = "'" . $filename . "'";
+
+            $sql = "SELECT `post_id`";
+            $sql .= " FROM `Posts`";
+            $sql .= " WHERE `filename` = $name";
+            $sql .= " LIMIT 1";
+
+            return Db::findColumnByValue($sql);
+        }
+
+
         static public function getAllPostsById($user_id)
         {
             $sql = "SELECT *";
@@ -185,6 +226,10 @@
             $file = str_replace(WWW_ROOT, ROOT, $src);
 
             if (Db::deleteOne($table='Posts', $column='post_id', $post_id)) {
+
+                Db::delete($table='Likes', $column='post_id', $post_id);
+                Db::delete($table='Comments', $column='post_id', $post_id);
+
                 return unlink($file);
             }
 

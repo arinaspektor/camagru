@@ -170,7 +170,7 @@ main > section {
 }
 
 .snap_container,
-div.post {
+.post > header{
 	position: relative;
 }
 
@@ -182,11 +182,19 @@ div.post {
 
 .post-container  {
 	display: none;
+	align-items: center;
+}
+
+div.post {
+	background: rgba(255,255,255, 0.4);
+}
+
+.post {
+	color: black;
 }
 
 article.post {
 	margin-bottom: 5%;
-	color: black;
 	background: rgba(255,255,255, 0.75);
 }
 
@@ -335,16 +343,12 @@ aside > footer {
 }
 
 
-div.post > img {
-	min-width: 300px;
-	height: auto;
+div.post  {
 	max-height: 100%;
-	width: 100%;
-	object-fit: cover;
 	overflow-y: scroll;
 }
 
-article.post > img {
+.post > img {
 	width: 100%;
 	height: auto;
 }
@@ -413,10 +417,10 @@ article.post > img {
 
 .del {
 	position: absolute;
-	right: 2em;
-	top: 1em;
-	width: 10px;
-	height: 10px;
+	right: 1em;
+	top: 25%;
+	width: 20px;
+	height: 20px;
 	opacity: 0.5;
 }
 
@@ -446,7 +450,7 @@ article.post > img {
 	position: absolute;
 	left: 15px;
 	content: ' ';
-	height: 30px;
+	height: 20px;
 	width: 3px;
 	background-color: #EC576B;
 }
@@ -460,11 +464,12 @@ article.post > img {
 }
 
 ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	display: none;
+	/* width: 10px;
+	height: 10px; */
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
 	background: rgba(255, 255, 255, 0.5);
 }
 
@@ -475,7 +480,7 @@ article.post > img {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: rgba(78, 197, 193, 1);
-}
+} */
 
 @media (max-width: 320px) {
 	.container {

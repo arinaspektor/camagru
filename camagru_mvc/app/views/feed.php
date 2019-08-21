@@ -1,8 +1,8 @@
-<style>
+<!-- <style>
     ::-webkit-scrollbar {
         display: none;
     }
-</style>
+</style> -->
 
 <?php
     if (! empty($view_data['posts'])) { ?>

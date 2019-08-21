@@ -4,7 +4,6 @@
     class PostController extends Controller
     {
         public $post_id;
-        public $user_id;
         private $postpath;
 
         public function __construct($post_id = null)
@@ -22,31 +21,39 @@
             $this->postpath = POSTS_WWW_PATH . '/' . $this->user_id;
         }
 
-        
-        public function actionIndex() {
-            echo $this->post_id;
+
+        public function actionIndex()
+        {
+            if ($this->post_id) {
+                $this->view_data['page_title'] = 'Post';
+
+                $this->view_data['post'] = Post::getAllInfo($this->post_id, $this->user_id);
+
+                $src = implode(Post::getPostFilename($this->post_id));
+
+                if (! $src) {
+                    $this->redirect('/profile');
+                }
+
+                $this->view_data['post']['src'] = $this->postpath . '/' . $src;
+                $this->view_data['post']['post_id'] = $this->post_id;
+                $this->view_data['post']['author'] = $this->username;
+
+
+                View::generate('post.php', 'main_template.php', $this->view_data);
+            } else {
+                $this->redirect('/profile');
+            }
         }
 
 
         public function actionGetPostInfo()
         {
             if ($this->post_id) {
-                $data = [];
-
-                $likes = Post::countLikes($this->post_id);
-                $comments = Post::getAllComments($this->post_id);
-
-                $data['likes'] = implode($likes[0]);
-                $data['liked'] = implode(Post::isLikedByUser($this->post_id, $this->user_id));
-
-                for ($i=0; $i < sizeof($comments); $i++) {
-                    $data['comments'][$i]['text'] = $comments[$i]['text'];
-                    $data['comments'][$i]['author'] = implode(Post::findUsernameById($comments[$i]['user_id']));
-                }
-
+                $data = Post::getAllInfo($this->post_id, $this->user_id);
+                
                 echo json_encode($data);
             }
-           
         }
 
 
@@ -62,9 +69,11 @@
 
             if ($filename) {
                 $url =  $this->postpath . '/' . $filename;
-                echo trim($url);
-            } else {
-                echo 'error';
+                $id = implode(Post::getPostIdByFilename($filename));
+
+                $encoded = json_encode( ["src" => $url, "id" => $id] );
+
+                echo $encoded;
             }
         }
 

@@ -35,6 +35,18 @@ function turnOnWeb() {
 }
 
 
+function showResult(data)
+{
+    let photos = document.querySelector('.photos');
+    let picture = new Image();
+        
+    picture.src = data.src;
+
+    photos.insertBefore(picture, photos.childNodes[0]);
+    picture.addEventListener('click', (e) => {viewPost(picture, data.id);});
+}
+
+
 function savePhoto(picture, mask, source) {
 
     let formData = new FormData();
@@ -49,17 +61,20 @@ function savePhoto(picture, mask, source) {
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "post", true);
+    xhr.open("POST", "take", true);
     xhr.send(formData);
     
+
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           showResult(this.responseText);
+            $decoded = JSON.parse(this.response);
+            showResult($decoded);
         }
      };
 
      mask.remove();
      scale = 1;
+  
 }
 
 
@@ -150,16 +165,4 @@ function uploadPhoto(e) {
 }
 
 
-function showResult(url)
-{
-    if (url === 'error') {
-        alert('Something went wront... Please, try again!');
-    } else {
-        let photos = document.querySelector('.photos');
-        let picture = new Image();
-        
-        picture.src = url;
-        picture.addEventListener('click', (e) => {viewPost(picture);});
-        photos.insertBefore(picture, photos.childNodes[0]);
-    }
-}
+

@@ -65,6 +65,17 @@
         }
 
 
+        static public function delete($table, $column, $value)
+        {
+            $sql = "DELETE FROM $table WHERE $column = :val";
+
+            $stmt = self::$pdo->prepare($sql);
+            $stmt->bindValue(':val', $value, PDO::PARAM_STR);
+            
+            return $stmt->execute();
+        }
+
+        
         static public function deleteOne($table, $column, $value)
         {
             $sql = "DELETE FROM $table WHERE $column = :val LIMIT 1";

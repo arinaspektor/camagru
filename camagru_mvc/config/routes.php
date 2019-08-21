@@ -21,7 +21,7 @@
         'reset' => 'password/requestReset',
         'upload_ava' => 'profile/uploadAva',
         'post/([0-9]+)' => 'post/index/1',
-        'post' => 'post/newPhoto',
+        'take' => 'post/newPhoto',
         'delete' => 'post/deletePost',
         'comment' => 'post/addComment',
         'like' => 'post/addLike',

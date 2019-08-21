@@ -33,10 +33,12 @@ function addLike(obj) {
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.response != 'error') {
+           try {
                 obj.src = src.replace(replace, new_src);
                 obj.nextElementSibling.innerText = this.response;
-            }   
+            } catch(e) {
+                alert('Something went wrong. Please, try again!');
+            }
         }
      };
 
@@ -47,6 +49,7 @@ function addComment(e, form) {
     e.preventDefault();
 
     let text = form.querySelector('textarea').value;
+    form.querySelector('textarea').value = '';
 
     if (text == '') {
         alert('Please, add some text first!');
@@ -65,20 +68,23 @@ function addComment(e, form) {
     
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                let decoded = JSON.parse(this.response);
+                try {
+                    let decoded = JSON.parse(this.response);
 
-                if (decoded.error == "false") {
-                    let comment = document.createElement('p');
-                    let author = document.createElement('span');
-                    let toappend = form.closest('.post').querySelector('.comments');
-
-                    author.innerText = decoded.author;
-                    comment.innerText =  decoded.comment;
-
-                    comment.insertBefore(author, comment.childNodes[0]);
-                    toappend.appendChild(comment);
+                    if (decoded.error == "false") {
+                        let comment = document.createElement('p');
+                        let author = document.createElement('span');
+                        let toappend = form.closest('.post').querySelector('.comments');
+    
+                        author.innerText = decoded.author;
+                        comment.innerText =  decoded.comment;
+    
+                        comment.insertBefore(author, comment.childNodes[0]);
+                        toappend.appendChild(comment);
+                    }
+                } catch(e) {
+                    alert('Something went wrong. Please, try again!');
                 }
-
             }
          };
     }
@@ -124,17 +130,40 @@ function deletePost() {
 
 
 function showInfo(data) {
-    console.log(data);
-
     let likeimg = document.querySelector('.likes img');
-    // let src = window.location.hostname+'/'
+    let src = likeimg.src;
 
+    if (data.liked && src.includes('unliked')) {
+        src = src.replace('unliked', 'liked');
+    } else if (! data.liked && ! src.includes('unliked')) {
+        src = src.replace('liked', 'unliked');
+    }
+
+    likeimg.src = src;
     document.querySelector('.likes p').innerText = data.likes;
 
-    // if (data.liked == "") {
-    //     console.log(src);
-    // }
+    let div = document.querySelector('.comments');
 
+    if (div.hasChildNodes) {
+        let child = div.lastElementChild;  
+
+        while (child) { 
+            div.removeChild(child); 
+            child = div.lastElementChild; 
+        } 
+    }
+
+    if (data.comments) {
+        let comments = data.comments;
+
+        for (let i = 0; i < comments.length; i++) {
+            let p = document.createElement('p');
+            p.innerHTML = '<span>'+comments[i].author+'</span>'+comments[i].text;
+            div.appendChild(p);
+        }
+
+    }
+    
 }
 
 
@@ -147,9 +176,12 @@ function getInfo(id) {
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let decoded = JSON.parse(this.response);
-
-            showInfo(decoded);
+            try {
+                let decoded = JSON.parse(this.response);
+                showInfo(decoded);
+            } catch (e) {
+                return false;
+            }
         }
     }
 
@@ -167,6 +199,7 @@ function viewPost(item, id) {
     img.onload = function() {
         post.querySelector('.post').id = id;
         getInfo(id);
+
         tohide.style.display = 'none';
         post.style.display = 'flex';
         post.style.height = h + 'px';
@@ -184,7 +217,6 @@ function openForm() {
     document.querySelector(".layer").style.display = "none";
     document.querySelector(".upload_photo").style.display = "none";
 }
-
 
 
 
