@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
+html, body, ul {
+	padding: 0;
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #EC576B;
+	margin: 0 auto;
+	color: rgb(104, 100, 102);
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	background-image: url("../images/Confetti-Doodles.svg");
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+	min-width: 320px;
+	min-height: 480px;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	overflow-y: hidden;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+
+body > header,
+body > footer {
+	display: flex;
+	align-items: center;
+	color: white;
+	padding: 0 3%;
+}
+
+
+body > header {
+	height: 7vh;
+	min-height: 40px;
+	font-size: 1.8em;
+	justify-content: center;
+}
+
+header > nav {
+	width: 100%;
+}
+
+header > nav > ul {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: baseline;
+}
+
+header > nav > ul > li:first-child {
+	font-family: 'Questrial', sans-serif;
+	letter-spacing: 1.5px;
+}
+
+header > nav > ul > li:first-child > a:hover {
+	text-decoration: none;
+}
+
+header > nav > ul > li:last-child {
+	padding: 0 5px;
+	font-weight: lighter;
+	font-size: 0.65em;
+	position: relative;
+}
+
+.dropdown {
+	padding: 3px 2px 4px 3px;
+	left: -2px;
+	display: none;
+	position: absolute;
+	border: 1px solid white;
+	width: 100%;
+	box-sizing: content-box;
+	background: #EC576B;
+}
+
+.dropdown li {
+	display: block;
+	font-size: 0.9em;
+	text-align: center;
+	z-index: 1000;
+}
+
+header > nav > ul > li:last-child:hover .dropdown {
+	display: block;
+}
+
+body > footer {
+	justify-content: flex-end;
+	align-content: baseline;
+	min-height: 40px;
+	height: 5vh;
+	font-family: 'Questrial', sans-serif;
+	letter-spacing: 1.5px;
+	font-size: 0.7em;
+	font-weight: lighter;
+}
+
+body > footer span {
+	padding-left: 0.3em;
+	font-size: 1.2em;
+}
+
+input,
+textarea, 
+button,
+input:focus,
+input:hover {
+    outline: none;
+	border: none;
+}
+
+::-webkit-input-placeholder,
+::placeholder {
+	color: rgba(104, 100, 102, 0.6);
+}
+
+.alert {
+	width: 100%;
+	font-size: 0.9em;
+	position: fixed;
+	font-weight: lighter;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.3);
+	color: white;
+	padding: 6px 8px;
+	top: 0;
+	left: 0;
+}
+
+@media (max-width: 420px) {
+	body {
+		font-size: 16px;
+	}
+}
