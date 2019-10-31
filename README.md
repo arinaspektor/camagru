@@ -1,4 +1,4 @@
-# camagru
+# Camagru
 
 First web project of 42 school.
 
@@ -8,7 +8,9 @@ Small Instagram-like web application that enables users to make and share photo 
 
 ![](Camagru.gif)
 
-##Authorized stack
+---
+
+## Authorized stack
 1. PHP
 2. SQL
 3. HTML, CSS and JavaScript client-side
