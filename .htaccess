@@ -1,18 +1,13 @@
-# Кодировка
 AddDefaultCharset utf-8
 
-# Переадресация на единую точку входа
 RewriteEngine on
 
-# Запрет перенаправления, если файл есть
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php
 
-# Закрыть просмотр директорий
 Options All -Indexes
 
-# ограничение размера загружаемых файлов
 php_value post_max_size 5M
 php_value upload_max_filesize 5M
 
